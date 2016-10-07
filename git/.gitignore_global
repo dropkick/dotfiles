@@ -1,0 +1,16 @@
+*~
+._*
+.DS_Store
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+node_modules
+bower_components
+npm-debug.log
+
+# codekit #
+###########
+.sass-cache/
+.codekit-config.json
+config.codekit
