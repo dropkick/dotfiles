@@ -241,6 +241,9 @@ defaults write com.apple.finder FXInfoPanesExpanded -dict General -bool true Ope
 # Dock                                                                        #
 ###############################################################################
 
+# Use dark mode for dock and menu bar
+defaults write NSGlobalDomain AppleInterfaceStyle Dark
+
 # Show indicator lights for open applications in the Dock
 defaults write com.apple.dock show-process-indicators -bool true
 
