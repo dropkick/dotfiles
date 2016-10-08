@@ -8,7 +8,7 @@ brew tap caskroom/versions
 
 apps=(
   1password
-  adobe-creative-cloud 
+  # adobe-creative-cloud 
   # adobe-illustrator-cc
   # adobe-indesign-cc 
   # adobe-photoshop-cc
@@ -33,7 +33,7 @@ apps=(
   deltawalker
   divvy
   dropbox
-  ember
+  # ember
   epic
   evernote
   expandrive
