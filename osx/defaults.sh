@@ -344,6 +344,16 @@ defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebK
 # Add a context menu item for showing the Web Inspector in web views
 defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
 
+# Show status bar 
+defaults write com.apple.Safari ShowStatusBar -bool true
+
+# Notifications
+
+# Don't even ask about push notifications
+defaults write com.aplle.Safari CanPromptForPushNotifications -bool false
+
+
+
 
 ###############################################################################
 # Mail                                                                        #

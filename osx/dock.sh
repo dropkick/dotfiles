@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Position (left, bottom, right) 
+defaults write com.apple.dock orientation -string "left" 
+
 dockutil --no-restart --remove all
 dockutil --no-restart --add "/Applications/iTunes.app"
 dockutil --no-restart --add "/Applications/Mail.app"
