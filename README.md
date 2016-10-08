@@ -2,7 +2,9 @@
 
 These are my dotfiles. Take anything you want, but at your own risk.
 
-It targets OS X systems, but since it has some defensive checks it should work on *nix as well (tested on a few Linux boxes).
+Much of this is based on how [Lars Kappert](https://github.com/webpro/) has set his system up. A good amount of bits and inspiration from [Dan Lowe](https://github.com/tangledhelix) here as well.
+
+This mess targets macOS systems, but has some checks to make lots of it work on *nix as well. macOS stuff is at very least broken out into its own files.
 
 ## Package overview
 
@@ -17,11 +19,13 @@ It targets OS X systems, but since it has some defensive checks it should work o
     * Python 2
 * Dev (FE/JS/JSON): [http-server](https://github.com/nodeapps/http-server), [jq](http://stedolan.github.io/jq/), [nodemon](http://nodemon.io), [peco](http://peco.github.io), [underscore-cli](https://github.com/ddopson/underscore-cli)
 * Graphics: [ffmpeg](https://www.ffmpeg.org), [gifsicle](http://www.lcdf.org/gifsicle), [imagemagick](http://www.imagemagick.org), [svgo](https://github.com/svg/svgo)
-* OS X: [dockutil](https://github.com/kcrawford/dockutil), [Hammerspoon](http://www.hammerspoon.org/), [Mackup](https://github.com/lra/mackup), [Quick Look plugins](https://github.com/sindresorhus/quick-look-plugins)
+* macOS: [dockutil](https://github.com/kcrawford/dockutil), [Mackup](https://github.com/lra/mackup), [Quick Look plugins](https://github.com/sindresorhus/quick-look-plugins)
 * [OS X apps](https://github.com/dropkick/dotfiles/blob/master/install/brew-cask.sh)
 
 
-## Install from App Store 
+## Apps installed from App Store
+
+These are either unavailable in Homebrew/Cask or my personal license is via the App Store.
 
 * [Amphetamine](https://itunes.apple.com/us/app/amphetamine/id937984704) - better replacement for Caffiene 
 * [Chronicle](https://itunes.apple.com/us/app/chronicle-bill-management/id402355593) - Bill management
@@ -42,7 +46,7 @@ It targets OS X systems, but since it has some defensive checks it should work o
 * [WiFi Explorer](https://itunes.apple.com/us/app/wifi-explorer/id494803304) - Scan, monitor, and troubleshoot wireless networks
 
 
-## Packages to install manually (not covered by Homebrew, etc.)
+## Packages to install manually (not covered by Homebrew, App Store, etc.)
 
 * [MainMenu Pro](http://mainmenuapp.com/) - can probably phase out. Most features are redundant to other packages.
 * [Seasonality Core](http://getseasonality.com/core/)
@@ -75,7 +79,7 @@ Alternatively, you can install this into `~/.dotfiles` remotely without Git usin
 
 Or, using wget:
 
-    sh -c "`wget -O - --no-check-certificate https://raw.githubusercontent.com/webpro/dotfiles/master/remote-install.sh`"
+    sh -c "`wget -O - --no-check-certificate https://raw.githubusercontent.com/dropkick/dotfiles/master/remote-install.sh`"
 
 ## The `dotfiles` command
 
