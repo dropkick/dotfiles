@@ -64,6 +64,8 @@ On a sparkling fresh installation of OS X:
     sudo softwareupdate -i -a
     xcode-select --install
 
+Note: update `COMPUTER_NAME` constant in [osx/defaults.sh](https://raw.github.com/dropkick/dotfiles/master/osx/defaults.sh) with correct/current machine name before firing that script.
+
 Install the dotfiles with either Git or curl:
 
 ### Clone with Git
