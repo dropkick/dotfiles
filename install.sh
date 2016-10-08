@@ -32,7 +32,8 @@ fi
 
 # Run tests
 
-bats "$DOTFILES_DIR/test/*.bats"
+bats "$DOTFILES_DIR/test/bin.bats"
+bats "$DOTFILES_DIR/test/function.bats"
 
 # Install extra stuff
 
