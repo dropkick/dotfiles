@@ -44,7 +44,7 @@ apps=(
   google-chrome
   google-chrome-canary
   google-drive
-  gpgtools
+  # gpgtools
   harvest
   hazel
   imagealpha
