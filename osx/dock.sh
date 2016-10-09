@@ -16,14 +16,13 @@ dockutil --no-restart --add "/Applications/PDFScanner.app"
 dockutil --no-restart --add "/Applications/Evernote.app"
 dockutil --no-restart --add "/Applications/Quiver.app"
 dockutil --no-restart --add "/Applications/rubiTrack 4 Pro.app"
-dockutil --no-restart --add '' --type spacer --section apps
+# dockutil --no-restart --add '' --type spacer --section apps
 dockutil --no-restart --add "/Applications/Google Chrome.app"
 dockutil --no-restart --add "/Applications/Google Chrome Canary.app"
 dockutil --no-restart --add "/Applications/Firefox.app"
 dockutil --no-restart --add "/Applications/FirefoxDeveloperEdition.app"
 dockutil --no-restart --add "/Applications/Safari.app"
 dockutil --no-restart --add "/Applications/Safari Technology Preview.app"
-dockutil --no-restart --add '' --type spacer --section apps
 dockutil --no-restart --add "/Applications/iTerm.app"
 dockutil --no-restart --add "/Applications/Sublime Text 2.app"
 dockutil --no-restart --add "/Applications/Tower.app"
