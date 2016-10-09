@@ -10,7 +10,6 @@ dockutil --no-restart --add "/Applications/Messages.app"
 dockutil --no-restart --add "/Applications/Slack.app"
 dockutil --no-restart --add "/Applications/Tweetbot.app"
 dockutil --no-restart --add "/Applications/Reeder.app"
-dockutil --no-restart --add '' --type spacer --section apps
 dockutil --no-restart --add "/Applications/Pages.app"
 dockutil --no-restart --add "/Applications/Numbers.app"
 dockutil --no-restart --add "/Applications/PDFScanner.app"
@@ -32,8 +31,7 @@ dockutil --no-restart --add "/Applications/CodeKit.app"
 dockutil --no-restart --add "/Applications/Dash.app"
 dockutil --no-restart --add "/Applications/System Preferences.app"
 dockutil --no-restart --add "/Applications/Utilities/Console.app"
-dockutil --no-restart --add '' --type spacer --section apps
 dockutil --add '~/Projects' --view list --display folder
-dockutil --add '~/Applications' --view list --display folder
+dockutil --add '/Applications' --view list --display folder
 dockutil --add '~/Downloads' --view list --display folder
 killall Dock
