@@ -48,6 +48,7 @@ These are either unavailable in Homebrew/Cask or my personal license is via the 
 
 ## Packages to install manually (not covered by Homebrew, App Store, etc.)
 
+* [Adobe Creative Cloud](https://creative.adobe.com/products/download/creative-cloud) - install Illustrator, Photoshop, etc. from this app
 * [MainMenu Pro](http://mainmenuapp.com/) - can probably phase out. Most features are redundant to other packages.
 * [Seasonality Core](http://getseasonality.com/core/)
 * [uBlock Origin](https://github.com/gorhill/uBlock/#installation) - Install extensions/add-ons for Chrome, Firefox, and Opera
