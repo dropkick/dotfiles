@@ -70,7 +70,7 @@ apps=(
   opera-developer
   otomatic
   owncloud
-  rubitrack
+  # rubitrack
   safari-technology-preview
   sequel-pro
   slack
