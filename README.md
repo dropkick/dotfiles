@@ -50,7 +50,9 @@ These are either unavailable in Homebrew/Cask or my personal license is via the 
 
 * [Adobe Creative Cloud](https://creative.adobe.com/products/download/creative-cloud) - install Illustrator, Photoshop, etc. from this app
 * [MainMenu Pro](http://mainmenuapp.com/) - can probably phase out. Most features are redundant to other packages.
+* [PhoneView](http://www.ecamm.com/mac/phoneview/) - I have a licensed "full version" link stored with my software licenses and download via that link.
 * [Seasonality Core](http://getseasonality.com/core/)
+* [TextExpander](https://textexpander.com) - homebrew cask uses older version
 * [uBlock Origin](https://github.com/gorhill/uBlock/#installation) - Install extensions/add-ons for Chrome, Firefox, and Opera
 
 ## Post Installation 

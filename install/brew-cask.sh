@@ -33,7 +33,6 @@ apps=(
   deltawalker
   divvy
   dropbox
-  # ember
   epic
   evernote
   expandrive
@@ -41,6 +40,8 @@ apps=(
   firefox
   firefoxdeveloperedition
   fuzzyclock
+  garagebuy
+  garagesale
   google-chrome
   google-chrome-canary
   google-drive
@@ -50,6 +51,7 @@ apps=(
   imagealpha
   imageoptim
   imazing
+  inboard
   inssider
   integrity
   iterm2 
@@ -72,19 +74,23 @@ apps=(
   owncloud
   # rubitrack
   safari-technology-preview
+  satellite-eyes 
   sequel-pro
   slack
+  skype
   sourcetree
   sublime-text2
   # sublime-text 
   superduper
+  suspicious-package 
   taskpaper 
-  textexpander
+  # textexpander
   torbrowser
   tower
   transmission 
   transmit
   tripmode
+  twitter
   versions
   vlc
   webstorm
