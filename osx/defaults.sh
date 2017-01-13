@@ -1,4 +1,4 @@
-COMPUTER_NAME="nitro"
+COMPUTER_NAME="enduro"
 
 # Ask for the administrator password upfront
 sudo -v
@@ -106,11 +106,15 @@ sudo chmod 444 /private/var/db/.AccessibilityAPIEnabled
 # Follow the keyboard focus while zoomed in
 # defaults write com.apple.universalaccess closeViewZoomFollowsFocus -bool true
 
-# Disable press-and-hold for keys in favor of key repeat
-defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+# Ensable press-and-hold for keys to get those sweet sweet alternate characters
+defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool true
 
-# Set a blazingly fast keyboard repeat rate
-defaults write NSGlobalDomain KeyRepeat -int 0
+# Set a reasonably fast keyboard repeat rate
+defaults write NSGlobalDomain KeyRepeat -int 2
+
+# Set our key repeat delay
+defaults write -g InitialKeyRepeat -int 15
+
 
 # Automatically illuminate built-in MacBook keyboard in low light
 defaults write com.apple.BezelServices kDim -bool true
@@ -142,7 +146,7 @@ sudo systemsetup -settimezone "America/Los_Angeles" > /dev/null
 defaults write com.apple.screensaver askForPassword -int 1
 defaults write com.apple.screensaver askForPasswordDelay -int 5
 
-# Save screenshots to the desktop
+# Save screenshots to my screenshot hole
 defaults write com.apple.screencapture location -string "$HOME/Pictures/screenshots"
 
 # Save screenshots in PNG format (other options: BMP, GIF, JPG, PDF, TIFF)
@@ -212,9 +216,9 @@ defaults write com.apple.frameworks.diskimages skip-verify-remote -bool true
 /usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:gridSpacing 100" ~/Library/Preferences/com.apple.finder.plist
  
 # Increase the size of icons on the desktop and in other icon views
-/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
-/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
-/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:iconSize 48" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:iconSize 48" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:iconSize 48" ~/Library/Preferences/com.apple.finder.plist
  
 # Show the ~/Library folder
 chflags nohidden ~/Library
@@ -266,10 +270,6 @@ defaults write com.apple.dock no-bouncing -bool true
 # Reset Launchpad
 find ~/Library/Application\ Support/Dock -name "*.db" -maxdepth 1 -delete
  
-# Add iOS Simulator to Launchpad
-ln -s /Applications/Xcode.app/Contents/Applications/iPhone\ Simulator.app /Applications/iOS\ Simulator.app
- 
-
 
 ###############################################################################
 # Dashboard                                                                   #
@@ -283,6 +283,9 @@ defaults write com.apple.dock expose-animation-duration -float 0.1
 
 # Don’t show Dashboard as a Space
 defaults write com.apple.dock dashboard-in-overlay -bool true
+
+# Disable "Displays have separate Spaces"
+defaults write com.apple.dock spans-displays -bool true
 
 ###############################################################################
 # Hot corners                                                                 #
@@ -432,11 +435,11 @@ defaults write com.apple.terminal StringEncodings -array 4
 # Use "Pro" theme (black background color)
 defaults write com.apple.terminal "Default Window Settings" -string "Pro"
 defaults write com.apple.terminal "Startup Window Settings" -string "Pro"
-
+,
 # Disable audible and visual bells
 defaults write com.apple.terminal "Bell" -bool false
 defaults write com.apple.terminal "VisualBell" -bool false
-
+,
 ###############################################################################
 # Time Machine                                                                #
 ###############################################################################
