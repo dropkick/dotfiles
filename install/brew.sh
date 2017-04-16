@@ -1,4 +1,4 @@
-# Install Homebrew
+\# Install Homebrew
 
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
@@ -17,6 +17,7 @@ apps=(
   coreutils
   cmake
   dockutil
+  docker
   ffmpeg
   fasd
   gifsicle
@@ -33,6 +34,7 @@ apps=(
   peco
   psgrep
   python
+  p7zip
   shellcheck
   ssh-copy-id
   svn

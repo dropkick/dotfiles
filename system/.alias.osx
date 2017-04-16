@@ -39,6 +39,9 @@ alias zzz="pmset sleepnow"
 
 alias logoff="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
 
+# Eject all ejectable volumes
+alias ejector="osascript -e 'tell application "Finder" to eject (every disk whose ejectable is true)'"
+
 # Quick-Look preview files from the command line
 
 alias ql="qlmanage -p &>/dev/null"

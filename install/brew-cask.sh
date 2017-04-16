@@ -27,10 +27,13 @@ apps=(
   cloak
   coda
   codekit
+  colloquy
   crashplan
   dash
   default-folder-x
   deltawalker
+  devonthink-pro-office
+  docker
   divvy
   dropbox
   epic
@@ -72,15 +75,15 @@ apps=(
   opera-developer
   otomatic
   owncloud
-  # rubitrack
+  rubitrack-pro
   safari-technology-preview
   satellite-eyes 
   sequel-pro
   slack
   skype
   sourcetree
-  sublime-text2
-  # sublime-text 
+  # sublime-text2
+  sublime-text 
   superduper
   suspicious-package 
   taskpaper 
@@ -91,6 +94,7 @@ apps=(
   transmit
   tripmode
   twitter
+  unison
   versions
   vlc
   webstorm
