@@ -75,6 +75,7 @@ apps=(
   opera-developer
   otomatic
   owncloud
+  renamer
   rubitrack-pro
   safari-technology-preview
   satellite-eyes 
