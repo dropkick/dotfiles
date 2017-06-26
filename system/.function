@@ -52,3 +52,6 @@ meteo() {
   local CITY=${1:-Portland}
   curl -4 "wttr.in/$CITY"
 }
+wx() {
+  telnet rainmaker.wunderground.com
+}
