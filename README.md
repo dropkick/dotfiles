@@ -35,6 +35,7 @@ These are either unavailable in Homebrew/Cask or my personal license is via the 
 * [Dropzone 3](https://itunes.apple.com/us/app/dropzone-3/id695406827) - move files, open applications and share files
 * [Exporter for Contacts](https://www.subclassed.com/apps/exporter-for-contacts/export-mac-os-x-mail-address-book-contacts-to-csv-or-excel) - Contacts export in multiple formats with custom templates
 * [Fantastical](https://itunes.apple.com/us/app/fantastical-2-calendar-reminders/id975937182) - calendars and reminders 
+* [FruitJuice](http://fruitjuiceapp.com/) - macOS battery maintenance and monitoring
 * [iA Writer](https://itunes.apple.com/us/app/ia-writer/id775737590) - minimal distraction writing app
 * [Keynote](https://itunes.apple.com/us/app/keynote/id409183694) - presentations 
 * [Numbers](https://itunes.apple.com/us/app/numbers/id409203825) - spreadsheets 
@@ -44,6 +45,7 @@ These are either unavailable in Homebrew/Cask or my personal license is via the 
 * [Pomodoro Timer](https://itunes.apple.com/us/app/pomodoro-timer-focus-on-your/id872515009) - menubar Pomodoro timer
 * [Quiver](https://itunes.apple.com/us/app/quiver-programmers-notebook/id866773894) - the Programmer’s Notebook
 * [Reeder](https://itunes.apple.com/us/app/reeder-3/id880001334) - RSS reader
+* [Silicio](https://itunes.apple.com/us/app/silicio-for-spotify-itunes-deezer-and-vox/id933627574?mt=12) - used to report itunes to last.fm
 * [Tweetbot for Mac](https://itunes.apple.com/us/app/tweetbot-for-twitter/id557168941) - twitter client
 * [WiFi Explorer](https://itunes.apple.com/us/app/wifi-explorer/id494803304) - Scan, monitor, and troubleshoot wireless networks
 

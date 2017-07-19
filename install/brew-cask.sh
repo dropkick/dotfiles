@@ -25,7 +25,7 @@ apps=(
   cleanmymac
   clipmenu
   cloak
-  coda
+  # coda - removed 2017-07-19
   codekit
   colloquy
   crashplan
@@ -36,6 +36,7 @@ apps=(
   docker
   divvy
   dropbox
+  # ember - discontinued. local copy installed manually
   epic
   evernote
   expandrive
@@ -48,17 +49,18 @@ apps=(
   google-chrome
   google-chrome-canary
   google-drive
-  # gpgtools
+  gpgtools
   harvest
   hazel
   imagealpha
   imageoptim
-  imazing
+  imazing # - replaced phoneview
   inboard
   inssider
   integrity
   iterm2 
-  # kaleidoscope 
+  # kaleidoscope - consider licensing again if deltawalker gets clunky
+  keybase
   knox
   lastfm
   launchbar
@@ -71,17 +73,20 @@ apps=(
   omnifocus-clip-o-tron
   omnifocus 
   omnioutliner
+  # omniplan - no current license
   opera
   opera-developer
   otomatic
   owncloud
   renamer
+  resilio-sync
   rubitrack-pro
   safari-technology-preview
   satellite-eyes 
   sequel-pro
-  slack
+  sketchup
   skype
+  slack
   sourcetree
   # sublime-text2
   sublime-text 
