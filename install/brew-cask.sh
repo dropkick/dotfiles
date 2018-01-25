@@ -25,6 +25,7 @@ apps=(
   audio-hijack
   bartender
   banktivity
+  betterzip
   chronosync
   clarify
   cleanmymac
@@ -46,6 +47,7 @@ apps=(
   evernote
   expandrive
   # fantastical (app store)
+  font-fira-code
   firefox
   firefoxdeveloperedition
   fuzzyclock
@@ -57,6 +59,7 @@ apps=(
   # gpgtools
   gpg-suite
   gqrx
+  hammerspoon
   harvest
   hazel
   imagealpha
@@ -120,4 +123,8 @@ apps=(
 brew cask install "${apps[@]}"
 
 # Quick Look Plugins (https://github.com/sindresorhus/quick-look-plugins)
-brew cask install qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch quicklook-csv betterzipql qlimagesize webpquicklook suspicious-package
+brew cask install qlcolorcode qlstephen qlmarkdown quicklook-json quicklook-csv qlimagesize webpquicklook suspicious-package qlvideo
+
+# Link Hammerspoon config
+if [ ! -d ~/.hammerspoon ]; then ln -sfv "$DOTFILES_DIR/etc/hammerspoon/" ~/.hammerspoon; fi
+
