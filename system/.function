@@ -1,26 +1,18 @@
+# Switch long/short prompt
+
+ps0() {
+  unset PROMPT_COMMAND
+  PS1='$ '
+}
+
+ps1() {
+  source "$DOTFILES_DIR"/system/.prompt
+}
+
 # Get named var (usage: get "VAR_NAME")
 
 get() {
   echo "${!1}"
-}
-
-# Executable
-
-is-executable() {
-  local BIN=$(command -v "$1" 2>/dev/null)
-  if [[ ! $BIN == "" && -x $BIN ]]; then true; else false; fi
-}
-
-is-supported() {
-  if [ $# -eq 1 ]; then
-    if eval "$1" > /dev/null 2>&1; then true; else false; fi
-  else
-    if eval "$1" > /dev/null 2>&1; then
-      echo -n "$2"
-    else
-      echo -n "$3"
-    fi
-  fi
 }
 
 # Add to path
@@ -49,9 +41,20 @@ calc() {
 # Weather
 
 meteo() {
-  local CITY=${1:-Portland}
-  curl -4 "wttr.in/$CITY"
+  local LOCALE=`echo ${LANG:-en} | cut -c1-2`
+  if [ $# -eq 0 ]; then
+    local LOCATION=`curl -s ipinfo.io/loc`
+  else
+    local LOCATION=$1
+  fi
+  curl -s "$LOCALE.wttr.in/$LOCATION"
 }
 wx() {
   telnet rainmaker.wunderground.com
+}
+
+# Markdown
+
+md() {
+  pandoc $1 | lynx -stdin -dump
 }
