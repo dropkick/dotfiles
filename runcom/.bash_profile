@@ -2,14 +2,6 @@
 
 [ -z "$PS1" ] && return
 
-# OS
-
-if [ "$(uname -s)" = "Darwin" ]; then
-  OS="OSX"
-else
-  OS=$(uname -s)
-fi
-
 # Resolve DOTFILES_DIR (assuming ~/.dotfiles on distros without readlink and/or $BASH_SOURCE/$0)
 
 READLINK=$(which greadlink || which readlink)
@@ -22,8 +14,19 @@ elif [ -d "$HOME/.dotfiles" ]; then
   DOTFILES_DIR="$HOME/.dotfiles"
 else
   echo "Unable to find dotfiles, exiting."
-  return # `exit 1` would quit the shell itself
+  return
 fi
+
+# Make utilities available
+
+PATH="$DOTFILES_DIR/bin:$PATH"
+
+# Read cache
+
+DOTFILES_CACHE="$DOTFILES_DIR/.cache.sh"
+[ -f "$DOTFILES_CACHE" ] && . "$DOTFILES_CACHE"
+
+# Finally we can source the dotfiles (order matters)
 
 # Finally we can source the dotfiles (order matters)
 
@@ -31,8 +34,8 @@ for DOTFILE in "$DOTFILES_DIR"/system/.{function,function_*,path,env,alias,compl
   [ -f "$DOTFILE" ] && . "$DOTFILE"
 done
 
-if [ "$OS" = "OSX" ]; then
-  for DOTFILE in "$DOTFILES_DIR"/system/.{env,alias,function}.osx; do
+if is-macos; then
+  for DOTFILE in "$DOTFILES_DIR"/system/.{env,alias,function}.macos; do
     [ -f "$DOTFILE" ] && . "$DOTFILE"
   done
 fi
@@ -43,20 +46,18 @@ eval "$(dircolors "$DOTFILES_DIR"/system/.dir_colors)"
 
 # Hook for extra/custom stuff
 
-EXTRA_DIR="$HOME/.extra"
+DOTFILES_EXTRA_DIR="$HOME/.extra"
 
-if [ -d "$EXTRA_DIR" ]; then
-  for EXTRAFILE in "$EXTRA_DIR"/runcom/*.sh; do
+if [ -d "$DOTFILES_EXTRA_DIR" ]; then
+  for EXTRAFILE in "$DOTFILES_EXTRA_DIR"/runcom/*.sh; do
     [ -f "$EXTRAFILE" ] && . "$EXTRAFILE"
   done
 fi
 
 # Clean up
 
-unset READLINK CURRENT_SCRIPT SCRIPT_PATH DOTFILE
+unset READLINK CURRENT_SCRIPT SCRIPT_PATH DOTFILE EXTRAFILE
 
 # Export
 
-export OS DOTFILES_DIR EXTRA_DIR
-
-# [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+export DOTFILES_DIR DOTFILES_EXTRA_DIR
