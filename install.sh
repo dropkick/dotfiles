@@ -1,4 +1,4 @@
-!/usr/bin/env bash
+#!/usr/bin/env bash
 
 # Get current dir (so run this script from anywhere)
 
@@ -39,4 +39,4 @@ if is-executable bats; then bats test/*.bats; else echo "Skipped: tests (missing
 
 if [ -d "$DOTFILES_EXTRA_DIR" -a -f "$DOTFILES_EXTRA_DIR/install.sh" ]; then
   . "$DOTFILES_EXTRA_DIR/install.sh"
-fi`
+fi
