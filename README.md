@@ -77,7 +77,7 @@ On a sparkling fresh installation of macOS:
     sudo softwareupdate -i -a
     xcode-select --install
 
-Note: update `COMPUTER_NAME` constant in [osx/defaults.sh](https://raw.github.com/dropkick/dotfiles/master/osx/defaults.sh) with correct/current machine name before firing that script.
+Note: update `COMPUTER_NAME` constant in [macos/defaults.sh](https://raw.github.com/dropkick/dotfiles/master/macos/defaults.sh) with correct/current machine name before firing that script.
 
 Install the dotfiles with either Git or curl:
 
@@ -108,9 +108,8 @@ Or, using wget:
        test             Run tests
        update           Update packages and pkg managers (OS, brew, npm, gem, pip)
        clean            Clean up caches (brew, npm, gem, rvm)
-       osx              Apply OS X system defaults
-       dock             Apply OS X Dock settings
-       install vundle   Install Vundle
+       osx              Apply macOS system defaults
+       dock             Apply macOS Dock settings
 
 ## Customize/extend
 
