@@ -72,7 +72,7 @@ These are either unavailable in Homebrew/Cask or my personal license is via the 
 
 ## Install
 
-On a sparkling fresh installation of OS X:
+On a sparkling fresh installation of macOS:
 
     sudo softwareupdate -i -a
     xcode-select --install
