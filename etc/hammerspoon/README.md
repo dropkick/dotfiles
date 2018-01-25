@@ -12,14 +12,15 @@ W | Print `¯\_(ツ)_/¯`
 
 Key | App
 ---|---
+B | Firefox
 C | Google Chrome
 D | Dash
 F | Finder
 G | SourceTree (Git)
-M | Mail
+H | Harvest
+M | MailMate
 P | System Preferences
-S | Spotify
-T | Terminal
+T | iTerm
 
 ## Window Management
 
