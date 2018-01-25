@@ -1,8 +1,12 @@
-# Install Caskroom
+if ! is-macos -o ! is-executable brew; then
+  echo "Skipped: Homebrew-Cask"
+  return
+fi
 
-brew tap caskroom/cask
-brew install brew-cask
 brew tap caskroom/versions
+brew tap caskroom/cask
+brew tap caskroom/fonts
+# brew install brew-cask
 
 # Install packages
 
@@ -21,11 +25,10 @@ apps=(
   audio-hijack
   bartender
   banktivity
+  chronosync
   clarify
   cleanmymac
   clipmenu
-  cloak
-  # coda - removed 2017-07-19
   codekit
   colloquy
   crashplan
@@ -33,10 +36,12 @@ apps=(
   default-folder-x
   deltawalker
   devonthink-pro-office
-  docker
   divvy
+  docker
+  downie
   dropbox
   # ember - discontinued. local copy installed manually
+  encryptme 
   epic
   evernote
   expandrive
@@ -49,7 +54,9 @@ apps=(
   google-chrome
   google-chrome-canary
   google-drive
-  gpgtools
+  # gpgtools
+  gpg-suite
+  gqrx
   harvest
   hazel
   imagealpha
@@ -61,19 +68,20 @@ apps=(
   iterm2 
   # kaleidoscope - consider licensing again if deltawalker gets clunky
   keybase
+  kindle
   knox
   lastfm
   launchbar
   little-snitch 
   livereload
+  mailmate
   # mamp 
   marked
   netspot
   nvalt
-  omnifocus-clip-o-tron
   omnifocus 
   omnioutliner
-  # omniplan - no current license
+  omniplan
   opera
   opera-developer
   otomatic
@@ -83,25 +91,27 @@ apps=(
   rubitrack-pro
   safari-technology-preview
   satellite-eyes 
+  scrivener
   sequel-pro
   sketchup
   skype
   slack
   sourcetree
-  # sublime-text2
   sublime-text 
   superduper
   suspicious-package 
   taskpaper 
-  # textexpander
+  textexpander
   torbrowser
+  tormessenger
   tower
   transmission 
   transmit
   tripmode
-  twitter
-  unison
+  # unison
   versions
+  virtualbox
+  virtualbox-extension-pack 
   vlc
   webstorm
   whatsize
