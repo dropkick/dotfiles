@@ -31,8 +31,10 @@ These are either unavailable in Homebrew/Cask or my personal license is via the 
 * [Amphetamine](https://itunes.apple.com/us/app/amphetamine/id937984704) - better replacement for Caffiene 
 * [Chronicle](https://itunes.apple.com/us/app/chronicle-bill-management/id402355593) - Bill management
 * [ColorSnapper 2](https://itunes.apple.com/us/app/colorsnapper-2/id969418666) - color picker/eyedropper
+* [Day One](https://itunes.apple.com/us/app/day-one/id1055511498) - Journaling <applet></applet>
 * [Deliveries](https://itunes.apple.com/us/app/deliveries-a-package-tracker/id924726344) - a package tracker
 * [Dropzone 3](https://itunes.apple.com/us/app/dropzone-3/id695406827) - move files, open applications and share files
+* [EchoHam](https://itunes.apple.com/us/app/echoham/id873302145?mt=12) - Echolink network from mac
 * [Exporter for Contacts](https://www.subclassed.com/apps/exporter-for-contacts/export-mac-os-x-mail-address-book-contacts-to-csv-or-excel) - Contacts export in multiple formats with custom templates
 * [Fantastical](https://itunes.apple.com/us/app/fantastical-2-calendar-reminders/id975937182) - calendars and reminders 
 * [FruitJuice](http://fruitjuiceapp.com/) - macOS battery maintenance and monitoring
@@ -40,23 +42,28 @@ These are either unavailable in Homebrew/Cask or my personal license is via the 
 * [Keynote](https://itunes.apple.com/us/app/keynote/id409183694) - presentations 
 * [Numbers](https://itunes.apple.com/us/app/numbers/id409203825) - spreadsheets 
 * [Pages](https://itunes.apple.com/us/app/pages/id409201541) - word processor
-* [Paprika](https://itunes.apple.com/us/app/paprika-recipe-manager/id451907568) - recipe management 
+* [Paprika Recipe Manager 3](https://itunes.apple.com/us/app/paprika-recipe-manager-3/id1303222628) - recipe management 
 * [PDF Scanner](https://itunes.apple.com/us/app/pdfscanner-simple-document/id410968114) - Simple document scanning and OCR 
 * [Pomodoro Timer](https://itunes.apple.com/us/app/pomodoro-timer-focus-on-your/id872515009) - menubar Pomodoro timer
 * [Quiver](https://itunes.apple.com/us/app/quiver-programmers-notebook/id866773894) - the Programmer’s Notebook
 * [Reeder](https://itunes.apple.com/us/app/reeder-3/id880001334) - RSS reader
 * [Silicio](https://itunes.apple.com/us/app/silicio-for-spotify-itunes-deezer-and-vox/id933627574?mt=12) - used to report itunes to last.fm
+* [Site Sucker](https://itunes.apple.com/us/app/sitesucker/id442168834?mt=12) - spider and download local copies of websites
+* [Toast DVD](https://itunes.apple.com/us/app/toast-dvd/id829469267?mt=12) - DVD creation
 * [Tweetbot for Mac](https://itunes.apple.com/us/app/tweetbot-for-twitter/id557168941) - twitter client
 * [WiFi Explorer](https://itunes.apple.com/us/app/wifi-explorer/id494803304) - Scan, monitor, and troubleshoot wireless networks
 
 ## Packages to install manually (not covered by Homebrew, App Store, etc.)
 
 * [Adobe Creative Cloud](https://creative.adobe.com/products/download/creative-cloud) - install Illustrator, Photoshop, etc. from this app
+* [Ember]() - Discontinued image catalog and screenshot app. I have a local copy of installer. Still working on MacOS.
+* [iRehearse Plus](http://rjvmedia.co.uk/irehearse-plus) - 
 * [MainMenu Pro](http://mainmenuapp.com/) - can probably phase out. Most features are redundant to other packages.
-* [PhoneView](http://www.ecamm.com/mac/phoneview/) - I have a licensed "full version" link stored with my software licenses and download via that link.
+* [Permute](https://trial.charliemonroe.net/permute/download.php) - media file conversion utility (I intend to make a homebrew cask for this)
+* ~~[PhoneView](http://www.ecamm.com/mac/phoneview/) - I have a licensed "full version" link stored with my software licenses and download via that link.~~~ (replaced with iMazing insatalled via homebrew cask)
+* [Privacy Badger](https://www.eff.org/privacybadger) - Install extensions/add-ons for Chrome, Firefox, and Safari
 * [Seasonality Core](http://getseasonality.com/core/)
-* [TextExpander](https://textexpander.com) - homebrew cask uses older version
-* [uBlock Origin](https://github.com/gorhill/uBlock/#installation) - Install extensions/add-ons for Chrome, Firefox, and Opera
+* [uBlock Origin](https://github.com/gorhill/uBlock/#installation) - Install extensions/add-ons for Chrome, Firefox, and Safari
 
 ## Post Installation 
 
