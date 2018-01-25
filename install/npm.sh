@@ -15,6 +15,7 @@ nvm alias default 8
 # Globally install with npm
 
 packages=(
+  get-port-cli
   gtop
   gulp
   historie
@@ -22,6 +23,7 @@ packages=(
   npm
   release-it
   spot
+  superstatic
   svgo
   tldr
   underscore-cli
