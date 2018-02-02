@@ -91,3 +91,8 @@ alias update="dotfiles update"
 alias stfu="osascript -e 'set volume output muted true'"
 alias pumpitup="osascript -e 'set volume 7'"
 
+## Added 2018-02-02 (via https://gist.github.com/cirrusUK/f1eec87cf5e63985d4e3)
+
+alias wget='wget -c'
+alias robot='espeak'
+
