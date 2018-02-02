@@ -43,6 +43,7 @@ apps=(
   python
   shellcheck
   ssh-copy-id
+  tmux
   tree
   unar
   vim
