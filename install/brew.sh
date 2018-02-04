@@ -48,9 +48,9 @@ apps=(
   tmux
   tree
   unar
-  vim
   wget
   wifi-password
+  wp-cli
 )
 
 brew install "${apps[@]}"
