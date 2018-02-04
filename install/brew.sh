@@ -8,6 +8,7 @@ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/
 # brew tap homebrew/versions
 # brew tap homebrew/dupes
 brew tap Goles/battery
+brew tap homebrew/homebrew-php # for php and composer
 brew update
 brew upgrade
 
@@ -17,6 +18,7 @@ apps=(
   bash-completion2
   bats
   battery
+  composer
   coreutils
   cmake
   diff-so-fancy
