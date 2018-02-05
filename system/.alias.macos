@@ -96,3 +96,5 @@ alias pumpitup="osascript -e 'set volume 7'"
 alias wget='wget -c'
 alias robot='espeak'
 
+#alias flushdns='sudo killall -HUP mDNSResponder && echo macOS DNS Cache Reset && espeak DNS reset'
+alias flushdns='sudo killall -HUP mDNSResponder; sleep 1; echo the DNS cache has been flushed | espeak -k5 -p36 -v english-north'
