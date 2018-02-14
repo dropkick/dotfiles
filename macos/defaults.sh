@@ -69,8 +69,8 @@ sudo systemsetup -setrestartfreeze on
 #launchctl unload -w /System/Library/LaunchAgents/com.apple.notificationcenterui.plist 2> /dev/null
 
 # Disable smart quotes and dashes as they’re annoying when typing code
-defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
-defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+#defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+#defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 
 ###############################################################################
 # Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
@@ -446,7 +446,7 @@ defaults write com.apple.terminal "Startup Window Settings" -string "Pro"
 
 # Disable audible and visual bells
 defaults write com.apple.terminal "Bell" -bool false
-defaults write com.apple.terminal "VisualBell" -bool false
+# defaults write com.apple.terminal "VisualBell" -bool false
 
 ###############################################################################
 # Time Machine                                                                #
