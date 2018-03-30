@@ -84,6 +84,7 @@ apps=(
   # mamp 
   marked
   netspot
+  nextcloud
   nvalt
   omnifocus 
   omnioutliner
