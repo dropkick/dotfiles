@@ -50,7 +50,7 @@ These are either unavailable in Homebrew/Cask or my personal license is via the 
 * [Silicio](https://itunes.apple.com/us/app/silicio-for-spotify-itunes-deezer-and-vox/id933627574?mt=12) - used to report itunes to last.fm
 * [Site Sucker](https://itunes.apple.com/us/app/sitesucker/id442168834?mt=12) - spider and download local copies of websites
 * [Toast DVD](https://itunes.apple.com/us/app/toast-dvd/id829469267?mt=12) - DVD creation
-* [Tweetbot for Mac](https://itunes.apple.com/us/app/tweetbot-for-twitter/id557168941) - twitter client
+* [Tweetbot 3 for Twitter](https://itunes.apple.com/us/app/tweetbot-3-for-twitter/id1384080005?mt=12) - twitter client
 * [WiFi Explorer](https://itunes.apple.com/us/app/wifi-explorer/id494803304) - Scan, monitor, and troubleshoot wireless networks
 
 ## Packages to install manually (not covered by Homebrew, App Store, etc.)
