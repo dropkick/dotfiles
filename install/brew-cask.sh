@@ -30,7 +30,7 @@ apps=(
   chronosync
 #  clarify
   cleanmymac
-#  clipmenu (replaced by clipy
+#  clipmenu (replaced by clipy)
   clipy
   codekit
   colloquy
@@ -51,13 +51,11 @@ apps=(
   # fantastical (app store)
   font-fira-code
   firefox
-#  firefoxdeveloperedition
   fuzzyclock
   garagebuy
   garagesale
   google-chrome
   google-chrome-canary
-#  google-drive
   google-backup-and-sync
   # gpgtools
   gpg-suite
@@ -81,7 +79,6 @@ apps=(
   little-snitch 
   livereload
   mailmate
-  # mamp 
   marked
   netspot
   nextcloud
@@ -115,7 +112,6 @@ apps=(
   transmission 
   transmit
   tripmode
-  # unison
   versions
   virtualbox
   virtualbox-extension-pack 
