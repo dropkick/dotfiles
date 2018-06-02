@@ -44,7 +44,7 @@ These are either unavailable in Homebrew/Cask or my personal license is via the 
 * [Pages](https://itunes.apple.com/us/app/pages/id409201541) - word processor
 * [Paprika Recipe Manager 3](https://itunes.apple.com/us/app/paprika-recipe-manager-3/id1303222628) - recipe management 
 * [PDF Scanner](https://itunes.apple.com/us/app/pdfscanner-simple-document/id410968114) - Simple document scanning and OCR 
-* [Pomodoro Timer](https://itunes.apple.com/us/app/pomodoro-timer-focus-on-your/id872515009) - menubar Pomodoro timer
+* [Pommie](https://itunes.apple.com/us/app/pommie/id963504129?mt=12) - menubar Pomodoro timer
 * [Quiver](https://itunes.apple.com/us/app/quiver-programmers-notebook/id866773894) - the Programmer’s Notebook
 * [Reeder](https://itunes.apple.com/us/app/reeder-3/id880001334) - RSS reader
 * [Silicio](https://itunes.apple.com/us/app/silicio-for-spotify-itunes-deezer-and-vox/id933627574?mt=12) - used to report itunes to last.fm
