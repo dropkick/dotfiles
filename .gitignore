@@ -1,3 +1,4 @@
 .cache.sh
 system/.custom
 /_reinstall-notes.md
+npm-debug.log*
