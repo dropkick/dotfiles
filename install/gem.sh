@@ -12,3 +12,4 @@ rvm use 2.5 --default
 
 gem install lunchy
 gem install pygmentize
+gem install wordmove
