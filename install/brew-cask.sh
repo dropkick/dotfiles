@@ -113,6 +113,7 @@ apps=(
   transmit
   tripmode
   versions
+  visual-studio-code
   virtualbox
   virtualbox-extension-pack 
   vlc
