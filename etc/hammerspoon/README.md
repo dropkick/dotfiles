@@ -14,9 +14,10 @@ Key | App
 ---|---
 B | Firefox
 C | Google Chrome
+S | Safari
 D | Dash
 F | Finder
-G | SourceTree (Git)
+G | Tower (Git)
 H | Harvest
 M | MailMate
 P | System Preferences
