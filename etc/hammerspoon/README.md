@@ -37,6 +37,7 @@ l | Increase width
 2 | Set 2x2 grid
 3 | Set 3x3 grid
 4 | Set 4x4 grid
+5 | Set 5x4 grid
 / | To next screen
 , | Snap to grid
 (space) | Maximize window
