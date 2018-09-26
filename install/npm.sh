@@ -15,12 +15,14 @@ nvm alias default 8
 # Globally install with npm
 
 packages=(
+  fkill-cli
   get-port-cli
   gtop
   gulp
   historie
   nodemon
   npm
+  prettier
   release-it
   spot
   superstatic
