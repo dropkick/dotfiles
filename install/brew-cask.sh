@@ -76,7 +76,7 @@ apps=(
   knox
   lastfm
   launchbar
-  little-snitch 
+  # little-snitch 
   livereload
   mailmate
   marked
