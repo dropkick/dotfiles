@@ -10,6 +10,5 @@ brew install gpg2
 rvm install 2.5
 rvm use 2.5 --default
 
-gem install lunchy
 gem install pygmentize
 gem install wordmove

@@ -25,7 +25,6 @@ apps=(
   dockutil
   ffmpeg
   fasd
-  gifsicle
   git
   git-extras
   gnu-sed --with-default-names
@@ -37,12 +36,11 @@ apps=(
   lynx
   mackup
   nano
-# may not need to update openssh on macos 
-#  homebrew/dupes/openssh
   pandoc
   peco
   psgrep
   python
+  python@2
   shellcheck
   ssh-copy-id
   tmux
