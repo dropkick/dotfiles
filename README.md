@@ -12,16 +12,17 @@ This mess targets macOS systems, but has some checks to make lots of it work on 
     * Bash + [coreutils](http://en.wikipedia.org/wiki/GNU_Core_Utilities) + bash-completion
     * [Homebrew](http://brew.sh/), [homebrew-cask](http://caskroom.io/)
     * Node.js + npm
+    * `$EDITOR` (and Git editor) is [GNU nano](https://www.nano-editor.org)
     * GNU [sed](http://www.gnu.org/software/sed/), [grep](https://www.gnu.org/software/grep/), [Wget](https://www.gnu.org/software/wget/)
-    * [fasd](https://github.com/clvv/fasd), [psgrep](https://github.com/jvz/psgrep/blob/master/psgrep), [pgrep](http://linux.die.net/man/1/pgrep), [spot](https://github.com/guille/spot), [tree](http://mama.indstate.edu/users/ice/tree/), [vtop](https://github.com/MrRio/vtop)
+    * [fasd](https://github.com/clvv/fasd), [fkill-cli](https://github.com/sindresorhus/fkill-cli), [gtop](https://github.com/aksakalli/gtop), [psgrep](https://github.com/jvz/psgrep/blob/master/psgrep), [pgrep](http://linux.die.net/man/1/pgrep), [spot](https://github.com/guille/spot), [tree](http://mama.indstate.edu/users/ice/tree/), [unar](https://theunarchiver.com/command-line), [vtop](https://github.com/MrRio/vtop)
     * Git + [SourceTree](http://www.sourcetreeapp.com) + [hub](http://hub.github.com/), Subversion + [Cornerstone](https://www.zennaware.com/cornerstone/)
-    * [rvm](https://rvm.io/) (Ruby 2.1), [consular](https://github.com/achiu/consular) ([-osx](https://github.com/achiu/consular-osx)), [lunchy](https://github.com/eddiezane/lunchy)
-    * Python 2
+    * [rvm](https://rvm.io/) (Ruby 2.5)
+    * Python 2 + 3 (`python/pip`, `python3/pip3`)
     * [Docker](https://www.docker.com/products/docker#/mac)
-* Dev (FE/JS/JSON): [http-server](https://github.com/nodeapps/http-server), [jq](http://stedolan.github.io/jq/), [nodemon](http://nodemon.io), [peco](http://peco.github.io), [underscore-cli](https://github.com/ddopson/underscore-cli)
-* Graphics: [ffmpeg](https://www.ffmpeg.org), [gifsicle](http://www.lcdf.org/gifsicle), [imagemagick](http://www.imagemagick.org), [svgo](https://github.com/svg/svgo)
-* macOS: [dockutil](https://github.com/kcrawford/dockutil), [Mackup](https://github.com/lra/mackup), [Quick Look plugins](https://github.com/sindresorhus/quick-look-plugins)
-* [OS X apps](https://github.com/dropkick/dotfiles/blob/master/install/brew-cask.sh)
+* Dev (Node/JS/JSON): [http-server](https://github.com/nodeapps/http-server), [jq](http://stedolan.github.io/jq/), [nodemon](http://nodemon.io), [peco](http://peco.github.io), [superstatic](https://github.com/firebase/superstatic), [underscore-cli](https://github.com/ddopson/underscore-cli)
+* Graphics: [ffmpeg](https://www.ffmpeg.org), [imagemagick](http://www.imagemagick.org), [svgo](https://github.com/svg/svgo)
+* macOS: [dockutil](https://github.com/kcrawford/dockutil), [Hammerspoon](https://www.hammerspoon.org), [Mackup](https://github.com/lra/mackup), [Quick Look plugins](https://github.com/sindresorhus/quick-look-plugins)
+* [macOS apps](https://github.com/dropkick/dotfiles/blob/master/install/brew-cask.sh)
 
 
 ## Apps installed from App Store
@@ -58,9 +59,7 @@ These are either unavailable in Homebrew/Cask or my personal license is via the 
 * [Adobe Creative Cloud](https://creative.adobe.com/products/download/creative-cloud) - install Illustrator, Photoshop, etc. from this app
 * [Ember]() - Discontinued image catalog and screenshot app. I have a local copy of installer. Still working on MacOS.
 * [iRehearse Plus](http://rjvmedia.co.uk/irehearse-plus) - 
-* [MainMenu Pro](http://mainmenuapp.com/) - can probably phase out. Most features are redundant to other packages.
 * [Permute](https://trial.charliemonroe.net/permute/download.php) - media file conversion utility (I intend to make a homebrew cask for this)
-* ~~[PhoneView](http://www.ecamm.com/mac/phoneview/) - I have a licensed "full version" link stored with my software licenses and download via that link.~~~ (replaced with iMazing insatalled via homebrew cask)
 * [Privacy Badger](https://www.eff.org/privacybadger) - Install extensions/add-ons for Chrome, Firefox, and Safari
 * [Seasonality Core](http://getseasonality.com/core/)
 * [uBlock Origin](https://github.com/gorhill/uBlock/#installation) - Install extensions/add-ons for Chrome, Firefox, and Safari
@@ -83,18 +82,18 @@ Install the dotfiles with either Git or curl:
 
 ### Clone with Git
 
-    git clone https://github.com/dropkick/dotfiles.git
-    source dotfiles/install.sh
+    git clone https://github.com/dropkick/dotfiles.git ~/.dotfiles
+    source ~/.dotfiles/install.sh
 
 ### Remotely install using curl
 
 Alternatively, you can install this into `~/.dotfiles` remotely without Git using curl:
 
-    sh -c "`curl -fsSL https://raw.github.com/dropkick/dotfiles/master/remote-install.sh`"
+    bash -c "`curl -fsSL https://raw.githubusercontent.com/dropkick/dotfiles/master/remote-install.sh`"
 
 Or, using wget:
 
-    sh -c "`wget -O - --no-check-certificate https://raw.githubusercontent.com/dropkick/dotfiles/master/remote-install.sh`"
+bash -c "`wget -O - --no-check-certificate https://raw.githubusercontent.com/dropkick/dotfiles/master/remote-install.sh`"
 
 ## The `dotfiles` command
 
@@ -102,14 +101,13 @@ Or, using wget:
     Usage: dotfiles <command>
 
     Commands:
-       help             This help message
-       edit             Open dotfiles in editor ($EDITOR_ALT) and Git GUI ($GIT_GUI)
-       reload           Reload dotfiles
-       test             Run tests
-       update           Update packages and pkg managers (OS, brew, npm, gem, pip)
        clean            Clean up caches (brew, npm, gem, rvm)
-       osx              Apply macOS system defaults
        dock             Apply macOS Dock settings
+       edit             Open dotfiles in IDE (code) and Git GUI (stree)
+       help             This help message
+       macos            Apply macOS system defaults
+       test             Run tests
+       update           Update packages and pkg managers (OS, brew, npm, gem)
 
 ## Customize/extend
 
@@ -117,8 +115,8 @@ You can put your custom settings, such as Git credentials in the `system/.custom
 
 Alternatively, you can have an additional, personal dotfiles repo at `~/.extra`.
 
-* The runcom `.bash_profile` sources all `~/.extra/runcom/*.sh` files.
 * The installer (`install.sh`) will run `~/.extra/install.sh`.
+* The runcom `.bash_profile` sources all `~/.extra/runcom/*.sh` files.
 
 ## Additional resources
 
