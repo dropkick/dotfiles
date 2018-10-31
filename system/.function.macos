@@ -1,15 +1,16 @@
-# Open man page as PDF
+# Change working directory to the top-most Finder window location
 
-manpdf() {
-  man -t "$1" | open -f -a /Applications/Preview.app/
+function cdf() {
+  cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')";
 }
+
+
 
 # Dev
 
 d() {
-  $EDITOR ${1:-.}
-  # $EDITOR_ALT ${1:-.}
-  $GIT_GUI ${1:-.}
+  $DOTFILES_IDE ${1:-.}
+  $DOTFILES_GIT_GUI ${1:-.}
 }
 
 # Open query in Dash app
@@ -21,4 +22,10 @@ dash() {
     *) echo "Usage: dash [docset] query"; return 1;
   esac
   open "dash://$QUERY"
+}
+
+# Open man page as PDF
+
+manpdf() {
+  man -t "$1" | open -f -a /Applications/Preview.app/
 }
