@@ -15,7 +15,6 @@ brew upgrade
 # Install packages
 
 apps=(
-  bash-completion2
   bats
   battery
   composer
