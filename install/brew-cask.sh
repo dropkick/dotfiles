@@ -13,35 +13,34 @@ brew tap caskroom/fonts
 
 apps=(
   1password
-  # adobe-creative-cloud 
+  adobe-creative-cloud 
   # adobe-illustrator-cc
   # adobe-indesign-cc 
   # adobe-photoshop-cc
   # adobe-photoshop-lightroom 
   # adobe-reader 
+  airfoil
   appzapper
   arq
 # audacity # cask removed
 # audacity-lame-library 
-#  audio-hijack
+  audio-hijack
   bartender
   banktivity
   betterzip
+  bitwarden
   chronosync
 #  clarify
   cleanmymac
-#  clipmenu (replaced by clipy)
   clipy
   codekit
   colloquy
-  crashplan
   dash
   default-folder-x
   deltawalker
   devonthink-pro-office
-  divvy
   docker
-#  downie (404)
+  downie
   dropbox
   # ember - discontinued. local copy installed manually
   encryptme 
@@ -65,10 +64,11 @@ apps=(
   hazel
   imagealpha
   imageoptim
-  imazing # - replaced phoneview
+  imazing 
   inboard
   inssider
   integrity
+  istat-menus
   iterm2 
   # kaleidoscope - consider licensing again if deltawalker gets clunky
   keybase
@@ -78,6 +78,7 @@ apps=(
   launchbar
   # little-snitch 
   livereload
+  loopback
   mailmate
   marked
   netspot
@@ -97,6 +98,7 @@ apps=(
   satellite-eyes 
   scrivener
   sequel-pro
+  sketch
   sketchup
   skype
   slack

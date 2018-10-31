@@ -20,7 +20,7 @@ This mess targets macOS systems, but has some checks to make lots of it work on 
     * Python 2 + 3 (`python/pip`, `python3/pip3`)
     * [Docker](https://www.docker.com/products/docker#/mac)
 * Dev (Node/JS/JSON): [http-server](https://github.com/nodeapps/http-server), [jq](http://stedolan.github.io/jq/), [nodemon](http://nodemon.io), [peco](http://peco.github.io), [superstatic](https://github.com/firebase/superstatic), [underscore-cli](https://github.com/ddopson/underscore-cli)
-* Graphics: [ffmpeg](https://www.ffmpeg.org), [imagemagick](http://www.imagemagick.org), [svgo](https://github.com/svg/svgo)
+* Graphics: [ffmpeg](https://www.ffmpeg.org), [imagemagick](http://www.imagemagick.org), [pageres](https://github.com/sindresorhus/pageres), [pageres-cli](https://github.com/sindresorhus/pageres-cli), [svgo](https://github.com/svg/svgo)
 * macOS: [dockutil](https://github.com/kcrawford/dockutil), [Hammerspoon](https://www.hammerspoon.org), [Mackup](https://github.com/lra/mackup), [Quick Look plugins](https://github.com/sindresorhus/quick-look-plugins)
 * [macOS apps](https://github.com/dropkick/dotfiles/blob/master/install/brew-cask.sh)
 
@@ -38,6 +38,7 @@ These are either unavailable in Homebrew/Cask or my personal license is via the 
 * [EchoHam](https://itunes.apple.com/us/app/echoham/id873302145?mt=12) - Echolink network from mac
 * [Exporter for Contacts](https://www.subclassed.com/apps/exporter-for-contacts/export-mac-os-x-mail-address-book-contacts-to-csv-or-excel) - Contacts export in multiple formats with custom templates
 * [Fantastical](https://itunes.apple.com/us/app/fantastical-2-calendar-reminders/id975937182) - calendars and reminders 
+* [Firefox Developer Edition](https://www.mozilla.org/en-US/firefox/developer/) - at last cheeck no cask available
 * [FruitJuice](http://fruitjuiceapp.com/) - macOS battery maintenance and monitoring
 * [iA Writer](https://itunes.apple.com/us/app/ia-writer/id775737590) - minimal distraction writing app
 * [Keynote](https://itunes.apple.com/us/app/keynote/id409183694) - presentations 
@@ -56,7 +57,7 @@ These are either unavailable in Homebrew/Cask or my personal license is via the 
 
 ## Packages to install manually (not covered by Homebrew, App Store, etc.)
 
-* [Adobe Creative Cloud](https://creative.adobe.com/products/download/creative-cloud) - install Illustrator, Photoshop, etc. from this app
+* [Adobe Creative Cloud](https://creative.adobe.com/products/download/creative-cloud) installed via homebrew/cask - install Acrobat DC, Animate CC, Audition CC, Illustrator CC, InDesign CC, Media Encoder CC, Photoshop CC, and XD CC from this app
 * [Ember]() - Discontinued image catalog and screenshot app. I have a local copy of installer. Still working on MacOS.
 * [iRehearse Plus](http://rjvmedia.co.uk/irehearse-plus) - 
 * [Permute](https://trial.charliemonroe.net/permute/download.php) - media file conversion utility (I intend to make a homebrew cask for this)

@@ -22,6 +22,8 @@ packages=(
   historie
   nodemon
   npm
+  pageres
+  pageres-cli
   prettier
   release-it
   spot
