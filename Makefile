@@ -64,25 +64,7 @@ brew-packages: brew
 cask-apps: brew
 	brew bundle --file=$(DOTFILES_DIR)/install/Caskfile
 	defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
-	code --install-extension davidanson.vscode-markdownlint
-	code --install-extension deerawan.vscode-dash
-	code --install-extension equinusocio.vsc-material-theme
-	code --install-extension esbenp.prettier-vscode
-	code --install-extension kirchner-trevor.shopify-liquid-preview
-	code --install-extension mrmlnc.vscode-duplicate
-	code --install-extension mrmlnc.vscode-apache
-	code --install-extension neilding.language-liquid
-	code --install-extension peterjausovec.vscode-docker
-	code --install-extension pkief.material-icon-theme
-	code --install-extension redhat.vscode-yaml
-	code --install-extension ricard.postcss
-	code --install-extension sharat.vscode-brewfile
-	code --install-extension sidthesloth.html5-boilerplate
-	code --install-extension spywhere.guides
-	code --install-extension techer.open-in-browser
-	code --install-extension tyriar.sort-lines
-	code --install-extension whatwedo.twig
-	code --install-extension zhuangtongfa.material-theme
+	for EXT in $$(cat install/Codefile); do code --install-extension $$EXT; done
 
 node-packages: npm
 	. $(NVM_DIR)/nvm.sh; npm install -g $(shell cat install/npmfile)
