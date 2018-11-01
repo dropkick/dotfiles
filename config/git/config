@@ -6,7 +6,7 @@
   user = dropkick
 
 [core]
-	excludesfile = ~/.gitignore_global
+	excludesfile = ~/.config/git/ignore
   editor = nano
   filemode = false
   trustctime = false
@@ -57,27 +57,27 @@
 [diff]
   renames = copies
   indentHeuristic = true
-  tool = DeltaWalker
+  tool = Kaleidoscope
 [difftool]
   prompt = false
-[difftool "DeltaWalker"]
+[difftool "Kaleidoscope"]
   cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	cmd = ksdiff -w \"$LOCAL\" \"$REMOTE\"
 	path = 
 
 [merge]
-  tool = DeltaWalker
+  tool = Kaleidoscope
   conflictstyle = diff3
   defaultToUpstream = true
 [mergetool]
   prompt = false
-[mergetool "DeltaWalker"]
+[mergetool "Kaleidoscope"]
   cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
   trustExitCode = true
 [mergetool "sourcetree"]
-	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+  cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+trustExitCode = true
 
 [color]
   ui = auto
