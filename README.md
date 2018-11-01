@@ -4,7 +4,7 @@ These are my dotfiles. Take anything you want, but at your own risk.
 
 Much of this is based on how [Lars Kappert](https://github.com/webpro/) has set his system up. A good amount of bits and inspiration from [Dan Lowe](https://github.com/tangledhelix) here as well.
 
-This mess targets macOS systems, but has some checks to make lots of it work on *nix as well. macOS stuff is at very least broken out into its own files.
+It targets macOS systems, but it should work on \*nix as well (with `apt-get`).
 
 ## Package overview
 
@@ -14,15 +14,14 @@ This mess targets macOS systems, but has some checks to make lots of it work on 
     * Node.js + npm
     * `$EDITOR` (and Git editor) is [GNU nano](https://www.nano-editor.org)
     * GNU [sed](http://www.gnu.org/software/sed/), [grep](https://www.gnu.org/software/grep/), [Wget](https://www.gnu.org/software/wget/)
-    * [fasd](https://github.com/clvv/fasd), [fkill-cli](https://github.com/sindresorhus/fkill-cli), [gtop](https://github.com/aksakalli/gtop), [psgrep](https://github.com/jvz/psgrep/blob/master/psgrep), [pgrep](http://linux.die.net/man/1/pgrep), [spot](https://github.com/guille/spot), [tree](http://mama.indstate.edu/users/ice/tree/), [unar](https://theunarchiver.com/command-line), [vtop](https://github.com/MrRio/vtop)
+    * [fasd](https://github.com/clvv/fasd), [fkill-cli](https://github.com/sindresorhus/fkill-cli), [gtop](https://github.com/aksakalli/gtop), [psgrep](https://github.com/jvz/psgrep/blob/master/psgrep), [spot](https://github.com/guille/spot), [tree](http://mama.indstate.edu/users/ice/tree/), [unar](https://theunarchiver.com/command-line), [vtop](https://github.com/MrRio/vtop)
     * Git + [SourceTree](http://www.sourcetreeapp.com) + [hub](http://hub.github.com/), Subversion + [Cornerstone](https://www.zennaware.com/cornerstone/)
-    * [rvm](https://rvm.io/) (Ruby 2.5)
     * Python 2 + 3 (`python/pip`, `python3/pip3`)
     * [Docker](https://www.docker.com/products/docker#/mac)
-* Dev (Node/JS/JSON): [http-server](https://github.com/nodeapps/http-server), [jq](http://stedolan.github.io/jq/), [nodemon](http://nodemon.io), [peco](http://peco.github.io), [superstatic](https://github.com/firebase/superstatic), [underscore-cli](https://github.com/ddopson/underscore-cli)
+* Dev (Node/JS/JSON): [jq](http://stedolan.github.io/jq/), [nodemon](http://nodemon.io), [peco](http://peco.github.io), [Prettier](https://prettier.io), [superstatic](https://github.com/firebase/superstatic), [underscore-cli](https://github.com/ddopson/underscore-cli)
 * Graphics: [ffmpeg](https://www.ffmpeg.org), [imagemagick](http://www.imagemagick.org), [pageres](https://github.com/sindresorhus/pageres), [pageres-cli](https://github.com/sindresorhus/pageres-cli), [svgo](https://github.com/svg/svgo)
 * macOS: [dockutil](https://github.com/kcrawford/dockutil), [Hammerspoon](https://www.hammerspoon.org), [Mackup](https://github.com/lra/mackup), [Quick Look plugins](https://github.com/sindresorhus/quick-look-plugins)
-* [macOS apps](https://github.com/dropkick/dotfiles/blob/master/install/brew-cask.sh)
+* [macOS apps](https://github.com/webpro/dotfiles/blob/master/install/Caskfile)
 
 
 ## Apps installed from App Store
@@ -129,4 +128,4 @@ Alternatively, you can have an additional, personal dotfiles repo at `~/.extra`.
 
 ## Credits
 
-Many thanks to the [dotfiles community](http://dotfiles.github.io/) and the creators of the incredibly useful tools.
+Many thanks to the [dotfiles community](http://dotfiles.github.io/) and the creators of these incredibly useful tools.
