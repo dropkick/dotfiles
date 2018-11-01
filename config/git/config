@@ -1,12 +1,12 @@
 [user]
-	name = Jason Duerr
-	email = jason@dropkickdesign.com
+  name = Jason Duerr
+  email = jason@dropkickdesign.com
 
 [github]
   user = dropkick
 
 [core]
-	excludesfile = ~/.config/git/ignore
+  excludesfile = ~/.config/git/ignore
   editor = nano
   filemode = false
   trustctime = false
@@ -99,4 +99,3 @@ trustExitCode = true
   oldHighlight = "red bold 52"
   newNormal = "green bold"
   newHighlight = "green bold 22"
-
