@@ -37,7 +37,7 @@ apps=(
   colloquy
   dash
   default-folder-x
-  deltawalker
+  # deltawalker
   devonthink-pro-office
   docker
   downie
@@ -70,7 +70,7 @@ apps=(
   integrity
   istat-menus
   iterm2 
-  # kaleidoscope - consider licensing again if deltawalker gets clunky
+  kaleidoscope
   keybase
   kindle
   knox
