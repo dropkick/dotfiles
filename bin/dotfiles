@@ -39,14 +39,8 @@ sub_update () {
 sub_clean () {
   brew cleanup
   brew cask cleanup
-  # npm cache clean
-  # As of npm@5, the npm cache self-heals from corruption issues 
-  # and data extracted from the cache is guaranteed to be valid.
-  # If you want to make sure everything is consistent, 
-  # use 'npm cache verify' instead.
-  npm cache verify
+  npm cache clean
   gem cleanup
-  rvm cleanup all
 }
 
 sub_macos () {
