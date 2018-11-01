@@ -35,3 +35,5 @@ packages=(
 )
 
 npm install -g "${packages[@]}"
+
+ln -sfv "$DOTFILES_DIR/etc/.prettierrc" ~

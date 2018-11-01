@@ -2,3 +2,4 @@
 system/.custom
 /_reinstall-notes.md
 npm-debug.log*
+.DS_Store
