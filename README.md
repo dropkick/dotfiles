@@ -9,14 +9,14 @@ It targets macOS systems, but it should work on \*nix as well (with `apt-get`).
 ## Package overview
 
 * Core
-    * Bash + [coreutils](http://en.wikipedia.org/wiki/GNU_Core_Utilities) + bash-completion
+    * Bash 4 + [coreutils](https://en.wikipedia.org/wiki/GNU_Core_Utilities) + bash-completion
     * [Homebrew](http://brew.sh/), [homebrew-cask](http://caskroom.io/)
-    * Node.js + npm
+    * Node.js + npm ([LTS](https://nodejs.org/en/download/))
     * `$EDITOR` (and Git editor) is [GNU nano](https://www.nano-editor.org)
     * GNU [sed](http://www.gnu.org/software/sed/), [grep](https://www.gnu.org/software/grep/), [Wget](https://www.gnu.org/software/wget/)
     * [fasd](https://github.com/clvv/fasd), [fkill-cli](https://github.com/sindresorhus/fkill-cli), [gtop](https://github.com/aksakalli/gtop), [psgrep](https://github.com/jvz/psgrep/blob/master/psgrep), [spot](https://github.com/guille/spot), [tree](http://mama.indstate.edu/users/ice/tree/), [unar](https://theunarchiver.com/command-line), [vtop](https://github.com/MrRio/vtop)
     * Git + [SourceTree](http://www.sourcetreeapp.com) + [hub](http://hub.github.com/), Subversion + [Cornerstone](https://www.zennaware.com/cornerstone/)
-    * Python 2 + 3 (`python/pip`, `python3/pip3`)
+    * Python 3 (`python3/pip3`)
     * [Docker](https://www.docker.com/products/docker#/mac)
 * Dev (Node/JS/JSON): [jq](http://stedolan.github.io/jq/), [nodemon](http://nodemon.io), [peco](http://peco.github.io), [Prettier](https://prettier.io), [superstatic](https://github.com/firebase/superstatic), [underscore-cli](https://github.com/ddopson/underscore-cli)
 * Graphics: [ffmpeg](https://www.ffmpeg.org), [imagemagick](http://www.imagemagick.org), [pageres](https://github.com/sindresorhus/pageres), [pageres-cli](https://github.com/sindresorhus/pageres-cli), [svgo](https://github.com/svg/svgo)
@@ -78,25 +78,17 @@ On a sparkling fresh installation of macOS:
 
 Note: update `COMPUTER_NAME` constant in [macos/defaults.sh](https://raw.github.com/dropkick/dotfiles/master/macos/defaults.sh) with correct/current machine name before firing that script.
 
-Install the dotfiles with either Git or curl:
+The Xcode Command Line Tools includes `git` and `make` (not available on stock macOS).
+Then, install this repo with `curl` available:
 
-### Clone with Git
+    bash -c "`curl -fsSL https://raw.githubusercontent.com/webpro/dotfiles/master/remote-install.sh`"
+
+This will clone (using `git`), or download (using `curl` or `wget`), this repo to `~/.dotfiles`. Alternatively, clone manually into the desired location:
 
     git clone https://github.com/dropkick/dotfiles.git ~/.dotfiles
-    cd ~/.dotfiles
-    make
 
-### Remotely install using curl
+Use the [Makefile](https://github.com/dropkick/dotfiles/blob/master/Makefile) to install everything [listed above](#package-overview), and symlink configurations:
 
-Alternatively, you can install this into `~/.dotfiles` remotely without Git using curl:
-
-    bash -c "`curl -fsSL https://raw.githubusercontent.com/dropkick/dotfiles/master/remote-install.sh`"
-    cd ~/.dotfiles
-    make
-
-Or, using wget:
-
-    bash -c "`wget -O - --no-check-certificate https://raw.githubusercontent.com/dropkick/dotfiles/master/remote-install.sh`"
     cd ~/.dotfiles
     make
 
