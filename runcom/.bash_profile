@@ -21,13 +21,6 @@ fi
 
 PATH="$DOTFILES_DIR/bin:$PATH"
 
-# Read cache
-
-DOTFILES_CACHE="$DOTFILES_DIR/.cache.sh"
-[ -f "$DOTFILES_CACHE" ] && . "$DOTFILES_CACHE"
-
-# Finally we can source the dotfiles (order matters)
-
 # Finally we can source the dotfiles (order matters)
 
 for DOTFILE in "$DOTFILES_DIR"/system/.{function,function_*,path,env,alias,completion,grep,prompt,nvm,rvm,custom}; do
@@ -61,5 +54,3 @@ unset READLINK CURRENT_SCRIPT SCRIPT_PATH DOTFILE EXTRAFILE
 # Export
 
 export DOTFILES_DIR DOTFILES_EXTRA_DIR
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
