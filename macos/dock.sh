@@ -33,7 +33,7 @@ dockutil --add '~/Stacks/browsers' --view list --display stack --sort name
 dockutil --add 'vnc://dynamo.dropkick.us' --label 'dynamo.dropkick.us VNC'
 dockutil --add 'afp://dynamo.dropkick.us' --label 'dynamo.dropkick.us AFP'
 dockutil --add 'afp://projects.sandstrompartners.com' --label 'projects.sandstrom AFP'
-dockutil --add '/Applications' --view list --display folder
+dockutil --add '/Applications' --view list --display folder --sort name
 dockutil --add '~/Projects' --view list --display folder
 dockutil --add '~/Downloads' --view list --display folder
 killall Dock
