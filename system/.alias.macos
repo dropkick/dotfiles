@@ -23,7 +23,7 @@ alias zip="zip -x *.DS_Store -x *__MACOSX* -x *.AppleDouble*"
 alias ios="open /Applications/Xcode.app/Contents/Developer/Applications/iOS\ Simulator.app"
 
 # Start screen saver
-alias afk="/System/Library/Frameworks/ScreenSaver.framework/Resources/ScreenSaverEngine.app/Contents/MacOS/ScreenSaverEngine"
+alias afk="open /System/Library/CoreServices/ScreenSaverEngine.app"
 
 # Set vtop to always use monokai theme
 alias vtop="vtop --theme monokai"
