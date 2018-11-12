@@ -1,4 +1,4 @@
-COMPUTER_NAME="enduro"
+COMPUTER_NAME="futuro"
 
 osascript -e 'tell application "System Preferences" to quit'
 
