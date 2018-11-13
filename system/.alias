@@ -43,7 +43,6 @@ alias ld="ls -ld $LS_COLORS */"
 # List all files colorized in long format, including dot files
 alias lls="ls -laF $LS_COLORS"
 # List only directories
-alias lsd="ls -lF $LS_COLORS | grep --color=never '^d'"
 # Always use color output for `ls`
 alias ls="command ls $LS_COLORS"
 
@@ -77,7 +76,7 @@ alias rsync="rsync -vh"
 
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias localip="ipconfig getifaddr en0"
-alias ips="ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'"
+alias localips="ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'"
 
 # Request using GET, POST, etc. method
 
