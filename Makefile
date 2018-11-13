@@ -44,7 +44,7 @@ unlink: stow-$(OS)
 	stow --delete -t $(XDG_CONFIG_HOME) config
 	for FILE in $$(\ls -A runcom); do if [ -f $(HOME)/$$FILE.bak ]; then mv -v $(HOME)/$$FILE.bak $(HOME)/$${FILE%%.bak}; fi; done
 
-brew: 
+brew:
 	is-executable brew || curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install | ruby
 
 bash: BASH=/usr/local/bin/bash
@@ -55,7 +55,7 @@ bash: brew
 git: brew
 	brew install git git-extras
 
-npm: 
+npm:
 	if ! [ -d $(NVM_DIR)/.git ]; then git clone https://github.com/creationix/nvm.git $(NVM_DIR); fi
 	. $(NVM_DIR)/nvm.sh; nvm install --lts
 
@@ -74,7 +74,7 @@ node-packages: npm
 	. $(NVM_DIR)/nvm.sh; npm install -g $(shell cat install/npmfile)
 
 gems: ruby
-	sudo gem install $(shell cat install/Gemfile)
+	gem install $(shell cat install/Gemfile)
 
 test:
 	bats test/*.bats
