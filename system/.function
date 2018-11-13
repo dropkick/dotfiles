@@ -62,6 +62,7 @@ md() {
 ## Added 2018-02-02 (via https://gist.github.com/cirrusUK/f1eec87cf5e63985d4e3)
 
 # Is server up ? | Usage: down4me <www.foo.com>
+
 down4me() { 
-curl -s "http://downforeveryoneorjustme.com/$1" | sed '/just you/!d;s/<[^>]*>//g';
+  curl -s "http://downforeveryoneorjustme.com/$1" | sed '/just you/!d;s/<[^>]*>//g';
 }
