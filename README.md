@@ -86,7 +86,7 @@ Use the [Makefile](./Makefile) to install everything [listed above](#package-ove
     make
 
 ## Post-install
-* `dotfiles dock` (set [Dock items](./macos/dock.sh))
+* `dotfiles dock` (set [Dock items](./macos/dock.sh)) - in my particular case, I install all of my app store apps before this as I set shortcuts to them in the dock with this step.
 * `dotfiles macos` (set [macOS defaults](./macos/defaults.sh))
 * Mackup
 	* Log in to cloud sync being used (Nextcloud/Owncloud in my case)
@@ -111,18 +111,15 @@ Use the [Makefile](./Makefile) to install everything [listed above](#package-ove
 
 You can put your custom settings, such as Git credentials in the `system/.custom` file which will be sourced from `.bash_profile` automatically. This file is in `.gitignore`.
 
-Alternatively, you can have an additional, personal dotfiles repo at `~/.extra`.
-
-* The installer (`install.sh`) will run `~/.extra/install.sh`.
-* The runcom `.bash_profile` sources all `~/.extra/runcom/*.sh` files.
+Alternatively, you can have an additional, personal dotfiles repo at `~/.extra`. The runcom `.bash_profile` sources all `~/.extra/runcom/*.sh` files.
 
 ## Additional resources
 
-* [Awesome Dotfiles](https://github.com/webpro/awesome-dotfiles)
-* [Homebrew](http://brew.sh/) / [FAQ](https://github.com/Homebrew/homebrew/wiki/FAQ)
-* [homebrew-cask](http://caskroom.io/) / [usage](https://github.com/phinze/homebrew-cask/blob/master/USAGE.md)
-* [Bash prompt](http://wiki.archlinux.org/index.php/Color_Bash_Prompt)
-* [Solarized Color Theme for GNU ls](https://github.com/seebi/dircolors-solarized)
+- [Awesome Dotfiles](https://github.com/webpro/awesome-dotfiles)
+- [Homebrew](https://brew.sh)
+- [Homebrew Cask](http://caskroom.io)
+- [Bash prompt](https://wiki.archlinux.org/index.php/Color_Bash_Prompt)
+- [Solarized Color Theme for GNU ls](https://github.com/seebi/dircolors-solarized)
 
 ## Credits
 
