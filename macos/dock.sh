@@ -36,4 +36,5 @@ dockutil --add 'afp://projects.sandstrompartners.com' --label 'projects.sandstro
 dockutil --add '/Applications' --view list --display folder --sort name
 dockutil --add '~/Projects' --view list --display folder
 dockutil --add '~/Downloads' --view list --display folder
+
 killall Dock
