@@ -1,19 +1,19 @@
-	code --install-extension davidanson.vscode-markdownlint
-	code --install-extension deerawan.vscode-dash
-	code --install-extension equinusocio.vsc-material-theme
-	code --install-extension esbenp.prettier-vscode
-	code --install-extension kirchner-trevor.shopify-liquid-preview
-	code --install-extension mrmlnc.vscode-duplicate
-	code --install-extension mrmlnc.vscode-apache
-	code --install-extension neilding.language-liquid
-	code --install-extension peterjausovec.vscode-docker
-	code --install-extension pkief.material-icon-theme
-	code --install-extension redhat.vscode-yaml
-	code --install-extension ricard.postcss
-	code --install-extension sharat.vscode-brewfile
-	code --install-extension sidthesloth.html5-boilerplate
-	code --install-extension spywhere.guides
-	code --install-extension techer.open-in-browser
-	code --install-extension tyriar.sort-lines
-	code --install-extension whatwedo.twig
-	code --install-extension zhuangtongfa.material-theme
+davidanson.vscode-markdownlint
+deerawan.vscode-dash
+equinusocio.vsc-material-theme
+esbenp.prettier-vscode
+kirchner-trevor.shopify-liquid-preview
+mrmlnc.vscode-duplicate
+mrmlnc.vscode-apache
+neilding.language-liquid
+peterjausovec.vscode-docker
+pkief.material-icon-theme
+redhat.vscode-yaml
+ricard.postcss
+sharat.vscode-brewfile
+sidthesloth.html5-boilerplate
+spywhere.guides
+techer.open-in-browser
+tyriar.sort-lines
+whatwedo.twig
+zhuangtongfa.material-theme
