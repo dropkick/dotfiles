@@ -9,7 +9,7 @@ It targets macOS systems, but it should work on \*nix as well (with `apt-get`).
 A few things are in flux with regard to macOS Mojave changes that I still need to sort out. In the meantime... 
 
  * the gem install in the Makefile is initiated with sudo. 
- * the `bin/append` portion of line 53 of the `Makefile` relies on `pcregrep`. `pcre` needs to be installed manually after the `make` errors out and stops on at the install of `bash` and `bash-completion@2`. Run `brew install pcre`, then run make again. 
+ * the `bin/append` portion of line 53 of the `Makefile` relies on `pcregrep`. `pcre` needs to be installed manually after `make` errors out and stops on at the install of `bash` and `bash-completion@2`. Run `brew install pcre`, then run make again. 
 
 ## Package overview
 
