@@ -2,9 +2,14 @@
 
 These are my dotfiles. Take anything you want, but at your own risk.
 
-Much of this is based on how [Lars Kappert](https://github.com/webpro/) has set his system up. A good amount of bits and inspiration from [Dan Lowe](https://github.com/tangledhelix) here as well.
-
 It targets macOS systems, but it should work on \*nix as well (with `apt-get`).
+
+## Issues
+
+A few things are in flux with regard to macOS Mojave changes that I still need to sort out. In the meantime... 
+
+ * the gem install in the Makefile is initiated with sudo. 
+ * the `bin/append` portion of line 53 of the `Makefile` relies on `pcregrep`. `pcre` needs to be installed manually after `make` errors out and stops on at the install of `bash` and `bash-completion@2`. Run `brew install pcre`, then run make again. 
 
 ## Package overview
 
@@ -24,7 +29,7 @@ These are either unavailable in Homebrew/Cask or my personal license is via the 
 * [Amphetamine](https://itunes.apple.com/us/app/amphetamine/id937984704) - better replacement for Caffiene 
 * [Chronicle](https://itunes.apple.com/us/app/chronicle-bill-management/id402355593) - Bill management
 * [ColorSnapper 2](https://itunes.apple.com/us/app/colorsnapper-2/id969418666) - color picker/eyedropper
-* [Day One](https://itunes.apple.com/us/app/day-one/id1055511498) - Journaling <applet></applet>
+* [Day One](https://itunes.apple.com/us/app/day-one/id1055511498) - journaling 
 * [Deliveries](https://itunes.apple.com/us/app/deliveries-a-package-tracker/id924726344) - a package tracker
 * [Dropzone 3](https://itunes.apple.com/us/app/dropzone-3/id695406827) - move files, open applications and share files
 * [EchoHam](https://itunes.apple.com/us/app/echoham/id873302145?mt=12) - Echolink network from mac
@@ -60,7 +65,6 @@ These are either unavailable in Homebrew/Cask or my personal license is via the 
 ## Post Installation 
 
 * Tower CLI Tool - To install the `gittower` command line tool, run installer from Tower's preferences on the Integration tab. (Make sure that Tower is run from the /Applications folder before trying to install.)
-
 
 ## Install
 
@@ -122,5 +126,7 @@ Alternatively, you can have an additional, personal dotfiles repo at `~/.extra`.
 - [Solarized Color Theme for GNU ls](https://github.com/seebi/dircolors-solarized)
 
 ## Credits
+
+Much of this is based in [Lars Kappert](https://github.com/webpro/)'s setup. A good amount of bits and inspiration from [Dan Lowe](https://github.com/tangledhelix) here as well.
 
 Many thanks to the [dotfiles community](http://dotfiles.github.io/) and the creators of these incredibly useful tools.
