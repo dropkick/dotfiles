@@ -6,7 +6,13 @@ It targets macOS systems, but it should work on \*nix as well (with `apt-get`).
 
 ## Issues
 
-None known.
+* 2018-11-20 - Source order of dotfiles (`system/*`) in `runcom/.bash_profile` was disabling LS_COLORS. I haven't figured out the cause yet, but moving `.alias` a couple of slots earlier makes LS_COLORS work again without breaking anything else AKAIK.
+
+## Credits
+
+Much of this is from [Lars Kappert](https://github.com/webpro/)'s setup. A good amount of bits and inspiration from [Dan Lowe](https://github.com/tangledhelix) here as well.
+
+Many thanks to the [dotfiles community](http://dotfiles.github.io/) and the creators of these incredibly useful tools.
 
 ## Package overview
 
@@ -122,8 +128,3 @@ Alternatively, you can have an additional, personal dotfiles repo at `~/.extra`.
 - [Bash prompt](https://wiki.archlinux.org/index.php/Color_Bash_Prompt)
 - [Solarized Color Theme for GNU ls](https://github.com/seebi/dircolors-solarized)
 
-## Credits
-
-Much of this is based in [Lars Kappert](https://github.com/webpro/)'s setup. A good amount of bits and inspiration from [Dan Lowe](https://github.com/tangledhelix) here as well.
-
-Many thanks to the [dotfiles community](http://dotfiles.github.io/) and the creators of these incredibly useful tools.
