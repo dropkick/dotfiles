@@ -6,7 +6,7 @@ It targets macOS systems, but it should work on \*nix as well (with `apt-get`).
 
 ## Issues
 
-* 2018-11-20 - Source order of dotfiles (`system/*`) in `runcom/.bash_profile` was disabling LS_COLORS. I haven't figured out the cause yet, but moving `.alias` a couple of slots earlier makes LS_COLORS work again without breaking anything else AKAIK.
+None known.
 
 ## Credits
 
