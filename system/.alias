@@ -3,6 +3,9 @@
 alias reload="source ~/.bash_profile"
 alias _="sudo"
 alias g="git"
+alias gstat="git log --stat"
+alias gitpretty="git log --oneline --decorate --all --graph --stat"
+alias gall="git add ."
 alias rr="rm -rf"
 
 # Default options
