@@ -4,6 +4,7 @@
 mkdir -p $HOME/Stacks/browsers
 
 # Link browsers
+ln -s '/Applications/Brave Browser.app' ~/Stacks/browsers/0\ -\ Brave
 ln -s '/Applications/Firefox.app' ~/Stacks/browsers/1\ -\ Firefox
 ln -s '/Applications/Firefox Developer Edition.app' ~/Stacks/browsers/2\ -\ Firefox\ Developer
 ln -s '/Applications/Google Chrome.app' ~/Stacks/browsers/3\ -\ Chrome
@@ -30,9 +31,9 @@ dockutil --no-restart --add "/Applications/DEVONthink Pro Office.app"
 dockutil --no-restart --add "/Applications/PDFScanner.app"
 dockutil --no-restart --add '' --type spacer --section apps
 dockutil --add '~/Stacks/browsers' --view list --display stack --sort name
-dockutil --add 'vnc://dynamo.dropkick.us' --label 'dynamo.dropkick.us VNC'
-dockutil --add 'afp://dynamo.dropkick.us' --label 'dynamo.dropkick.us AFP'
-dockutil --add 'afp://projects.sandstrompartners.com' --label 'projects.sandstrom AFP'
+dockutil --add 'vnc://dynamo.dropkick.design' --label 'dynamo.dropkick.us VNC'
+dockutil --add 'smb://dynamo.dropkick.design' --label 'dynamo.dropkick.design SMB'
+dockutil --add 'afp://projects.sandstrompartners.com' --label 'projects.sandstrom SMB'
 dockutil --add '/Applications' --view list --display folder --sort name
 dockutil --add '~/Projects' --view list --display folder
 dockutil --add '~/Downloads' --view list --display folder
