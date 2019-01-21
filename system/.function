@@ -60,9 +60,15 @@ md() {
 }
 
 ## Added 2018-02-02 (via https://gist.github.com/cirrusUK/f1eec87cf5e63985d4e3)
-
 # Is server up ? | Usage: down4me <www.foo.com>
 
 down4me() { 
   curl -s "http://downforeveryoneorjustme.com/$1" | sed '/just you/!d;s/<[^>]*>//g';
+}
+
+## Added 2019-01-21 (via https://news.ycombinator.com/item?id=18903234)
+# Query cht.sh for various Unix commands. | Usage: cheat <command> 
+
+cheat() {
+  curl cht.sh/$1
 }
