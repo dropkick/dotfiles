@@ -13,7 +13,7 @@ ln -s '/Applications/Safari.app' ~/Stacks/browsers/5\ -\ Safari
 ln -s '/Applications/Safari Technology Preview.app' ~/Stacks/browsers/6\ -\ Safari\ Preview
 ln -s '/Applications/Opera.app' ~/Stacks/browsers/7\ -\ Opera
 ln -s '/Applications/Epic.app' ~/Stacks/browsers/8\ -\ Epic
-ln -s '/Applications/TorBrowser.app' ~/Stacks/browsers/9\ -\ TorBrowser
+ln -s '/Applications/Tor Browser.app' ~/Stacks/browsers/9\ -\ TorBrowser
 ln -s '/Applications/Reeder.app' ~/Stacks/browsers/10\ -\ Reeder
 
 # Position (left, bottom, right) 
