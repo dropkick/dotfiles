@@ -93,6 +93,7 @@ alias his="historie"
 alias quit="exit"
 alias week="date +%V"
 alias speedtest="wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip"
+alias grip="grip -b"
 
 # Tracking what I've learned/done in my did file
 
