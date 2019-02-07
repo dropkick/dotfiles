@@ -8,6 +8,7 @@ is-executable getconf && PATH=$($(command -v getconf) PATH)
 prepend-path "/bin"
 prepend-path "/usr/bin"
 prepend-path "/usr/local/bin"
+prepend-path "/usr/local/lib/ruby/gems/2.6.0/gems"
 prepend-path "/usr/local/opt/coreutils/libexec/gnubin"
 prepend-path "/usr/local/opt/ruby/bin"
 prepend-path "$DOTFILES_DIR/bin"
