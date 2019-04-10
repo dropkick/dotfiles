@@ -93,8 +93,18 @@ alias his="historie"
 alias quit="exit"
 alias week="date +%V"
 alias speedtest="wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip"
+
+# host/port status check
+alias uporno="bash ~/scripts/uporno.sh"
+
+# GitHub Markdown previewer
 alias grip="grip -b"
 
-# Tracking what I've learned/done in my did file
+# audio streaming script
+alias radio="bash ~/scripts/radio.sh"
 
+# YouTube video streamer
+alias bashtube="bash ~/scripts/bashtube.sh"
+
+# Tracking what I've learned/done in my did file
 alias did="nano -S ~/did.txt"
