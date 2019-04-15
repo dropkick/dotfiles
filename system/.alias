@@ -94,6 +94,11 @@ alias quit="exit"
 alias week="date +%V"
 alias speedtest="wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip"
 
+# buildhelp.rb - looks for file in the current directory with a name that starts with “build” and 
+# an extension of “.md”, “.txt”, or “.markdown”
+# [script](https://brettterpstra.com/2019/04/01/keeping-track-of-all-your-projects-build-systems/) to keep track of project build systems, etc. 
+alias build?="ruby ~/scripts/buildhelp.rb"
+
 # host/port status check
 alias uporno="bash ~/scripts/uporno.sh"
 
