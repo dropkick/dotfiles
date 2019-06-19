@@ -58,6 +58,7 @@ These are either unavailable in Homebrew/Cask or my personal license is via the 
 ## Packages to install manually (not covered by Homebrew, App Store, etc.)
 
 * [Adobe Creative Cloud](https://creative.adobe.com/products/download/creative-cloud) installed via homebrew/cask - install Acrobat DC, Animate CC, Audition CC, Illustrator CC, InDesign CC, Media Encoder CC, Photoshop CC, and XD CC from this app
+* [Brett's PopClip Extensions](https://github.com/ttscoff/popclipextensions) - Brett Terpstra's treasure trove of extensions for PopClip – which is installed via Homebrew cask – lots of really useful markdwon formatting tools here.
 * [Ember]() - Discontinued image catalog and screenshot app. I have a local copy of installer. Still working on MacOS.
 * [iRehearse Plus](http://rjvmedia.co.uk/irehearse-plus) - 
 * [Permute](https://trial.charliemonroe.net/permute/download.php) - media file conversion utility (I intend to make a homebrew cask for this)
