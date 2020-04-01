@@ -26,8 +26,8 @@ dockutil --no-restart --add "/Applications/Visual Studio Code.app"
 dockutil --no-restart --add "/Applications/Tower.app"
 dockutil --no-restart --add "/Applications/Dash.app"
 # dockutil --no-restart --add '' --type spacer --section apps
-dockutil --no-restart --add "/Applications/nvALT.app"
-dockutil --no-restart --add "/Applications/DEVONthink Pro Office.app"
+dockutil --no-restart --add "/Applications/nvUltra\ Beta.app "
+dockutil --no-restart --add "/Applications//DEVONthink\ 3.app "
 dockutil --no-restart --add "/Applications/PDFScanner.app"
 dockutil --no-restart --add '' --type spacer --section apps
 dockutil --add '~/Stacks/browsers' --view list --display stack --sort name

@@ -1,0 +1,602 @@
+{
+  "entries": {
+    "tap": {
+      "homebrew/cask": {
+        "revision": "cafeebac3a245e73c9a8e84e3ef4adfdf2055f27"
+      },
+      "homebrew/cask-drivers": {
+        "revision": "b2a8965b50f5d60be1e21a4688a4d28541c73bb5"
+      },
+      "homebrew/cask-fonts": {
+        "revision": "0df83012db895a011caa00729dc4b322026266a8"
+      },
+      "homebrew/cask-versions": {
+        "revision": "01d7151c2700c89345b2cb5c0db40057ddc6dfa6"
+      }
+    },
+    "cask": {
+      "1password": {
+        "version": "7.4.2",
+        "options": {
+          "full_name": "1password"
+        }
+      },
+      "adobe-creative-cloud": {
+        "version": "latest",
+        "options": {
+          "full_name": "adobe-creative-cloud"
+        }
+      },
+      "appzapper": {
+        "version": "2.0.2",
+        "options": {
+          "full_name": "appzapper"
+        }
+      },
+      "arq": {
+        "version": "5.17.2",
+        "options": {
+          "full_name": "arq"
+        }
+      },
+      "audio-hijack": {
+        "version": "3.6.3",
+        "options": {
+          "full_name": "audio-hijack"
+        }
+      },
+      "bartender": {
+        "version": "3.1.07",
+        "options": {
+          "full_name": "bartender"
+        }
+      },
+      "banktivity": {
+        "version": "7",
+        "options": {
+          "full_name": "banktivity"
+        }
+      },
+      "betterzip": {
+        "version": "4.2.5",
+        "options": {
+          "full_name": "betterzip"
+        }
+      },
+      "brave-browser": {
+        "version": "79.1.2.43,102.43",
+        "options": {
+          "full_name": "brave-browser"
+        }
+      },
+      "chronosync": {
+        "version": "4.9.8",
+        "options": {
+          "full_name": "chronosync"
+        }
+      },
+      "cleanmymac": {
+        "version": "4.5.3,1580915237",
+        "options": {
+          "full_name": "cleanmymac"
+        }
+      },
+      "clipy": {
+        "version": "1.2.1",
+        "options": {
+          "full_name": "clipy"
+        }
+      },
+      "codekit": {
+        "version": "3.10.2,31934",
+        "options": {
+          "full_name": "codekit"
+        }
+      },
+      "colloquy": {
+        "version": "2.4.3",
+        "options": {
+          "full_name": "colloquy"
+        }
+      },
+      "dash": {
+        "version": "5.1.2",
+        "options": {
+          "full_name": "dash"
+        }
+      },
+      "default-folder-x": {
+        "version": "5.4.2",
+        "options": {
+          "full_name": "default-folder-x"
+        }
+      },
+      "deltawalker": {
+        "version": "2.5.5",
+        "options": {
+          "full_name": "deltawalker"
+        }
+      },
+      "docker": {
+        "version": "2.2.0.0,42247",
+        "options": {
+          "full_name": "docker"
+        }
+      },
+      "dropbox": {
+        "version": "latest",
+        "options": {
+          "full_name": "dropbox"
+        }
+      },
+      "encryptme": {
+        "version": "4.2.0",
+        "options": {
+          "full_name": "encryptme"
+        }
+      },
+      "evernote": {
+        "version": "7.14_458244",
+        "options": {
+          "full_name": "evernote"
+        }
+      },
+      "expandrive": {
+        "version": "7.4.10",
+        "options": {
+          "full_name": "expandrive"
+        }
+      },
+      "firefox": {
+        "version": "72.0.2",
+        "options": {
+          "full_name": "firefox"
+        }
+      },
+      "font-fira-code": {
+        "version": "2",
+        "options": {
+          "full_name": "font-fira-code"
+        }
+      },
+      "garagebuy": {
+        "version": "3.3.2",
+        "options": {
+          "full_name": "garagebuy"
+        }
+      },
+      "garagesale": {
+        "version": "8.0.11",
+        "options": {
+          "full_name": "garagesale"
+        }
+      },
+      "google-backup-and-sync": {
+        "version": "latest",
+        "options": {
+          "full_name": "google-backup-and-sync"
+        }
+      },
+      "google-chrome": {
+        "version": "80.0.3987.87",
+        "options": {
+          "full_name": "google-chrome"
+        }
+      },
+      "google-chrome-canary": {
+        "version": "latest",
+        "options": {
+          "full_name": "google-chrome-canary"
+        }
+      },
+      "gpg-suite": {
+        "version": "2019.2",
+        "options": {
+          "full_name": "gpg-suite"
+        }
+      },
+      "gqrx": {
+        "version": "2.11.5",
+        "options": {
+          "full_name": "gqrx"
+        }
+      },
+      "hammerspoon": {
+        "version": "0.9.78",
+        "options": {
+          "full_name": "hammerspoon"
+        }
+      },
+      "harvest": {
+        "version": "2.1.16",
+        "options": {
+          "full_name": "harvest"
+        }
+      },
+      "hazel": {
+        "version": "4.4.4",
+        "options": {
+          "full_name": "hazel"
+        }
+      },
+      "imagealpha": {
+        "version": "1.5.1",
+        "options": {
+          "full_name": "imagealpha"
+        }
+      },
+      "imageoptim": {
+        "version": "1.8.8",
+        "options": {
+          "full_name": "imageoptim"
+        }
+      },
+      "imazing": {
+        "version": "2.10.6.11553",
+        "options": {
+          "full_name": "imazing"
+        }
+      },
+      "inboard": {
+        "version": "1.1.5-431",
+        "options": {
+          "full_name": "inboard"
+        }
+      },
+      "inssider": {
+        "version": "4.2.4.1",
+        "options": {
+          "full_name": "inssider"
+        }
+      },
+      "integrity": {
+        "version": "9.5",
+        "options": {
+          "full_name": "integrity"
+        }
+      },
+      "istat-menus": {
+        "version": "6.40",
+        "options": {
+          "full_name": "istat-menus"
+        }
+      },
+      "iterm2": {
+        "version": "3.3.8",
+        "options": {
+          "full_name": "iterm2"
+        }
+      },
+      "kaleidoscope": {
+        "version": "2.2.2-1376",
+        "options": {
+          "full_name": "kaleidoscope"
+        }
+      },
+      "keybase": {
+        "version": "5.2.0-20200130011203,cf82db8320",
+        "options": {
+          "full_name": "keybase"
+        }
+      },
+      "kindle": {
+        "version": "56108",
+        "options": {
+          "full_name": "kindle"
+        }
+      },
+      "knox": {
+        "version": "2.3.2",
+        "options": {
+          "full_name": "knox"
+        }
+      },
+      "lastfm": {
+        "version": "2.1.39",
+        "options": {
+          "full_name": "lastfm"
+        }
+      },
+      "launchbar": {
+        "version": "6.12",
+        "options": {
+          "full_name": "launchbar"
+        }
+      },
+      "livereload": {
+        "version": "2.3.84",
+        "options": {
+          "full_name": "livereload"
+        }
+      },
+      "loopback": {
+        "version": "2.1.2",
+        "options": {
+          "full_name": "loopback"
+        }
+      },
+      "macdown": {
+        "version": "0.7.2",
+        "options": {
+          "full_name": "macdown"
+        }
+      },
+      "mailmate": {
+        "version": "5671",
+        "options": {
+          "full_name": "mailmate"
+        }
+      },
+      "marked": {
+        "version": "2.5.36980",
+        "options": {
+          "full_name": "marked"
+        }
+      },
+      "netspot": {
+        "version": "2.12.997",
+        "options": {
+          "full_name": "netspot"
+        }
+      },
+      "nextcloud": {
+        "version": "2.6.2.20191224",
+        "options": {
+          "full_name": "nextcloud"
+        }
+      },
+      "nvalt": {
+        "version": "2.2.8-128",
+        "options": {
+          "full_name": "nvalt"
+        }
+      },
+      "omnifocus": {
+        "version": "3.4.6",
+        "options": {
+          "full_name": "omnifocus"
+        }
+      },
+      "omnioutliner": {
+        "version": "5.5.2",
+        "options": {
+          "full_name": "omnioutliner"
+        }
+      },
+      "omniplan": {
+        "version": "3.13.2",
+        "options": {
+          "full_name": "omniplan"
+        }
+      },
+      "opera": {
+        "version": "66.0.3515.72",
+        "options": {
+          "full_name": "opera"
+        }
+      },
+      "opera-developer": {
+        "version": "67.0.3523.0",
+        "options": {
+          "full_name": "opera-developer"
+        }
+      },
+      "owncloud": {
+        "version": "2.6.1.13096",
+        "options": {
+          "full_name": "owncloud"
+        }
+      },
+      "popclip": {
+        "version": "2019.10",
+        "options": {
+          "full_name": "popclip"
+        }
+      },
+      "postman": {
+        "version": "7.17.0",
+        "options": {
+          "full_name": "postman"
+        }
+      },
+      "renamer": {
+        "version": "6.0.3",
+        "options": {
+          "full_name": "renamer"
+        }
+      },
+      "resilio-sync": {
+        "version": "2.6.4",
+        "options": {
+          "full_name": "resilio-sync"
+        }
+      },
+      "rubitrack-pro": {
+        "version": "5.3.1",
+        "options": {
+          "full_name": "rubitrack-pro"
+        }
+      },
+      "safari-technology-preview": {
+        "version": "100,061-72782-20200205-2dfe759e-8392-4b7a-92d4-700aaa3333c3",
+        "options": {
+          "full_name": "safari-technology-preview"
+        }
+      },
+      "satellite-eyes": {
+        "version": "1.4.3",
+        "options": {
+          "full_name": "satellite-eyes"
+        }
+      },
+      "scrivener": {
+        "version": "3.1.5,12258",
+        "options": {
+          "full_name": "scrivener"
+        }
+      },
+      "sequel-pro": {
+        "version": "1.1.2",
+        "options": {
+          "full_name": "sequel-pro"
+        }
+      },
+      "sketch": {
+        "version": "62-91390",
+        "options": {
+          "full_name": "sketch"
+        }
+      },
+      "sketchup": {
+        "version": "2017,3-116-90851",
+        "options": {
+          "full_name": "sketchup"
+        }
+      },
+      "skype": {
+        "version": "8.56.0.103",
+        "options": {
+          "full_name": "skype"
+        }
+      },
+      "sourcetree": {
+        "version": "4.0.1_234",
+        "options": {
+          "full_name": "sourcetree"
+        }
+      },
+      "sublime-text": {
+        "version": "3.211",
+        "options": {
+          "full_name": "sublime-text"
+        }
+      },
+      "superduper": {
+        "version": "3.3.1,121",
+        "options": {
+          "full_name": "superduper"
+        }
+      },
+      "suspicious-package": {
+        "version": "3.5.2",
+        "options": {
+          "full_name": "suspicious-package"
+        }
+      },
+      "taskpaper": {
+        "version": "3.8.6",
+        "options": {
+          "full_name": "taskpaper"
+        }
+      },
+      "textexpander": {
+        "version": "6.5.3",
+        "options": {
+          "full_name": "textexpander"
+        }
+      },
+      "tor-browser": {
+        "version": "9.0.4",
+        "options": {
+          "full_name": "tor-browser"
+        }
+      },
+      "tower": {
+        "version": "3.6.0,205:1262a183",
+        "options": {
+          "full_name": "tower"
+        }
+      },
+      "transmission": {
+        "version": "2.94",
+        "options": {
+          "full_name": "transmission"
+        }
+      },
+      "transmit": {
+        "version": "5.6.2",
+        "options": {
+          "full_name": "transmit"
+        }
+      },
+      "visual-studio-code": {
+        "version": "1.42.0",
+        "options": {
+          "full_name": "visual-studio-code"
+        }
+      },
+      "vlc": {
+        "version": "3.0.8",
+        "options": {
+          "full_name": "vlc"
+        }
+      },
+      "webstorm": {
+        "version": "2019.3.2,193.6015.40",
+        "options": {
+          "full_name": "webstorm"
+        }
+      },
+      "whatsize": {
+        "version": "7.3.3",
+        "options": {
+          "full_name": "whatsize"
+        }
+      },
+      "qlcolorcode": {
+        "version": "2.1.0",
+        "options": {
+          "full_name": "qlcolorcode"
+        }
+      },
+      "qlimagesize": {
+        "version": "2.6.1",
+        "options": {
+          "full_name": "qlimagesize"
+        }
+      },
+      "qlmarkdown": {
+        "version": "1.3.6",
+        "options": {
+          "full_name": "qlmarkdown"
+        }
+      },
+      "qlstephen": {
+        "version": "1.5.1",
+        "options": {
+          "full_name": "qlstephen"
+        }
+      },
+      "qlvideo": {
+        "version": "193",
+        "options": {
+          "full_name": "qlvideo"
+        }
+      },
+      "quicklook-json": {
+        "version": "latest",
+        "options": {
+          "full_name": "quicklook-json"
+        }
+      },
+      "webpquicklook": {
+        "version": "latest",
+        "options": {
+          "full_name": "webpquicklook"
+        }
+      }
+    }
+  },
+  "system": {
+    "macos": {
+      "catalina": {
+        "HOMEBREW_VERSION": "2.2.5",
+        "HOMEBREW_PREFIX": "/usr/local",
+        "Homebrew/homebrew-core": "db0b03daf41f0f770c3a9baa2055b7afecc3f5d7",
+        "CLT": "11.3.1.0.1.1576735732",
+        "Xcode": "11.3",
+        "macOS": "10.15.3"
+      }
+    }
+  }
+}

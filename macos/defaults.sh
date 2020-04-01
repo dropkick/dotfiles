@@ -1,4 +1,4 @@
-COMPUTER_NAME="futuro"
+COMPUTER_NAME="nitro"
 
 osascript -e 'tell application "System Preferences" to quit'
 
