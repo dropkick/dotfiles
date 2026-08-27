@@ -100,4 +100,30 @@ case "$(uname -s)" in
     ;;
 esac
 
+
+# ── Set zsh as default shell if it isn't already ───────────────────────
+info "🐚 Checking default shell..."
+CURRENT_SHELL=$(getent passwd "$USER" 2>/dev/null | cut -d: -f7 || echo "$SHELL")
+ZSH_PATH=$(command -v zsh 2>/dev/null)
+
+if [[ -z "$ZSH_PATH" ]]; then
+  info "zsh not found in PATH — skipping default shell check."
+elif [[ "$CURRENT_SHELL" == *zsh ]]; then
+  ok "zsh is already your default shell."
+else
+  info "Your default shell is $CURRENT_SHELL — zsh is at $ZSH_PATH"
+  printf "  Would you like to set zsh as your default shell? [y/N] "
+  read -r REPLY
+  if [[ "$REPLY" =~ ^[Yy]$ ]]; then
+    if chsh -s "$ZSH_PATH"; then
+      ok "Default shell set to zsh. Log out and back in for it to take effect."
+    else
+      info "chsh failed — you may need to run: sudo chsh -s $ZSH_PATH $USER"
+    fi
+  else
+    info "Skipping. You can set it later with: chsh -s $ZSH_PATH"
+  fi
+fi
+
+
 ok "📦 Package installation complete!"
