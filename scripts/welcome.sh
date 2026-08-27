@@ -45,7 +45,5 @@ echo " "                # Pad blank lines for calendar & time to fit
 
 tput sc                 # Save cursor position.
 # Move up 9 lines
-i=0
-while [ $((++i)) -lt 10 ]; do tput cuu1; done
-
-if [[ "$Weather
+# Strip control characters from cal output
+tr -cd '\11\12\15\40\60-\136\140-\176' < /tmp/terminal1 > /tmp/terminal
