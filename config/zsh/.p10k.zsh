@@ -315,6 +315,7 @@
   #
   # Whenever the current directory is ~/work or a subdirectory of ~/work, it gets styled with one
   # of the following classes depending on its writability and existence: WORK, WORK_NOT_WRITABLE or
+      typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
   # WORK_NON_EXISTENT.
   #
   # Simply assigning classes to directories doesn't have any visible effects. It merely gives you an
@@ -1700,7 +1701,7 @@
   #   - verbose: Enable instant prompt and print a warning when detecting console output during
   #              zsh initialization. Choose this if you've never tried instant prompt, haven't
   #              seen the warning, or if you are unsure what this all means.
-  typeset -g POWERLEVEL9K_INSTANT_PROMPT=verbose
+  typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
 
   # Hot reload allows you to change POWERLEVEL9K options after Powerlevel10k has been initialized.
   # For example, you can type POWERLEVEL9K_BACKGROUND=red and see your prompt turn red. Hot reload
