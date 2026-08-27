@@ -34,6 +34,9 @@
     ~/.config/dotfiles/functions.zsh: config/zsh/functions.zsh
     ~/.config/dotfiles/options.zsh: config/zsh/options.zsh
     ~/.gitconfig: config/git/gitconfig
+    ~/.config/git/ignore: config/git/ignore
+    ~/.config/git/gitconfig.macos: config/git/gitconfig.macos
+    ~/.config/git/gitconfig.linux: config/git/gitconfig.linux
     ~/scripts/welcome.sh: scripts/welcome.sh
 
 # ── Create directories ─────────────────────────────────────────────────

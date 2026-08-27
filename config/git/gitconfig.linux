@@ -1,0 +1,12 @@
+# ═══════════════════════════════════════════════════════════════════════
+#  gitconfig.linux — Linux-specific Git settings
+#  ─────────────────────────────────────────────────────────────────────
+#  Symlinked to ~/.config/git/gitconfig.local on Linux machines.
+#  Included by ~/.gitconfig via [include] path = ~/.config/git/gitconfig.local
+# ═══════════════════════════════════════════════════════════════════════
+
+[credential]
+	helper = store
+
+[core]
+	pager = less --tabs=4 -RFX

@@ -81,4 +81,23 @@ if [ "$SHELL" != "$(which zsh)" ] 2>/dev/null; then
   ok "Default shell set to zsh (takes effect on next login)"
 fi
 
+# ── Create platform-specific gitconfig.local symlink ───────────────────
+# The main ~/.gitconfig has [include] path = ~/.config/git/gitconfig.local
+# We symlink that to the right platform file (both are stowed by Dotbot).
+info "🔗 Setting up platform-specific gitconfig.local..."
+mkdir -p ~/.config/git
+if [ -L ~/.config/git/gitconfig.local ] || [ -f ~/.config/git/gitconfig.local ]; then
+  rm -f ~/.config/git/gitconfig.local
+fi
+case "$(uname -s)" in
+  Darwin)
+    ln -s ~/.config/git/gitconfig.macos ~/.config/git/gitconfig.local
+    ok "gitconfig.local → gitconfig.macos"
+    ;;
+  Linux)
+    ln -s ~/.config/git/gitconfig.linux ~/.config/git/gitconfig.local
+    ok "gitconfig.local → gitconfig.linux"
+    ;;
+esac
+
 ok "📦 Package installation complete!"

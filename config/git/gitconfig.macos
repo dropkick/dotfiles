@@ -1,0 +1,12 @@
+# ═══════════════════════════════════════════════════════════════════════
+#  gitconfig.macos — macOS-specific Git settings
+#  ─────────────────────────────────────────────────────────────────────
+#  Symlinked to ~/.config/git/gitconfig.local on macOS machines.
+#  Included by ~/.gitconfig via [include] path = ~/.config/git/gitconfig.local
+# ═══════════════════════════════════════════════════════════════════════
+
+[credential]
+	helper = osxkeychain
+
+[core]
+	pager = diff-so-fancy | less --tabs=4 -RFX

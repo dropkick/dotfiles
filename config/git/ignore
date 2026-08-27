@@ -1,0 +1,35 @@
+# ═══════════════════════════════════════════════════════════════════════
+#  ~/.config/git/ignore — Global Git ignore rules
+#  ─────────────────────────────────────────────────────────────────────
+#  These rules apply to ALL git repos on this machine.
+#  Symlinked from the dotfiles repo by Dotbot.
+#  Edit here, not the symlink.
+# ═══════════════════════════════════════════════════════════════════════
+
+# ── Editor / IDE files ────────────────────────────────────────────────
+*~
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+.vscode
+
+# ── OS metadata ───────────────────────────────────────────────────────
+# macOS
+._*
+.DS_Store
+.Spotlight-V100
+.Trashes
+# Windows
+ehthumbs.db
+Thumbs.db
+
+# ── Node.js ───────────────────────────────────────────────────────────
+node_modules
+bower_components
+npm-debug.log
+
+# ── Build tools ───────────────────────────────────────────────────────
+# CodeKit (macOS web dev tool)
+.sass-cache/
+.codekit-config.json
+config.codekit

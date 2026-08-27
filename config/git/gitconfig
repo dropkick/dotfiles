@@ -1,29 +1,103 @@
 # ═══════════════════════════════════════════════════════════════════════
 #  ~/.gitconfig — Global Git configuration
 #  ─────────────────────────────────────────────────────────────────────
-#  This is symlinked into your home directory by Dotbot.
+#  Symlinked into your home directory by Dotbot.
 #  Edit the file in the repo, not the symlink.
+#
+#  NOTE: OS-specific settings (credential helper) are handled in
+#  ~/.gitconfig.local, which is NOT managed by this repo — each machine
+#  has its own. See "Per-machine overrides" at the bottom of this file.
 # ═══════════════════════════════════════════════════════════════════════
 
 [user]
-  # TODO: Replace with your name and email
-  name = Jason
-  email = jason@example.com
+	name = Jason Duerr
+	email = jason@dropkickdesign.com
 
-[init]
-  defaultBranch = main
+[github]
+	user = dropkick
+
+[gitlab]
+	user = dropkickdesign
 
 [core]
-  editor = nano
+	# Global gitignore file — symlinked to ~/.config/git/ignore by Dotbot
+	excludesfile = ~/.config/git/ignore
+	editor = nano
+	filemode = false
+	trustctime = false
+	autocrlf = input
+	untrackedCache = true
 
-[pull]
-  rebase = false
+[grep]
+	lineNumber = true
+
+[help]
+	autocorrect = 1
 
 [push]
-  default = current
+	default = simple
+	followTags = true
 
-[diff]
-  color = auto
+[init]
+	defaultBranch = main
 
-[log]
-  decorate = auto
+[fetch]
+	prune = true
+
+# ── Aliases ───────────────────────────────────────────────────────────
+# Shortcuts for common git commands. These save a lot of typing.
+[alias]
+	amend = commit --amend --reuse-message=HEAD
+	br = branch
+	ci = commit
+	co = checkout
+	contrib = shortlog --summary --numbered
+	cr = clone --recursive
+	df = diff --word-diff
+	g = grep --break --heading --line-number
+	l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	ld = "!sh -c \"git log --since '${1:-1} days ago' --oneline --author $(git config user.email)\" -"
+	lg = log -p
+	ll = log --pretty=oneline --graph --abbrev-commit
+	lm = log --pretty=format:'* %s (%h)'
+	patch = !git --no-pager diff --no-color
+	p = push
+	pf = push --force
+	pr = "!f() { git fetch -fu ${2:-origin} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
+	show-ignored = "! git clean -ndX | perl -pe 's/Would remove/Ignored:/'"
+	st = status
+	stl = ls-files -m -o --exclude-standard
+	sts = status -sb
+	unstage = reset --hard HEAD
+
+# ── Color ─────────────────────────────────────────────────────────────
+[color]
+	ui = auto
+[color "branch"]
+	current = yellow reverse
+	local = yellow
+	remote = green
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+[color "status"]
+	added = yellow
+	changed = green
+	untracked = cyan
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+
+[lfs]
+	locksverify = true
+
+# ── Platform-specific settings ────────────────────────────────────────
+# The install script symlinks ~/.config/git/gitconfig.local to either
+# gitconfig.macos or gitconfig.linux depending on the OS.
+# This include pulls in the right credential helper and pager.
+[include]
+	path = ~/.config/git/gitconfig.local
