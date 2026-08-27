@@ -1,0 +1,13 @@
+# ═══════════════════════════════════════════════════════════════════════
+#  ~/.zshenv — Environment variables (loaded by ALL zsh invocations)
+#  ─────────────────────────────────────────────────────────────────────
+#  Keep this minimal! It runs for every zsh process, including scripts.
+#  Only put things here that must be available non-interactively (PATH,
+#  editor, etc.). Interactive stuff goes in zshrc.
+# ═══════════════════════════════════════════════════════════════════════
+
+# Default editor (used by git, sudoedit, etc.)
+export EDITOR="${EDITOR:-nano}"
+
+# Add ~/.local/bin to PATH for user-installed binaries
+export PATH="$HOME/.local/bin:$PATH"

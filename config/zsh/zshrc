@@ -1,0 +1,146 @@
+# ═══════════════════════════════════════════════════════════════════════
+#  ~/.zshrc — Zsh entry point (thin loader)
+#  ─────────────────────────────────────────────────────────────────────
+#  This file is intentionally lean. It sets up core zsh behavior, loads
+#  the prompt (Powerlevel10k), then sources modular config files:
+#
+#    ~/.config/dotfiles/options.zsh       — zsh options and history
+#    ~/.config/dotfiles/aliases.zsh       — shared aliases (all OSes)
+#    ~/.config/dotfiles/aliases.<os>.zsh  — OS-specific aliases
+#    ~/.config/dotfiles/functions.zsh     — shell functions
+#    ~/scripts/welcome.sh                — weather/calendar/time greeting
+#
+#  All modular files are managed by Dotbot from the dotfiles repo.
+#  See the repo's README.md for the full layout and how to make changes.
+# ═══════════════════════════════════════════════════════════════════════
+
+
+# ── OS detection ──────────────────────────────────────────────────────
+# Used to load OS-specific alias files and pick the right plugin paths.
+case "$(uname -s)" in
+  Darwin) OS="macos" ;;
+  Linux)  OS="linux" ;;
+  *)      OS="unknown" ;;
+esac
+
+
+# ── Powerlevel10k instant prompt ──────────────────────────────────────
+# Caches the last prompt render and shows it immediately on startup,
+# making zsh feel instant even with heavy configs.
+# MUST come before anything that produces terminal output.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+
+# ── Powerlevel10k theme ───────────────────────────────────────────────
+# Installed as a git submodule in the dotfiles repo at powerlevel10k/.
+# Also checks ~/powerlevel10k/ for standalone clones.
+if [[ -f ~/powerlevel10k/powerlevel10k.zsh-theme ]]; then
+  source ~/powerlevel10k/powerlevel10k.zsh-theme
+  [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+fi
+
+
+# ── zsh options and history ───────────────────────────────────────────
+# Large history + dedup + immediate write = great autosuggestions.
+# (Bash default is 1,000; we use 50,000 so history-based autocomplete
+# has plenty to draw from.)
+[[ -f ~/.config/dotfiles/options.zsh ]] && source ~/.config/dotfiles/options.zsh
+
+
+# ── Completion system ─────────────────────────────────────────────────
+# zsh's completion is powerful but must be initialized explicitly.
+autoload -Uz compinit && compinit
+
+
+# ── Modular config files ──────────────────────────────────────────────
+# Each file is a Dotbot-managed symlink from the dotfiles repo.
+DOTFILES_CONFIG="$HOME/.config/dotfiles"
+
+# Shared aliases (work on any OS)
+[ -f "$DOTFILES_CONFIG/aliases.zsh" ] && source "$DOTFILES_CONFIG/aliases.zsh"
+
+# OS-specific aliases (e.g. aliases.linux.zsh, aliases.macos.zsh)
+[ -f "$DOTFILES_CONFIG/aliases.$OS.zsh" ] && source "$DOTFILES_CONFIG/aliases.$OS.zsh"
+
+# Shell functions (includes the cross-platform `updates` function)
+[ -f "$DOTFILES_CONFIG/functions.zsh" ] && source "$DOTFILES_CONFIG/functions.zsh"
+
+
+# ── Welcome screen ────────────────────────────────────────────────────
+# Displays Portland weather, a calendar with today highlighted, and
+# the current time in ASCII art (requires figlet or toilet + curl).
+# Gracefully no-ops if the script doesn't exist.
+[ -f ~/scripts/welcome.sh ] && source ~/scripts/welcome.sh
+
+
+# ── fzf (fuzzy finder) ────────────────────────────────────────────────
+# fzf supercharges Ctrl+R (history search) with fuzzy matching.
+# Key bindings and completion are loaded if available.
+# On macOS: installed via Homebrew (files at /opt/homebrew/opt/fzf/shell/)
+# On Linux: installed via apt or ~/.fzf/install (files at ~/.fzf/)
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f /opt/homebrew/opt/fzf/shell/key-bindings.zsh ] && source /opt/homebrew/opt/fzf/shell/key-bindings.zsh
+[ -f /opt/homebrew/opt/fzf/shell/completion.zsh ] && source /opt/homebrew/opt/fzf/shell/completion.zsh
+[ -f ~/.fzf/zsh-key-bindings.zsh ] && source ~/.fzf/zsh-key-bindings.zsh
+[ -f ~/.fzf/zsh-completion.zsh ] && source ~/.fzf/zsh-completion.zsh
+
+# Disable Alt+C (fuzzy cd) — not everyone wants it
+FZF_ALT_C_COMMAND=''
+
+
+# ── Autocomplete plugins (the "magic trio") ───────────────────────────
+# These three plugins give the grey ghost text, command coloring, and
+# Up/Down history search that make zsh feel great.
+# Path varies by OS: Homebrew on macOS, apt on Linux, git fallback anywhere.
+
+# 1. zsh-autosuggestions — grey ghost text from history
+#    Type a partial command → suggests the full match from history.
+#    → (right arrow) to accept the whole suggestion
+#    Alt+→ to accept one word
+if [ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+  source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+elif [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+  source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+elif [ -f ~/.zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+  source ~/.zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
+
+# 2. zsh-syntax-highlighting — colors commands as you type
+#    Green = valid command, red = not found, etc.
+#    Must be sourced near the END of .zshrc (it wraps all widgets).
+if [ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+  source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+elif [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+  source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+elif [ -f ~/.zsh-plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+  source ~/.zsh-plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
+
+# 3. zsh-history-substring-search — Up/Down searches matching history
+#    Type "git" then Up → cycles through all "git ..." commands in history.
+if [ -f /opt/homebrew/share/zsh-history-substring-search/zsh-history-substring-search.zsh ]; then
+  source /opt/homebrew/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+elif [ -f ~/.zsh-plugins/zsh-history-substring-search/zsh-history-substring-search.zsh ]; then
+  source ~/.zsh-plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+fi
+
+# Keybindings for history-substring-search (apply if plugin loaded)
+bindkey '^[[A' history-substring-search-up    # Up arrow
+bindkey '^[[B' history-substring-search-down   # Down arrow
+
+
+# ── PATH additions ────────────────────────────────────────────────────
+# ~/.local/bin for user-installed binaries (pip, cargo, etc.)
+# Homebrew on Apple Silicon (macOS only, harmless on Linux if absent)
+export PATH="$HOME/.local/bin:$PATH"
+[ -d /opt/homebrew/bin ] && export PATH="/opt/homebrew/bin:$PATH"
+
+
+# ── Platform-specific eval blocks (macOS only) ────────────────────────
+# These tools are macOS-specific and silently fail if not installed.
+if [[ "$OS" == "macos" ]]; then
+  command -v thefuck &>/dev/null && eval $(thefuck --alias)
+  command -v rbenv &>/dev/null && eval "$(rbenv init - zsh)"
+fi

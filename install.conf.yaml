@@ -1,0 +1,50 @@
+# ═══════════════════════════════════════════════════════════════════════
+#  install.conf.yaml — Dotbot configuration
+#  ─────────────────────────────────────────────────────────────────────
+#  This file is the single source of truth for what gets installed.
+#  Run `./install` from the repo root to apply.
+#
+#  It does four things:
+#    1. clean  — removes broken symlinks in ~
+#    2. link   — creates symlinks from repo files into your home directory
+#    3. create — creates directories that don't exist yet
+#    4. shell  — runs setup scripts (package installation)
+#
+#  NOTE: This repo can live anywhere (~/Projects/dotfiles, ~/.dotfiles, etc.)
+#  Dotbot creates symlinks with absolute paths, so the location doesn't
+#  matter — just run `./install` from wherever you cloned it.
+# ═══════════════════════════════════════════════════════════════════════
+
+- defaults:
+    link:
+      relink: true
+
+# ── Clean broken symlinks ──────────────────────────────────────────────
+- clean: ['~']
+
+# ── Symlinks ───────────────────────────────────────────────────────────
+# Each line: <target in home> : <source in repo>
+- link:
+    ~/.zshrc: config/zsh/zshrc
+    ~/.zshenv: config/zsh/zshenv
+    ~/.p10k.zsh: config/zsh/.p10k.zsh
+    ~/.config/dotfiles/aliases.zsh: config/zsh/aliases.zsh
+    ~/.config/dotfiles/aliases.linux.zsh: config/zsh/aliases.linux.zsh
+    ~/.config/dotfiles/aliases.macos.zsh: config/zsh/aliases.macos.zsh
+    ~/.config/dotfiles/functions.zsh: config/zsh/functions.zsh
+    ~/.config/dotfiles/options.zsh: config/zsh/options.zsh
+    ~/.gitconfig: config/git/gitconfig
+    ~/scripts/welcome.sh: scripts/welcome.sh
+
+# ── Create directories ─────────────────────────────────────────────────
+- create:
+    - ~/projects
+    - ~/scripts
+
+# ── Run setup scripts ──────────────────────────────────────────────────
+# install_packages.zsh detects the OS and installs the right packages.
+- shell:
+    -
+      command: chmod -R +x scripts/setup && zsh scripts/setup/install_packages.zsh
+      stdout: true
+      stderr: true

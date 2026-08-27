@@ -1,0 +1,29 @@
+# ═══════════════════════════════════════════════════════════════════════
+#  ~/.gitconfig — Global Git configuration
+#  ─────────────────────────────────────────────────────────────────────
+#  This is symlinked into your home directory by Dotbot.
+#  Edit the file in the repo, not the symlink.
+# ═══════════════════════════════════════════════════════════════════════
+
+[user]
+  # TODO: Replace with your name and email
+  name = Jason
+  email = jason@example.com
+
+[init]
+  defaultBranch = main
+
+[core]
+  editor = nano
+
+[pull]
+  rebase = false
+
+[push]
+  default = current
+
+[diff]
+  color = auto
+
+[log]
+  decorate = auto
