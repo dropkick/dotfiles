@@ -35,6 +35,7 @@ alias psgrep="psgrep -i"               # Case-insensitive process search
 
 # ── Introspection ─────────────────────────────────────────────────────
 alias aliases="alias | sed 's/=.*//'"   # List all alias names (no values)
+alias functions="functions_list"          # List all function names (or pass a name to see its body)
 alias paths='echo -e ${PATH//:/\\n}'    # Print PATH entries, one per line
 
 

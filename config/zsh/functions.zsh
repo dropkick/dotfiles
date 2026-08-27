@@ -81,6 +81,89 @@ function updates {
 }
 
 
+
+# ── clean — Clean up caches and free disk space (cross-platform) ──────
+# Runs OS-appropriate cleanup commands for:
+#   - System package manager caches (Homebrew / apt)
+#   - Global npm cache
+#   - Ruby gem cleanup
+#   - Old pip cache
+#   - Docker (if installed)
+#   - Trash / temporary files
+#
+# Usage: clean
+function clean {
+  ok "🧹 Let's clean up all the things..."
+
+  # Detect OS
+  case "$(uname -s)" in
+    Darwin) OS="macos" ;;
+    Linux)  OS="linux" ;;
+  esac
+
+  if [[ "$OS" == "macos" ]]; then
+    # ── macOS cleanup ─────────────────────────────────────────────────
+    info "[1/7] 🍺 Cleaning Homebrew cache..."
+    command -v brew &>/dev/null && brew cleanup --prune=0 || info "brew not installed, skipping"
+    ok "Homebrew cache cleaned"
+
+    info "[2/7] 🗑️  Emptying trash..."
+    rm -rf ~/.Trash/* 2>/dev/null
+    ok "Trash emptied"
+
+    info "[3/7] 🧽 Cleaning DNS cache..."
+    sudo killall -HUP mDNSResponder 2>/dev/null
+    ok "DNS cache flushed"
+
+    info "[4/7] 💎 Cleaning Ruby gems..."
+    command -v gem &>/dev/null && gem cleanup || info "gem not installed, skipping"
+    ok "Ruby gems cleaned"
+
+    info "[5/7] 📦 Cleaning npm cache..."
+    command -v npm &>/dev/null && npm cache clean --force || info "npm not installed, skipping"
+    ok "npm cache cleaned"
+
+    info "[6/7] 🐍 Cleaning pip cache..."
+    command -v pip &>/dev/null && pip cache purge 2>/dev/null || info "pip not installed, skipping"
+    ok "pip cache cleaned"
+
+    info "[7/7] 🐳 Cleaning Docker..."
+    command -v docker &>/dev/null && docker system prune -f 2>/dev/null || info "docker not installed, skipping"
+    ok "Docker pruned"
+
+  elif [[ "$OS" == "linux" ]]; then
+    # ── Linux cleanup ─────────────────────────────────────────────────
+    info "[1/6] 📦 Cleaning apt cache..."
+    command -v apt &>/dev/null && { sudo apt autoremove -y; sudo apt clean; sudo apt autoclean; } || info "apt not available, skipping"
+    ok "apt cleaned"
+
+    info "[2/6] 🗑️  Emptying trash..."
+    rm -rf ~/.local/share/Trash/* 2>/dev/null
+    ok "Trash emptied"
+
+    info "[3/6] 💎 Cleaning Ruby gems..."
+    command -v gem &>/dev/null && gem cleanup || info "gem not installed, skipping"
+    ok "Ruby gems cleaned"
+
+    info "[4/6] 📦 Cleaning npm cache..."
+    command -v npm &>/dev/null && npm cache clean --force || info "npm not installed, skipping"
+    ok "npm cache cleaned"
+
+    info "[5/6] 🐍 Cleaning pip cache..."
+    command -v pip &>/dev/null && pip cache purge 2>/dev/null || info "pip not installed, skipping"
+    ok "pip cache cleaned"
+
+    info "[6/6] 🐳 Cleaning Docker..."
+    command -v docker &>/dev/null && docker system prune -f 2>/dev/null || info "docker not installed, skipping"
+    ok "Docker pruned"
+
+  else
+    info "Unknown OS — skipping cleanup."
+  fi
+
+  ok "✨ All cleaned up!"
+}
+
 # ── mkcd — Create a directory and cd into it in one command ───────────
 # Usage: mkcd my/new/project
 function mkcd {
@@ -155,4 +238,25 @@ hostname2ip() {
 # Find the real URL behind a shortened URL
 unshorten() {
   curl -sIL "$1" | sed -n 's/Location: *//p'
+}
+
+# ── functions — List all defined shell functions ──────────────────────
+# Usage: functions          (lists names only)
+#        functions <name>   (shows the body of a specific function)
+#        functions -v       (shows all function names + bodies)
+#
+# Mirrors the `aliases` alias that lists alias names.
+# Uses zsh's `functions` builtin under the hood (we wrap it to make the
+# no-argument case show names only, since the bare builtin dumps bodies).
+function functions_list {
+  if [[ $# -eq 0 ]]; then
+    # No args: print function names only, sorted
+    print -l ${(ok)functions} | grep -v '^_' | sort
+  elif [[ "$1" == "-v" || "$1" == "--verbose" ]]; then
+    # -v: show all function names + bodies
+    typeset -f
+  else
+    # Specific function name(s): show their bodies
+    typeset -f "$@"
+  fi
 }

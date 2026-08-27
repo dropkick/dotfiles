@@ -1,21 +1,24 @@
-cat &gt; ~/Projects/dotfiles/README.md &lt;&lt; &#x27;ENDOFFILE&#x27;
+cat > ~/Projects/dotfiles/README.md << 'ENDOFFILE'
 # dotfiles
 
 My cross-platform dotfiles, managed with [Dotbot](https://github.com/anishathalye/dotbot).
 Works on macOS and Linux (Debian, Mint, DietPi, etc.).
 
-## What&#x27;s Included
+## What's Included
 
 - **zsh** shell with three autocomplete plugins:
-    - `zsh-autosuggestions` — grey ghost text suggestions from history
-    - `zsh-syntax-highlighting` — green/red command coloring as you type
-    - `zsh-history-substring-search` — Up/Down arrows search matching history
+  - `zsh-autosuggestions` — grey ghost text suggestions from history
+  - `zsh-syntax-highlighting` — green/red command coloring as you type
+  - `zsh-history-substring-search` — Up/Down arrows search matching history
 - **Powerlevel10k** prompt theme (configurable with `p10k configure`)
 - **fzf** integration for fuzzy history search (Ctrl+R)
 - Cross-platform **`updates`** function — updates system, package manager,
   Mac App Store (mas), npm, and Ruby gems with one command
-
+- Cross-platform **`clean`** function — clears caches and frees disk space
+  for brew/apt, npm, gems, pip, Docker, and trash with one command
 - A collection of **aliases** and **functions** for common tasks
+- **Introspection commands** — `aliases` lists alias names, `functions`
+  lists function names (or pass a name to see its body)
 - A **welcome screen** showing weather, calendar, and time on terminal open
 
 ## Repository Structure
@@ -33,9 +36,11 @@ Works on macOS and Linux (Debian, Mint, DietPi, etc.).
     │   │   ├── aliases.zsh               ← shared aliases (all OSes)
     │   │   ├── aliases.linux.zsh         ← Linux-specific aliases
     │   │   ├── aliases.macos.zsh         ← macOS-specific aliases
-    │   │   └── functions.zsh             ← shell functions (incl. `updates`)
+    │   │   └── functions.zsh             ← shell functions (incl. `updates`, `clean`)
     │   └── git/
     │       ├── gitconfig                 ← (→ ~/.gitconfig)
+    │       ├── gitconfig.macos           ← (→ ~/.config/git/gitconfig.macos)
+    │       ├── gitconfig.linux           ← (→ ~/.config/git/gitconfig.linux)
     │       └── ignore                    ← (→ ~/.config/git/ignore)
     ├── scripts/
     │   ├── welcome.sh                    ← weather/calendar/time greeting
@@ -47,7 +52,7 @@ Works on macOS and Linux (Debian, Mint, DietPi, etc.).
 ## Install on a New Machine
 
     # 1. Clone the repo (with submodules for Dotbot and Powerlevel10k)
-    git clone --recursive <mailto:git@github.com>:yourusername/dotfiles.git ~/.dotfiles
+    git clone --recursive git@github.com:dropkick/dotfiles.git ~/.dotfiles
 
     # 2. Run the installer
     cd ~/.dotfiles
@@ -61,12 +66,12 @@ Works on macOS and Linux (Debian, Mint, DietPi, etc.).
     p10k configure
 
 The installer:
-
 1. Installs zsh + autocomplete plugins (via Homebrew on macOS, apt/dnf/pacman on Linux)
 2. Clones zsh-history-substring-search from git
 3. Creates symlinks for all config files (via Dotbot)
-4. Ports bash history to zsh (if applicable)
-5. Sets zsh as the default shell
+4. Creates the platform-specific gitconfig.local symlink
+5. Ports bash history to zsh (if applicable)
+6. Sets zsh as the default shell
 
 ### How Dotbot Works
 
@@ -77,12 +82,14 @@ your home directory. For example:
     ~/.config/dotfiles/aliases.zsh → dotfiles/config/zsh/aliases.zsh
     ~/.gitconfig                   → dotfiles/config/git/gitconfig
     ~/.config/git/ignore           → dotfiles/config/git/ignore
+    ~/.config/git/gitconfig.macos  → dotfiles/config/git/gitconfig.macos
+    ~/.config/git/gitconfig.linux  → dotfiles/config/git/gitconfig.linux
 
-Because they&#x27;re symlinks, any edit you make to the file in the repo
+Because they're symlinks, any edit you make to the file in the repo
 is immediately live — no copy step needed.
 
 The repo can live anywhere (~/.dotfiles, ~/Projects/dotfiles, etc.) —
-Dotbot uses absolute paths for symlinks, so the location doesn&#x27;t matter.
+Dotbot uses absolute paths for symlinks, so the location doesn't matter.
 Just run `./install` from wherever you cloned it.
 
 ## Making Changes
@@ -96,26 +103,34 @@ Just run `./install` from wherever you cloned it.
 | Edit welcome screen | Edit `scripts/welcome.sh` |
 | Change what gets linked | Edit `install.conf.yaml`, then re-run `./install` |
 | Update packages on this machine | Run `updates` |
+| Clean caches / free disk space | Run `clean` |
+| List all aliases | Run `aliases` |
+| List all functions | Run `functions` (or `functions <name>` to see a body) |
 
 ## Syncing Across Machines
 
     # On the machine you changed:
     cd ~/.dotfiles
     git add -A
-    git commit -m &quot;description of change&quot;
+    git commit -m "description of change"
     git push
 
     # On other machines:
     cd ~/.dotfiles
     git pull
     ./install    # re-run to update symlinks if install.conf.yaml changed
+    source ~/.zshrc    # reload zsh for alias/function changes
+
+You only need to re-run `./install` when `install.conf.yaml` changed
+(files added, removed, or renamed). For edits to existing files, just
+`git pull` and `source ~/.zshrc` — the symlinks already point to the
+updated content.
 
 ## The `updates` Function
 
 Run `updates` to update everything on your system:
 
 **On macOS:**
-
 1. macOS software updates (`softwareupdate`)
 2. Homebrew update + upgrade
 3. Mac App Store apps (`mas upgrade`)
@@ -123,59 +138,74 @@ Run `updates` to update everything on your system:
 5. Ruby gems
 
 **On Linux:**
-
 1. apt update + upgrade
 2. Global npm packages
 3. Ruby gems
 
 Each step is labeled with a progress indicator and skips gracefully if
-a tool isn&#x27;t installed.
+a tool isn't installed.
+
+## The `clean` Function
+
+Run `clean` to clear caches and free up disk space:
+
+**On macOS:**
+1. Homebrew cache (`brew cleanup --prune=0`)
+2. Trash (`~/.Trash/*`)
+3. DNS cache (`mDNSResponder`)
+4. Ruby gem cleanup
+5. npm cache
+6. pip cache
+7. Docker system prune
+
+**On Linux:**
+1. apt cleanup (`autoremove`, `clean`, `autoclean`)
+2. Trash (`~/.local/share/Trash/*`)
+3. Ruby gem cleanup
+4. npm cache
+5. pip cache
+6. Docker system prune
+
+Same as `updates` — each step skips gracefully if a tool isn't installed.
 
 ## Git Configuration
 
 The global gitconfig is symlinked to `~/.gitconfig`. It includes:
-
-- User info (name, email, GitHub user, GitLab user)
-- Aliases (`l`, `st`, `co`, `ci`, `p`, `pr`, `br`, etc.)
+- User info (name, email, GitHub user: dropkick, GitLab user: dropkickdesign)
+- Aliases (`l`, `st`, `co`, `ci`, `p`, `pr`, `br`, `amend`, etc.)
 - Color scheme for branch/diff/status output
 - Push/fetch behavior (simple, followTags, prune)
-- Global gitignore at `~/.config/git/ignore`
+- Global gitignore at `~/.config/git/ignore` (covers macOS + Windows metadata,
+  Node.js, Sublime, VS Code, CodeKit)
 
-OS-specific git settings (credential helper, pager) live in
-`~/.gitconfig.local`, which is NOT managed by this repo — each machine
-has its own. Create it manually:
+### Platform-specific Git settings
 
-**macOS:**
+OS-specific git settings (credential helper, pager) are handled
+automatically. The repo includes two platform files:
 
-    cat &gt; ~/.gitconfig.local &lt;&lt; &#x27;EOF&#x27;
-    [credential]
-        helper = osxkeychain
-    [core]
-        pager = diff-so-fancy | less --tabs=4 -RFX
-    EOF
-    git config --global include.path ~/.gitconfig.local
+- `gitconfig.macos` — `osxkeychain` credential helper, `diff-so-fancy` pager
+- `gitconfig.linux` — `store` credential helper, plain `less` pager
 
-**Linux:**
+Both are symlinked into `~/.config/git/` by Dotbot. During `./install`,
+the setup script creates `~/.config/git/gitconfig.local` as a symlink
+to the appropriate platform file based on OS. The main `~/.gitconfig`
+includes it via:
 
-    cat &gt; ~/.gitconfig.local &lt;&lt; &#x27;EOF&#x27;
-    [credential]
-        helper = store
-    [core]
-        pager = less --tabs=4 -RFX
-    EOF
-    git config --global include.path ~/.gitconfig.local
+    [include]
+        path = ~/.config/git/gitconfig.local
+
+No manual setup needed — it just works after `./install`.
 
 ## OS-Specific Aliases
 
 The `zshrc` detects the OS via `uname -s` and loads:
-
 - `aliases.zsh` — shared aliases (always loaded)
 - `aliases.linux.zsh` — Linux-specific (loaded on Linux)
 - `aliases.macos.zsh` — macOS-specific (loaded on macOS)
 
 ## DietPi / Minimal Systems
 
-DietPi is Debian-based but minimal. If `install_packages.zsh` can&#x27;t
+DietPi is Debian-based but minimal. If `install_packages.zsh` can't
 install the zsh plugins via apt, clone from git as a fallback:
 
     git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions \
