@@ -4,23 +4,42 @@
 #  This file is the single source of truth for what gets installed.
 #  Run `./install` from the repo root to apply.
 #
-#  It does four things:
+#  Steps run in order:
 #    1. clean  — removes broken symlinks in ~
-#    2. link   — creates symlinks from repo files into your home directory
-#    3. create — creates directories that don't exist yet
-#    4. shell  — runs setup scripts (package installation)
+#    2. shell  — backs up existing real files, then installs packages
+#    3. link   — creates symlinks from repo files into your home directory
 #
 #  NOTE: This repo can live anywhere (~/Projects/dotfiles, ~/.dotfiles, etc.)
 #  Dotbot creates symlinks with absolute paths, so the location doesn't
 #  matter — just run `./install` from wherever you cloned it.
+#
+#  force: true  — overwrites existing real files (non-symlinks) with symlinks
+#                 Existing files are automatically backed up before linking
+#                 by backup_existing.zsh to ~/.dotfiles-backup-TIMESTAMP/
+#  relink: true — replaces existing symlinks that point elsewhere
 # ═══════════════════════════════════════════════════════════════════════
 
 - defaults:
     link:
       relink: true
+      force: true
 
 # ── Clean broken symlinks ──────────────────────────────────────────────
 - clean: ['~']
+
+# ── Back up existing files & install packages ──────────────────────────
+# backup_existing.zsh runs first — reads this file, backs up any real
+# files at link targets to ~/.dotfiles-backup-TIMESTAMP/ before they're
+# overwritten. Then install_packages.zsh installs software.
+- shell:
+    -
+      command: zsh scripts/setup/backup_existing.zsh install.conf.yaml
+      stdout: true
+      stderr: true
+    -
+      command: chmod -R +x scripts/setup && zsh scripts/setup/install_packages.zsh
+      stdout: true
+      stderr: true
 
 # ── Symlinks ───────────────────────────────────────────────────────────
 # Each line: <target in home> : <source in repo>
@@ -38,16 +57,3 @@
     ~/.config/git/gitconfig.macos: config/git/gitconfig.macos
     ~/.config/git/gitconfig.linux: config/git/gitconfig.linux
     ~/scripts/welcome.sh: scripts/welcome.sh
-
-# ── Create directories ─────────────────────────────────────────────────
-- create:
-    - ~/projects
-    - ~/scripts
-
-# ── Run setup scripts ──────────────────────────────────────────────────
-# install_packages.zsh detects the OS and installs the right packages.
-- shell:
-    -
-      command: chmod -R +x scripts/setup && zsh scripts/setup/install_packages.zsh
-      stdout: true
-      stderr: true

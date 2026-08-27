@@ -1,4 +1,3 @@
-cat > ~/Projects/dotfiles/README.md << 'ENDOFFILE'
 # dotfiles
 
 My cross-platform dotfiles, managed with [Dotbot](https://github.com/anishathalye/dotbot).
@@ -20,6 +19,8 @@ Works on macOS and Linux (Debian, Mint, DietPi, etc.).
 - **Introspection commands** — `aliases` lists alias names, `functions`
   lists function names (or pass a name to see its body)
 - A **welcome screen** showing weather, calendar, and time on terminal open
+- **Automatic backups** — the installer backs up any existing real files
+  before replacing them with symlinks
 
 ## Repository Structure
 
@@ -45,6 +46,7 @@ Works on macOS and Linux (Debian, Mint, DietPi, etc.).
     ├── scripts/
     │   ├── welcome.sh                    ← weather/calendar/time greeting
     │   └── setup/
+    │       ├── backup_existing.zsh       ← backs up real files before linking
     │       └── install_packages.zsh      ← OS-aware package installer
     ├── powerlevel10k/                    ← git submodule
     └── dotbot/                           ← git submodule
@@ -66,12 +68,35 @@ Works on macOS and Linux (Debian, Mint, DietPi, etc.).
     p10k configure
 
 The installer:
-1. Installs zsh + autocomplete plugins (via Homebrew on macOS, apt/dnf/pacman on Linux)
-2. Clones zsh-history-substring-search from git
-3. Creates symlinks for all config files (via Dotbot)
-4. Creates the platform-specific gitconfig.local symlink
-5. Ports bash history to zsh (if applicable)
-6. Sets zsh as the default shell
+1. Removes broken symlinks in your home directory
+2. Backs up any existing real files that would be replaced (to
+   ~/.dotfiles-backup-TIMESTAMP/)
+3. Installs zsh + autocomplete plugins (via Homebrew on macOS,
+   apt/dnf/pacman on Linux)
+4. Creates symlinks for all config files (via Dotbot)
+5. Creates the platform-specific gitconfig.local symlink
+6. Ports bash history to zsh (if applicable)
+7. Sets zsh as the default shell
+
+### Automatic Backups
+
+The installer automatically backs up any existing real files (not
+symlinks) that would be overwritten by the symlinking step. Backups
+are saved to:
+
+    ~/.dotfiles-backup-YYYYMMDD-HHMMSS/
+
+For example, if you already have a ~/.zshrc, it gets copied to
+~/.dotfiles-backup-20260827-143000/.zshrc before being replaced
+with a symlink.
+
+The backup script reads install.conf.yaml dynamically — no hardcoding.
+If you add new link targets to the config, they're automatically
+included in future backups.
+
+Once you've verified everything works, you can remove old backups:
+
+    rm -rf ~/.dotfiles-backup-*
 
 ### How Dotbot Works
 
@@ -223,4 +248,3 @@ For `fzf` on minimal systems:
 ## License
 
 Personal use. Feel free to fork and adapt.
-ENDOFFILE
