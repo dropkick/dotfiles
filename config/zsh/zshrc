@@ -35,9 +35,9 @@ fi
 
 # ── Powerlevel10k theme ───────────────────────────────────────────────
 # Installed as a git submodule in the dotfiles repo at powerlevel10k/.
-# Also checks ~/powerlevel10k/ for standalone clones.
-if [[ -f ~/powerlevel10k/powerlevel10k.zsh-theme ]]; then
-  source ~/powerlevel10k/powerlevel10k.zsh-theme
+
+if [[ -f ~/.dotfiles/powerlevel10k/powerlevel10k.zsh-theme ]]; then
+  source ~/.dotfiles/powerlevel10k/powerlevel10k.zsh-theme
   [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 fi
 
