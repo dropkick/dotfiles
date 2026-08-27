@@ -80,7 +80,51 @@ DOTFILES_CONFIG="$HOME/.config/dotfiles"
 # Key bindings and completion are loaded if available.
 # On macOS: installed via Homebrew (files at /opt/homebrew/opt/fzf/shell/)
 # On Linux: installed via apt or ~/.fzf/install (files at ~/.fzf/)
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# ── fzf: keybindings + completion ─────────────────────────────────────
+# Works with any fzf version — checks multiple install locations.
+# Older fzf (apt/dnf/pacman): ships separate key-bindings and completion
+#   scripts in various locations depending on distro
+# Newer fzf (0.48+): ~/.fzf.zsh created by installer, uses `fzf --zsh`
+# Git install: scripts in ~/.fzf/shell/
+# Homebrew: scripts in /opt/homebrew/opt/fzf/shell/ (Apple Silicon)
+#           or /usr/local/opt/fzf/shell/ (Intel)
+FZF_KEYBINDINGS_SOURCED=0
+FZF_COMPLETION_SOURCED=0
+
+if command -v fzf &>/dev/null; then
+  # Source key-bindings
+  for f in \
+    /usr/share/doc/fzf/examples/key-bindings.zsh \
+    /usr/share/fzf/key-bindings.zsh \
+    /opt/homebrew/opt/fzf/shell/key-bindings.zsh \
+    /usr/local/opt/fzf/shell/key-bindings.zsh \
+    ~/.fzf/shell/key-bindings.zsh; do
+    if [[ -f "$f" ]]; then
+      source "$f"
+      FZF_KEYBINDINGS_SOURCED=1
+      break
+    fi
+  done
+
+  # Source completion
+  for f in \
+    /usr/share/doc/fzf/examples/completion.zsh \
+    /usr/share/fzf/completion.zsh \
+    /opt/homebrew/opt/fzf/shell/completion.zsh \
+    /usr/local/opt/fzf/shell/completion.zsh \
+    ~/.fzf/shell/completion.zsh; do
+    if [[ -f "$f" ]]; then
+      source "$f"
+      FZF_COMPLETION_SOURCED=1
+      break
+    fi
+  done
+
+  # If separate scripts weren't found, try ~/.fzf.zsh (fzf installer)
+  if [[ $FZF_KEYBINDINGS_SOURCED -eq 0 ]] && [[ -f ~/.fzf.zsh ]]; then
+    source ~/.fzf.zsh
+  fi
+fi
 [ -f /opt/homebrew/opt/fzf/shell/key-bindings.zsh ] && source /opt/homebrew/opt/fzf/shell/key-bindings.zsh
 [ -f /opt/homebrew/opt/fzf/shell/completion.zsh ] && source /opt/homebrew/opt/fzf/shell/completion.zsh
 [ -f ~/.fzf/zsh-key-bindings.zsh ] && source ~/.fzf/zsh-key-bindings.zsh
