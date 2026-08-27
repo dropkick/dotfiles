@@ -1,12 +1,15 @@
 #!/usr/bin/env zsh
 # ═══════════════════════════════════════════════════════════════════════
-#  backup_existing.zsh — Back up real files before Dotbot replaces them
+#  backup_existing.zsh — Back up real files & create dirs before Dotbot
 #  ─────────────────────────────────────────────────────────────────────
-#  Reads install.conf.yaml, extracts all link targets, and backs up any
-#  that exist as real files (not symlinks) to ~/.dotfiles-backup-TIMESTAMP/
+#  Reads install.conf.yaml, extracts all link targets, and:
+#    1. Creates any missing parent directories (so Dotbot can link into them)
+#    2. Backs up any existing real files (not symlinks) to
+#       ~/.dotfiles-backup-TIMESTAMP/
 #
 #  This runs as a shell step BEFORE the link step in install.conf.yaml,
-#  so Dotbot's force:true can safely overwrite without losing data.
+#  so Dotbot's force:true can safely overwrite without losing data or
+#  failing on missing directories.
 #
 #  No hardcoding — targets are pulled dynamically from the YAML.
 # ═══════════════════════════════════════════════════════════════════════
@@ -38,6 +41,26 @@ print('\n'.join(targets))
 if [[ -z "$TARGETS" ]]; then
   echo "  No link targets found in $CONFIG — skipping backup."
   exit 0
+fi
+
+# ── Create missing parent directories for all link targets ─────────────
+# Dotbot's force:true overwrites files but does NOT create parent dirs.
+# We do it here so linking never fails on a missing directory.
+DIRS_CREATED=0
+while IFS= read -r target; do
+  expanded=$(eval echo "$target")
+  parent=$(dirname "$expanded")
+  if [[ ! -d "$parent" ]]; then
+    mkdir -p "$parent"
+    echo "  📁 Created directory: $parent"
+    DIRS_CREATED=$((DIRS_CREATED + 1))
+  fi
+done <<< "$TARGETS"
+
+if [[ $DIRS_CREATED -gt 0 ]]; then
+  echo "  ✅ Created $DIRS_CREATED director(y/ies)."
+else
+  echo "  ✅ All target directories already exist."
 fi
 
 # ── Back up any real (non-symlink) files ───────────────────────────────
