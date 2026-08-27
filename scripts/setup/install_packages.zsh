@@ -100,6 +100,7 @@ case "$(uname -s)" in
     ;;
 esac
 
+
 # ── Set zsh as default shell if it isn't already ───────────────────────
 info "🐚 Checking default shell..."
 CURRENT_SHELL=$(getent passwd "$USER" 2>/dev/null | cut -d: -f7 || echo "$SHELL")
@@ -114,10 +115,18 @@ else
   printf "  Would you like to set zsh as your default shell? [y/N] "
   read -r REPLY < /dev/tty
   if [[ "$REPLY" =~ ^[Yy]$ ]]; then
-    if chsh -s "$ZSH_PATH"; then
+    # Try chsh first (works on macOS, some Linux distros)
+    if chsh -s "$ZSH_PATH" 2>/dev/null; then
       ok "Default shell set to zsh. Log out and back in for it to take effect."
     else
-      info "chsh failed — you may need to run: sudo chsh -s $ZSH_PATH $USER"
+      # chsh failed (PAM restriction on Debian/Ubuntu) — try sudo
+      info "chsh failed (likely PAM restriction). Trying with sudo..."
+      if sudo chsh -s "$ZSH_PATH" "$USER" 2>/dev/null; then
+        ok "Default shell set to zsh. Log out and back in for it to take effect."
+      else
+        info "Could not set zsh as default shell automatically."
+        info "Run this manually:  sudo chsh -s $ZSH_PATH $USER"
+      fi
     fi
   else
     info "Skipping. You can set it later with: chsh -s $ZSH_PATH"
