@@ -125,10 +125,6 @@ if command -v fzf &>/dev/null; then
     source ~/.fzf.zsh
   fi
 fi
-[ -f /opt/homebrew/opt/fzf/shell/key-bindings.zsh ] && source /opt/homebrew/opt/fzf/shell/key-bindings.zsh
-[ -f /opt/homebrew/opt/fzf/shell/completion.zsh ] && source /opt/homebrew/opt/fzf/shell/completion.zsh
-[ -f ~/.fzf/zsh-key-bindings.zsh ] && source ~/.fzf/zsh-key-bindings.zsh
-[ -f ~/.fzf/zsh-completion.zsh ] && source ~/.fzf/zsh-completion.zsh
 
 # Disable Alt+C (fuzzy cd) — not everyone wants it
 FZF_ALT_C_COMMAND=''
