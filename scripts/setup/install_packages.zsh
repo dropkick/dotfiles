@@ -21,7 +21,7 @@ case "$(uname -s)" in
       info "Homebrew not found. Installing..."
       /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     fi
-    brew install zsh zsh-autosuggestions zsh-syntax-highlighting fzf mas
+    brew install zsh zsh-autosuggestions zsh-syntax-highlighting fzf mas eza lsd
     ok "macOS packages installed"
     ;;
 
