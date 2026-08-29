@@ -115,6 +115,11 @@ alias week="date +%V"                   # Current ISO week number
 alias grip="grip -b"                    # GitHub Markdown preview in browser
 alias cal="ncal -M -b"                  # Calendar, Monday-first
 
+# ── man → batman (syntax-highlighted man pages via bat-extras) ──────
+if command -v batman &>/dev/null; then
+  alias man='batman'                    # Use batman if installed, else regular man
+fi
+
 # Network speed test (downloads a test file and discards it)
 alias speedtest="wget -O /dev/null http://speedtest.wdc01.softsoftlayer.com/downloads/test10.zip"
 

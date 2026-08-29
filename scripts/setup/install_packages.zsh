@@ -21,7 +21,7 @@ case "$(uname -s)" in
       info "Homebrew not found. Installing..."
       /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     fi
-    brew install zsh zsh-autosuggestions zsh-syntax-highlighting fzf mas eza lsd
+    brew install zsh zsh-autosuggestions zsh-syntax-highlighting fzf mas eza lsd bat
     ok "macOS packages installed"
     ;;
 
@@ -31,22 +31,22 @@ case "$(uname -s)" in
     if command -v apt &>/dev/null; then
       info "Using apt (Debian/Ubuntu/Mint/DietPi)"
       sudo apt update
-      sudo apt install -y zsh zsh-autosuggestions zsh-syntax-highlighting fzf lsd eza      
+      sudo apt install -y zsh zsh-autosuggestions zsh-syntax-highlighting fzf lsd eza bat     
       ok "apt packages installed"
 
     elif command -v dnf &>/dev/null; then
       info "Using dnf (Fedora)"
-      sudo dnf install -y zsh zsh-autosuggestions zsh-syntax-highlighting fzf lsd eza
+      sudo dnf install -y zsh zsh-autosuggestions zsh-syntax-highlighting fzf lsd eza bat
       ok "dnf packages installed"
 
     elif command -v pacman &>/dev/null; then
       info "Using pacman (Arch)"
-      sudo pacman -S --noconfirm zsh zsh-autosuggestions zsh-syntax-highlighting fzf lsd eza
+      sudo pacman -S --noconfirm zsh zsh-autosuggestions zsh-syntax-highlighting fzf lsd eza bat
       ok "pacman packages installed"
 
     else
       info "⚠️  No supported package manager found."
-      info "    Install manually: zsh, zsh-autosuggestions, zsh-syntax-highlighting, fzf, lsd, eza"
+      info "    Install manually: zsh, zsh-autosuggestions, zsh-syntax-highlighting, fzf, lsd, eza bat"
     fi
     ;;
 
