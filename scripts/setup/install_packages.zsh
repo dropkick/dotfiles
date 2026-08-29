@@ -31,22 +31,34 @@ case "$(uname -s)" in
     if command -v apt &>/dev/null; then
       info "Using apt (Debian/Ubuntu/Mint/DietPi)"
       sudo apt update
-      sudo apt install -y zsh zsh-autosuggestions zsh-syntax-highlighting fzf
+      sudo apt install -y zsh zsh-autosuggestions zsh-syntax-highlighting fzf lsd
+      # eza is not in default Debian/Ubuntu repos — install from deb.gierens.de
+      if ! command -v eza &>/dev/null; then
+        info "Installing eza from deb.gierens.de..."
+        sudo mkdir -p /etc/apt/keyrings
+        wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | \
+          sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg 2>/dev/null
+        echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de/debian ./" | \
+          sudo tee /etc/apt/sources.list.d/gierens.list >/dev/null
+        sudo apt update
+        sudo apt install -y eza
+        ok "eza installed"
+      fi
       ok "apt packages installed"
 
     elif command -v dnf &>/dev/null; then
       info "Using dnf (Fedora)"
-      sudo dnf install -y zsh zsh-autosuggestions zsh-syntax-highlighting fzf
+      sudo dnf install -y zsh zsh-autosuggestions zsh-syntax-highlighting fzf lsd eza
       ok "dnf packages installed"
 
     elif command -v pacman &>/dev/null; then
       info "Using pacman (Arch)"
-      sudo pacman -S --noconfirm zsh zsh-autosuggestions zsh-syntax-highlighting fzf
+      sudo pacman -S --noconfirm zsh zsh-autosuggestions zsh-syntax-highlighting fzf lsd eza
       ok "pacman packages installed"
 
     else
       info "⚠️  No supported package manager found."
-      info "    Install manually: zsh, zsh-autosuggestions, zsh-syntax-highlighting, fzf"
+      info "    Install manually: zsh, zsh-autosuggestions, zsh-syntax-highlighting, fzf, lsd, eza"
     fi
     ;;
 
