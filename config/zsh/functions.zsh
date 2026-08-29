@@ -337,12 +337,12 @@ alias uporno='down4me'
 function wx() {
   local DEFAULT_LOCATION="Portland"
   local location="$DEFAULT_LOCATION"
-  local format="4"
+  local fmt="1"
 
   # Parse args — format flag or location can come in any order
   for arg in "$@"; do
     if [[ "$arg" == "-"[0-9] ]]; then
-      format="$arg"
+      fmt="${arg#-}"
     else
       location="$arg"
     fi
@@ -351,7 +351,8 @@ function wx() {
   # Replace spaces with + for the URL
   location="${location// /+}"
 
-  curl -s "wttr.in/${location}${format}" --max-time 5
+  # Use --globoff to prevent zsh/curl from interpreting ? as glob
+  curl -sg --max-time 5 "wttr.in/${location}?${fmt}"
 }
 
 # ── moon — Moon phase via wttr.in ────────────────────────────────────
