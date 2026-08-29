@@ -55,3 +55,7 @@ alias localips="ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -E
 
 # ── iOS Simulator ─────────────────────────────────────────────────────
 alias ios="open /Applications/Xcode.app/Contents/Developer/Applications/iOS\ Simulator.app"
+
+# ── Audio ────────────────────────────────────────────────────────────
+alias stfu="osascript -e 'set volume output muted true'"
+alias pumpitup="osascript -e 'set volume 7'"

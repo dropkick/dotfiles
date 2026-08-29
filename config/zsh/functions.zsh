@@ -260,3 +260,55 @@ function functions_list {
     typeset -f "$@"
   fi
 }
+
+
+# ── calc — Quick calculator ──────────────────────────────────────────
+function calc() {
+  echo "$*" | bc -l
+}
+
+# ── cheat — Command cheatsheet via cht.sh ─────────────────────────────
+function cheat() {
+  curl cht.sh/"$1"
+}
+
+# ── ff — Fuzzy find file by name ──────────────────────────────────────
+function ff() {
+  find . -type f -iname "*$1*"
+}
+
+# ── fd — Fuzzy find directory by name ─────────────────────────────────
+function fd() {
+  find . -type d -iname "*$1*"
+}
+
+# ── duf — Disk usage, sorted and formatted ────────────────────────────
+function duf() {
+  du --max-depth="${1:-0}" -c | sort -r -n | awk \
+    '{split("K M G",v); s=1; while($1>1024){$1/=1024; s++} print int($1)v[s]"\t"$2}'
+}
+
+# ── gz — Show gzip compression ratio for a file ───────────────────────
+function gz() {
+  local ORIGSIZE=$(wc -c < "$1")
+  local GZIPSIZE=$(gzip -c "$1" | wc -c)
+  local RATIO=$(echo "$GZIPSIZE * 100 / $ORIGSIZE" | bc -l)
+  local SAVED=$(echo "($ORIGSIZE - $GZIPSIZE) * 100 / $ORIGSIZE" | bc -l)
+  printf "orig: %d bytes\ngzip: %d bytes\nsave: %2.0f%% (%2.0f%%)\n" \
+    "$ORIGSIZE" "$GZIPSIZE" "$SAVED" "$RATIO"
+}
+
+# ── dataurl — Create data URL from a file ─────────────────────────────
+function dataurl() {
+  local MIMETYPE=$(file --mime-type "$1" | cut -d ' ' -f2)
+  if [[ $MIMETYPE == "text/"* ]]; then
+    MIMETYPE="${MIMETYPE};charset=utf-8"
+  fi
+  echo "data:${MIMETYPE};base64,$(openssl base64 -in "$1" | tr -d '\n')"
+}
+
+# ── down4me — Check if a website is down ──────────────────────────────
+function down4me() {
+  curl -s "http://downforeveryoneorjustme.com/$1" | \
+    sed '/just you/!d;s/<[^>]*>//g'
+}
