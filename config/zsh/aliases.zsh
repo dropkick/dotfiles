@@ -123,5 +123,8 @@ fi
 # Network speed test (downloads a test file and discards it)
 alias speedtest="wget -O /dev/null http://speedtest.wdc01.softsoftlayer.com/downloads/test10.zip"
 
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias localips="ifconfig | grep -Eo 'inet (addr:)?([0-9]+.){3}[0-9]+' | grep -v '127.0.0.1'"
+
 # Track what I've done today
 alias did="nano -S ~/did.txt"
