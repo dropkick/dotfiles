@@ -327,3 +327,34 @@ function down4me() {
 
 alias uporno='down4me'
 
+# ── wx — Weather report via wttr.in ──────────────────────────────────
+# Usage:
+#   wx              → weather for default location (two-line format)
+#   wx 97123        → weather for zip code 97123
+#   wx "San Diego"  → weather for San Diego
+#   wx -1           → one-liner (current conditions only)
+#   wx -0           → full 3-day forecast
+function wx() {
+  local DEFAULT_LOCATION="Portland"
+  local location="$DEFAULT_LOCATION"
+  local format="-2"
+
+  # Parse args — format flag or location can come in any order
+  for arg in "$@"; do
+    if [[ "$arg" == "-"[0-9] ]]; then
+      format="$arg"
+    else
+      location="$arg"
+    fi
+  done
+
+  # Replace spaces with + for the URL
+  location="${location// /+}"
+
+  curl -s "wttr.in/${location}${format}" --max-time 5
+}
+
+# ── moon — Moon phase via wttr.in ────────────────────────────────────
+function moon() {
+  curl -s "wttr.in/moon" --max-time 5
+}
