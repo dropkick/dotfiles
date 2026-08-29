@@ -329,10 +329,10 @@ alias uporno='down4me'
 
 # ── wx — Weather report via wttr.in ──────────────────────────────────
 # Usage:
-#   wx              → weather for default location (two-line format)
-#   wx 97123        → weather for zip code 97123
-#   wx "San Diego"  → weather for San Diego
-#   wx -1           → one-liner (current conditions only)
+#   wx              → one-liner for default location (Portland)
+#   wx 97123        → one-liner for zip 97123
+#   wx "San Diego"  → one-liner for San Diego
+#   wx -2           → two-line format
 #   wx -0           → full 3-day forecast
 function wx() {
   local DEFAULT_LOCATION="Portland"
