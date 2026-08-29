@@ -329,20 +329,28 @@ alias uporno='down4me'
 
 # ── wx — Weather report via wttr.in ──────────────────────────────────
 # Usage:
-#   wx              → one-liner for default location (Portland)
-#   wx 97123        → one-liner for zip 97123
-#   wx "San Diego"  → one-liner for San Diego
+#   wx              → narrow one-liner for default location (Portland)
+#   wx 97123        → narrow one-liner for zip 97123
+#   wx "San Diego"  → narrow one-liner for San Diego
+#   wx -1           → one-liner (current conditions)
 #   wx -2           → two-line format
 #   wx -0           → full 3-day forecast
 function wx() {
   local DEFAULT_LOCATION="Portland"
   local location="$DEFAULT_LOCATION"
-  local fmt="4"
+  local fmt="format=4"
 
   # Parse args — format flag or location can come in any order
   for arg in "$@"; do
     if [[ "$arg" == "-"[0-9] ]]; then
-      fmt="${arg#-}"
+      local num="${arg#-}"
+      # 0, 1, 2 use short syntax (?0, ?1, ?2)
+      # 3+ use format=N syntax
+      if [[ "$num" -le 2 ]]; then
+        fmt="$num"
+      else
+        fmt="format=$num"
+      fi
     else
       location="$arg"
     fi
@@ -351,11 +359,11 @@ function wx() {
   # Replace spaces with + for the URL
   location="${location// /+}"
 
-  # Use --globoff to prevent zsh/curl from interpreting ? as glob
+  # --globoff prevents curl from interpreting ? as glob
   curl -sg --max-time 5 "wttr.in/${location}?${fmt}"
 }
 
 # ── moon — Moon phase via wttr.in ────────────────────────────────────
 function moon() {
-  curl -s "wttr.in/moon" --max-time 5
+  curl -sg --max-time 5 "wttr.in/moon"
 }
