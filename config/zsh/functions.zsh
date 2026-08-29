@@ -314,14 +314,16 @@ function down4me() {
   local clean="${site#http://}"
   clean="${clean#https://}"
   clean="${clean%%/*}"
-  local page
-  page=$(curl -s --max-time 10 "https://downforeveryoneorjustme.com/${clean}")
-  if [[ "$page" == *"not detecting any problems"* ]]; then
-    print "✅ It's just you — ${clean} is up."
-  elif [[ "$page" == *"has been detected"* ]]; then
-    print "❌ It's not just you — ${clean} appears down."
-  else
-    print "❓ Couldn't check ${clean} — try https://downforeveryoneorjustme.com/${clean}"
-  fi
+  local response
+  response=$(curl -s --max-time 10 "https://isdownapi.com/api/check?domain=${clean}")
+  local status
+  status=$(echo "$response" | grep -o '"status":"[^"]*"' | cut -d'"' -f4)
+  case "$status" in
+    up)   print "✅ It's just you — ${clean} is up." ;;
+    down) print "❌ It's not just you — ${clean} appears down." ;;
+    *)    print "❓ Couldn't check ${clean} — try https://isdownapi.com/api/check?domain=${clean}" ;;
+  esac
 }
+
+alias uporno='down4me'
 
