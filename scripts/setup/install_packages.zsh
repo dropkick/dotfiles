@@ -31,19 +31,7 @@ case "$(uname -s)" in
     if command -v apt &>/dev/null; then
       info "Using apt (Debian/Ubuntu/Mint/DietPi)"
       sudo apt update
-      sudo apt install -y zsh zsh-autosuggestions zsh-syntax-highlighting fzf lsd
-      # eza is not in default Debian/Ubuntu repos — install from deb.gierens.de
-      if ! command -v eza &>/dev/null; then
-        info "Installing eza from deb.gierens.de..."
-        sudo mkdir -p /etc/apt/keyrings
-        wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | \
-          sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg 2>/dev/null
-        echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de/debian ./" | \
-          sudo tee /etc/apt/sources.list.d/gierens.list >/dev/null
-        sudo apt update
-        sudo apt install -y eza
-        ok "eza installed"
-      fi
+      sudo apt install -y zsh zsh-autosuggestions zsh-syntax-highlighting fzf lsd eza      
       ok "apt packages installed"
 
     elif command -v dnf &>/dev/null; then
