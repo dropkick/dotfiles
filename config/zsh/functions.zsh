@@ -307,8 +307,21 @@ function dataurl() {
   echo "data:${MIMETYPE};base64,$(openssl base64 -in "$1" | tr -d '\n')"
 }
 
-# ── down4me — Check if a website is down ──────────────────────────────
+# ── down4me — Check if a site is down for everyone or just you ───────
 function down4me() {
-  curl -s "http://downforeveryoneorjustme.com/$1" | \
-    sed '/just you/!d;s/<[^>]*>//g'
+  local site="$1"
+  # Strip protocol for the URL
+  local clean="${site#http://}"
+  clean="${clean#https://}"
+  clean="${clean%%/*}"
+  local result
+  result=$(curl -s --max-time 10 "https://downforeveryoneorjustme.com/${clean}" | grep -i 'detecting any problems\|has been detected' | sed 's/<[^>]*>//g' | tr -s ' ')
+  if [[ -z "$result" ]]; then
+    print "❓ Couldn't check ${site} — try https://downforeveryoneorjustme.com/${clean}"
+  elif [[ "$result" == *"not detecting any problems"* ]]; then
+    print "✅ It's just you — ${clean} is up."
+  else
+    print "❌ It's not just you — ${clean} appears down."
+  fi
 }
+
