@@ -363,7 +363,12 @@ function wx() {
   curl -sg --max-time 5 "wttr.in/${location}?${fmt}"
 }
 
-# ── moon — Moon phase via wttr.in ────────────────────────────────────
+# ── moon — Moon phase via wttr.in (ASCII art + phase name) ───────────
 function moon() {
+  local phase
+  phase=$(curl -sg --max-time 5 "wttr.in?format=j1" | grep -m1 -o '"moon_phase":"[^"]*"' | cut -d'"' -f4)
+  if [[ -n "$phase" ]]; then
+    print "\033[1;33m🌙 Phase: ${phase}\033[0m\n"
+  fi
   curl -sg --max-time 5 "wttr.in/moon"
 }
