@@ -1,7 +1,14 @@
 # dotfiles
 
-My cross-platform dotfiles, managed with [Dotbot](https://github.com/anishathalye/dotbot).
-Works on macOS and Linux (Debian, Mint, DietPi, etc.).
+Cross-platform dotfiles and shell bizniss for zsh, managed with [Dotbot](https://github.com/anishathalye/dotbot).
+Focused on macOS and flavors of Linux I use most (Debian, Mint, DietPi, Fedora, Arch, etc.).
+
+![License](https://p.kagi.com/proxy/license-personal-blue?c=EgGQfWtq44GRXgvj3b8hBT9Ge2Vh_riJyU6FF9ZblGvu-jRvNFNzL-hMmsQsdQqaQUyn2mFUjhEMVdO-VTKJMzDItz0mlR3aOyCo6bhRRq0%3D)
+![Shell](https://p.kagi.com/proxy/shell-zsh-orange?c=EgGQfWtq44GRXgvj3b8hBZKRAkalvT8vg7AbP1kL44dCofqhzvZAuQTA5EwIzx6WgbnaggTVjUFKRys4ahHK3w%3D%3D)
+![OS](https://p.kagi.com/proxy/platform-macOS%20%7C%20Linux-success?c=EgGQfWtq44GRXgvj3b8hBe5AlT5CdAhhGjaxLHzJ-5yUToW3DhvsI5olR93MgK_B6azDlsF3R31EA_LRBpRneOTTB_UUE8TAlN4nbgJg6HUXwhgI-kQFpHdm-R4DULJE)
+![Manager](https://p.kagi.com/proxy/managed%20by-Dotbot-yellow?c=EgGQfWtq44GRXgvj3b8hBSWaisRzt1x0yTAIDau0DNWx5SRRGZr0ZKLAOs2_tCOayEtdkgoQzmbAlmakL1_4HHgxfkFT1vvFsFS6Jn0ov2U%3D)
+
+---
 
 ## What's Included
 
@@ -15,12 +22,23 @@ Works on macOS and Linux (Debian, Mint, DietPi, etc.).
   Mac App Store (mas), npm, and Ruby gems with one command
 - Cross-platform **`clean`** function — clears caches and frees disk space
   for brew/apt, npm, gems, pip, Docker, and trash with one command
-- A collection of **aliases** and **functions** for common tasks
-- **Introspection commands** — `aliases` lists alias names, `functions`
-  lists function names (or pass a name to see its body)
+- A collection of **aliases** and **functions** for common tasks:
+  - `calc` — quick calculator (`calc "2 + 2"`)
+  - `cheat` — command cheatsheets via cht.sh (`cheat tar`)
+  - `ff` / `fd` — fuzzy find files/directories by name
+  - `duf` — disk usage, sorted and formatted
+  - `gz` — gzip compression ratio for a file
+  - `dataurl` — create a data URL from a file
+  - `down4me` / `uporno` — check if a site is down for everyone or just you
+  - `wx` — weather report via wttr.in (`wx`, `wx 97201`, `wx -0` for full forecast)
+  - `moon` — moon phase with ASCII art and phase name
+- **Introspection commands** — `aliases` lists alias names, `fn` lists
+  function names (or pass a name to see its body)
 - A **welcome screen** showing weather, calendar, and time on terminal open
 - **Automatic backups** — the installer backs up any existing real files
   before replacing them with symlinks
+- **Standalone macOS defaults script** — applies ~100 system preferences
+  (run manually, not part of `./install`)
 
 ## Repository Structure
 
@@ -37,7 +55,9 @@ Works on macOS and Linux (Debian, Mint, DietPi, etc.).
     │   │   ├── aliases.zsh               ← shared aliases (all OSes)
     │   │   ├── aliases.linux.zsh         ← Linux-specific aliases
     │   │   ├── aliases.macos.zsh         ← macOS-specific aliases
-    │   │   └── functions.zsh             ← shell functions (incl. `updates`, `clean`)
+    │   │   └── functions.zsh             ← shell functions (updates, clean,
+    │   │                                    calc, cheat, ff, fd, duf, gz,
+    │   │                                    dataurl, down4me, wx, moon)
     │   └── git/
     │       ├── gitconfig                 ← (→ ~/.gitconfig)
     │       ├── gitconfig.macos           ← (→ ~/.config/git/gitconfig.macos)
@@ -47,7 +67,8 @@ Works on macOS and Linux (Debian, Mint, DietPi, etc.).
     │   ├── welcome.sh                    ← weather/calendar/time greeting
     │   └── setup/
     │       ├── backup_existing.zsh       ← backs up real files before linking
-    │       └── install_packages.zsh      ← OS-aware package installer
+    │       ├── install_packages.zsh      ← OS-aware package installer
+    │       └── macos_defaults.zsh        ← standalone macOS system preferences
     ├── powerlevel10k/                    ← git submodule
     └── dotbot/                           ← git submodule
 
@@ -130,7 +151,11 @@ Just run `./install` from wherever you cloned it.
 | Update packages on this machine | Run `updates` |
 | Clean caches / free disk space | Run `clean` |
 | List all aliases | Run `aliases` |
-| List all functions | Run `functions` (or `functions <name>` to see a body) |
+| List all functions | Run `fn` (or `fn <name>` to see a body) |
+| Check weather | Run `wx` (or `wx <zip>`, `wx -0` for full forecast) |
+| Check moon phase | Run `moon` |
+| Check if a site is down | Run `down4me <site>` (or `uporno <site>`) |
+| Apply macOS defaults | Run `~/.dotfiles/scripts/setup/macos_defaults.zsh` |
 
 ## Syncing Across Machines
 
@@ -193,6 +218,26 @@ Run `clean` to clear caches and free up disk space:
 
 Same as `updates` — each step skips gracefully if a tool isn't installed.
 
+## macOS System Defaults
+
+`scripts/setup/macos_defaults.zsh` is a standalone script that applies
+~100 macOS system preferences (UI, keyboard, trackpad, Finder, Dock,
+Safari, Mail, Calendar, Spotlight, Terminal, App Store, etc.).
+
+**This is NOT run by `./install`** — system defaults are invasive
+(kill apps, require sudo, change UI). Run it manually on a fresh Mac
+or when you want to reapply preferences:
+
+    # Run with default hostname (keeps existing)
+    ~/.dotfiles/scripts/setup/macos_defaults.zsh
+
+    # Run and set a custom computer name
+    COMPUTER_NAME="primo" ~/.dotfiles/scripts/setup/macos_defaults.zsh
+
+The script is safe to re-run — all `defaults write` commands are
+idempotent. Hostname is only set if `COMPUTER_NAME` is passed; otherwise
+the existing computer name is kept.
+
 ## Git Configuration
 
 The global gitconfig is symlinked to `~/.gitconfig`. It includes:
@@ -246,5 +291,6 @@ For `fzf` on minimal systems:
     ~/.fzf/install
 
 ## License
+
 
 Personal use. Feel free to fork and adapt.
