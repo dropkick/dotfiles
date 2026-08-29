@@ -310,18 +310,18 @@ function dataurl() {
 # ── down4me — Check if a site is down for everyone or just you ───────
 function down4me() {
   local site="$1"
-  # Strip protocol for the URL
+  # Strip protocol and path
   local clean="${site#http://}"
   clean="${clean#https://}"
   clean="${clean%%/*}"
-  local result
-  result=$(curl -s --max-time 10 "https://downforeveryoneorjustme.com/${clean}" | grep -i 'detecting any problems\|has been detected' | sed 's/<[^>]*>//g' | tr -s ' ')
-  if [[ -z "$result" ]]; then
-    print "❓ Couldn't check ${site} — try https://downforeveryoneorjustme.com/${clean}"
-  elif [[ "$result" == *"not detecting any problems"* ]]; then
+  local page
+  page=$(curl -s --max-time 10 "https://downforeveryoneorjustme.com/${clean}")
+  if [[ "$page" == *"not detecting any problems"* ]]; then
     print "✅ It's just you — ${clean} is up."
-  else
+  elif [[ "$page" == *"has been detected"* ]]; then
     print "❌ It's not just you — ${clean} appears down."
+  else
+    print "❓ Couldn't check ${clean} — try https://downforeveryoneorjustme.com/${clean}"
   fi
 }
 
