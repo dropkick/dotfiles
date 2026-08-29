@@ -86,13 +86,6 @@ if [ -f ~/.bash_history ] && [ ! -f ~/.zsh_history ]; then
   ok "bash history ported"
 fi
 
-# ── Set zsh as default shell ──────────────────────────────────────────
-if [ "$SHELL" != "$(which zsh)" ] 2>/dev/null; then
-  info "🐚 Setting zsh as default shell..."
-  chsh -s "$(which zsh)"
-  ok "Default shell set to zsh (takes effect on next login)"
-fi
-
 # ── Create platform-specific gitconfig.local symlink ───────────────────
 # The main ~/.gitconfig has [include] path = ~/.config/git/gitconfig.local
 # We symlink that to the right platform file (both are stowed by Dotbot).
