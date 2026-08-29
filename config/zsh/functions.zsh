@@ -337,7 +337,7 @@ alias uporno='down4me'
 function wx() {
   local DEFAULT_LOCATION="Portland"
   local location="$DEFAULT_LOCATION"
-  local format="-1"
+  local format="4"
 
   # Parse args — format flag or location can come in any order
   for arg in "$@"; do
