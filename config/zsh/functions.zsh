@@ -316,9 +316,9 @@ function down4me() {
   clean="${clean%%/*}"
   local response
   response=$(curl -s --max-time 10 "https://isdownapi.com/api/check?domain=${clean}")
-  local status
-  status=$(echo "$response" | grep -o '"status":"[^"]*"' | cut -d'"' -f4)
-  case "$status" in
+  local result
+  result=$(echo "$response" | grep -o '"status":"[^"]*"' | cut -d'"' -f4)
+  case "$result" in
     up)   print "✅ It's just you — ${clean} is up." ;;
     down) print "❌ It's not just you — ${clean} appears down." ;;
     *)    print "❓ Couldn't check ${clean} — try https://isdownapi.com/api/check?domain=${clean}" ;;
