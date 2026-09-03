@@ -95,9 +95,3 @@
 [lfs]
 	locksverify = true
 
-# ── Platform-specific settings ────────────────────────────────────────
-# The install script symlinks ~/.config/git/gitconfig.local to either
-# gitconfig.macos or gitconfig.linux depending on the OS.
-# This include pulls in the right credential helper and pager.
-[include]
-	path = ~/.config/git/gitconfig.local
