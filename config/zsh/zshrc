@@ -181,6 +181,11 @@ export PATH="$HOME/.local/bin:$PATH"
 # ── Platform-specific eval blocks (macOS only) ────────────────────────
 # These tools are macOS-specific and silently fail if not installed.
 if [[ "$OS" == "macos" ]]; then
-  command -v thefuck &>/dev/null && eval $(thefuck --alias)
+  if command -v thefuck &>/dev/null; then
+  # Ensure config dir is a real directory (not a file or dangling symlink)
+    [[ -e ~/.config/thefuck || -L ~/.config/thefuck ]] && [[ ! -d ~/.config/thefuck ]] && rm ~/.config/thefuck
+    eval $(thefuck --alias 2>/dev/null)
+  fi
   command -v rbenv &>/dev/null && eval "$(rbenv init - zsh)"
 fi
+
