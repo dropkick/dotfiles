@@ -42,10 +42,6 @@
 # ── Symlinks ───────────────────────────────────────────────────────────
 # Each line: <target in home> : <source in repo>
 - link:
-    ~/.config/git/gitconfig.local:
-      path: config/git/gitconfig.macos
-      if: '[ "$(uname -s)" = "Darwin" ]'
-- link:
     ~/.zshrc: config/zsh/zshrc
     ~/.zshenv: config/zsh/zshenv
     ~/.p10k.zsh: config/zsh/.p10k.zsh
@@ -76,8 +72,4 @@
       if: '[ "$(uname -s)" = "Darwin" ]'
     ~/.config/VSCodium/User/settings.json:
       path: config/vscode/settings.json
-      if: '[ "$(uname -s)" = "Linux" ]'
-- link:
-    ~/.config/git/gitconfig.local:
-      path: config/git/gitconfig.linux
       if: '[ "$(uname -s)" = "Linux" ]'
