@@ -65,6 +65,9 @@ Focused on macOS and flavors of Linux I use most (Debian, Mint, DietPi, Fedora, 
     │   │   └── functions.zsh             ← shell functions (updates, clean, fn,
     │   │                                    calc, cheat, ff, fd, duf, gz,
     │   │                                    dataurl, down4me, uporno, wx, moon)
+    │   ├── vscode/
+    │   │   ├── settings.json             ← VS Code settings (→ platform-specific path)
+    │   │   └── extensions.txt            ← list of extension IDs
     │   └── git/
     │       ├── gitconfig                 ← (→ ~/.gitconfig)
     │       ├── gitconfig.macos           ← (→ ~/.config/git/gitconfig.macos)
@@ -75,7 +78,8 @@ Focused on macOS and flavors of Linux I use most (Debian, Mint, DietPi, Fedora, 
     │   └── setup/
     │       ├── backup_existing.zsh       ← backs up real files before linking
     │       ├── install_packages.zsh      ← OS-aware package installer
-    │       └── macos_defaults.zsh        ← standalone macOS system preferences
+    │       ├── macos_defaults.zsh        ← standalone macOS system preferences
+    │       └── install_vscode_extensions.zsh ← installs extensions on demand
     ├── powerlevel10k/                    ← git submodule
     └── dotbot/                           ← git submodule
 
@@ -148,22 +152,24 @@ Just run `./install` from wherever you cloned it.
 
 ## Making Changes
 
-| What you want to do             | How                                                               |
-| ------------------------------- | ----------------------------------------------------------------- |
-| Add an alias                    | Edit `config/zsh/aliases.zsh`, then `source ~/.zshrc`             |
-| Add an OS-specific alias        | Edit `aliases.linux.zsh` or `aliases.macos.zsh`                   |
-| Add a function                  | Edit `config/zsh/functions.zsh`, then `source ~/.zshrc`           |
-| Change prompt                   | Run `p10k configure` (saves to `~/.p10k.zsh`, which is symlinked) |
-| Edit welcome screen             | Edit `scripts/welcome.sh`                                         |
-| Change what gets linked         | Edit `install.conf.yaml`, then re-run `./install`                 |
-| Update packages on this machine | Run `updates`                                                     |
-| Clean caches / free disk space  | Run `clean`                                                       |
-| List all aliases                | Run `aliases`                                                     |
-| List all functions              | Run `fn` (or `fn <name>` to see a body)                           |
-| Check weather                   | Run `wx` (or `wx <zip>`, `wx -0` for full forecast)               |
-| Check moon phase                | Run `moon`                                                        |
-| Check if a site is down         | Run `down4me <site>` (or `uporno <site>`)                         |
-| Apply macOS defaults            | Run `~/.dotfiles/scripts/setup/macos_defaults.zsh`                |
+| What you want to do             | How                                                                              |
+| ------------------------------- | -------------------------------------------------------------------------------- |
+| Add an alias                    | Edit `config/zsh/aliases.zsh`, then `source ~/.zshrc`                            |
+| Add an OS-specific alias        | Edit `aliases.linux.zsh` or `aliases.macos.zsh`                                  |
+| Add a function                  | Edit `config/zsh/functions.zsh`, then `source ~/.zshrc`                          |
+| Change prompt                   | Run `p10k configure` (saves to `~/.p10k.zsh`, which is symlinked)                |
+| Edit welcome screen             | Edit `scripts/welcome.sh`                                                        |
+| Change what gets linked         | Edit `install.conf.yaml`, then re-run `./install`                                |
+| Update packages on this machine | Run `updates`                                                                    |
+| Clean caches / free disk space  | Run `clean`                                                                      |
+| List all aliases                | Run `aliases`                                                                    |
+| List all functions              | Run `fn` (or `fn <name>` to see a body)                                          |
+| Check weather                   | Run `wx` (or `wx <zip>`, `wx -0` for full forecast)                              |
+| Check moon phase                | Run `moon`                                                                       |
+| Check if a site is down         | Run `down4me <site>` (or `uporno <site>`)                                        |
+| Apply macOS defaults            | Run `~/.dotfiles/scripts/setup/macos_defaults.zsh`                               |
+| Install VS Code extensions      | Run `~/.dotfiles/scripts/setup/install_vscode_extensions.zsh`                    |
+| Update extension list           | `code --list-extensions > ~/.dotfiles/config/vscode/extensions.txt`, then commit |
 
 ## Syncing Across Machines
 
@@ -249,6 +255,32 @@ or when you want to reapply preferences:
 The script is safe to re-run — all `defaults write` commands are
 idempotent. Hostname is only set if `COMPUTER_NAME` is passed; otherwise
 the existing computer name is kept.
+
+## VS Code Settings & Extensions
+
+VS Code settings are symlinked from `config/vscode/settings.json` to the
+platform-specific location:
+
+- **macOS:** `~/Library/Application Support/Code/User/settings.json`
+- **Linux:** `~/.config/Code/User/settings.json`
+
+The symlink is created automatically by `./install` (OS-conditional).
+
+### Extensions
+
+A list of installed extensions is tracked in `config/vscode/extensions.txt`.
+This is **not** installed automatically — run the script on demand:
+
+    # Install any missing extensions
+    ~/.dotfiles/scripts/setup/install_vscode_extensions.zsh
+
+To update the list when you add or remove extensions:
+
+    code --list-extensions > ~/.dotfiles/config/vscode/extensions.txt
+    cd ~/.dotfiles
+    git add config/vscode/extensions.txt
+    git commit -m "Update VS Code extensions list"
+    git push
 
 ## Git Configuration
 
