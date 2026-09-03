@@ -23,10 +23,6 @@ else
     WeatherSuccess=false
     echo "  +============================+"
     echo "  |       WX unavailable       |"
-    echo "  |        Check with:         |"
-    echo "  |                            |"
-    echo "  |   curl wttr.in/Portland?0  |"
-    echo "  |   --silent --max-time 3    |"
     echo "  +============================+"
 fi
 
