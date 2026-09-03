@@ -52,15 +52,12 @@
     ~/.config/dotfiles/options.zsh: config/zsh/options.zsh
     ~/.gitconfig: config/git/gitconfig
     ~/.config/git/ignore: config/git/ignore
-    - link:
-        ~/.config/git/gitconfig.local:
-          path: config/git/gitconfig.macos
-          if: '[ "$(uname -s)" = "Darwin" ]'
-
-    - link:
-        ~/.config/git/gitconfig.local:
-          path: config/git/gitconfig.linux
-          if: '[ "$(uname -s)" = "Linux" ]'
+    ~/.config/git/gitconfig.local:
+      path: config/git/gitconfig.macos
+      if: '[ "$(uname -s)" = "Darwin" ]'
+    ~/.config/git/gitconfig.local:
+      path: config/git/gitconfig.linux
+      if: '[ "$(uname -s)" = "Linux" ]'
     ~/.config/gh/config.yml: config/gh/config.yml
     ~/.config/lsd: config/lsd
     ~/.config/bat: config/bat
