@@ -21,7 +21,8 @@ case "$(uname -s)" in
       info "Homebrew not found. Installing..."
       /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     fi
-    brew install zsh zsh-autosuggestions zsh-syntax-highlighting fzf mas eza lsd bat figlet    ok "macOS packages installed"
+    brew install zsh zsh-autosuggestions zsh-syntax-highlighting fzf mas eza lsd bat figlet
+    ok "macOS packages installed"
     ;;
 
   Linux)
@@ -78,25 +79,6 @@ if [ -f ~/.bash_history ] && [ ! -f ~/.zsh_history ]; then
   ok "bash history ported"
 fi
 
-# ── Create platform-specific gitconfig.local symlink ───────────────────
-# The main ~/.gitconfig has [include] path = ~/.config/git/gitconfig.local
-# We symlink that to the right platform file (both are stowed by Dotbot).
-info "🔗 Setting up platform-specific gitconfig.local..."
-mkdir -p ~/.config/git
-if [ -L ~/.config/git/gitconfig.local ] || [ -f ~/.config/git/gitconfig.local ]; then
-  rm -f ~/.config/git/gitconfig.local
-fi
-case "$(uname -s)" in
-  Darwin)
-    ln -s ~/.config/git/gitconfig.macos ~/.config/git/gitconfig.local
-    ok "gitconfig.local → gitconfig.macos"
-    ;;
-  Linux)
-    ln -s ~/.config/git/gitconfig.linux ~/.config/git/gitconfig.local
-    ok "gitconfig.local → gitconfig.linux"
-    ;;
-esac
-
 
 # ── Set zsh as default shell if it isn't already ───────────────────────
 info "🐚 Checking default shell..."
@@ -108,7 +90,6 @@ if [[ -z "$ZSH_PATH" ]]; then
 elif [[ "$CURRENT_SHELL" == *zsh ]]; then
   ok "zsh is already your default shell."
 else
-  info "Your default shell is $CURRENT_SHELL — zsh is at $ZSH_PATH"
   printf "  Would you like to set zsh as your default shell? [y/N] "
   read -r REPLY < /dev/tty
   if [[ "$REPLY" =~ ^[Yy]$ ]]; then
