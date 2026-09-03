@@ -22,3 +22,4 @@ alias apts="apt search"                 # Search for a package
 alias aptu="sudo apt update && sudo apt upgrade"  # Update + upgrade all
 alias aptsh="apt show"                  # Show package details
 alias aptl="apt list --installed"       # List installed packages
+alias cal="ncal -M -b"

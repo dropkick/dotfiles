@@ -113,7 +113,6 @@ alias hosts="sudo $EDITOR /etc/hosts"   # Edit hosts file
 alias quit="exit"
 alias week="date +%V"                   # Current ISO week number
 alias grip="grip -b"                    # GitHub Markdown preview in browser
-alias cal="ncal -M -b"                  # Calendar, Monday-first
 
 # ── man → batman (syntax-highlighted man pages via bat-extras) ──────
 if command -v batman &>/dev/null; then

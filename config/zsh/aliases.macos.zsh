@@ -30,7 +30,6 @@ alias killdock="killall Dock"
 alias killos="killfinder && killdock"
 alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl"
 
-
 # ── File cleanup ──────────────────────────────────────────────────────
 # Exclude macOS metadata files when creating ZIP archives
 alias zip="zip -x *.DS_Store -x *__MACOSX* -x *.AppleDouble*"
@@ -38,15 +37,12 @@ alias zip="zip -x *.DS_Store -x *__MACOSX* -x *.AppleDouble*"
 # Recursively remove .DS_Store files in current directory
 alias cleanupds="find . -type f -name '*.DS_Store' -ls -delete"
 
-
 # ── Quick Look (preview files from CLI) ───────────────────────────────
 alias ql="qlmanage -p &>/dev/null"
-
 
 # ── System info ───────────────────────────────────────────────────────
 alias displays="system_profiler SPDisplaysDataType"
 alias cpu="sysctl -n machdep.cpu.brand_string"
-
 
 # ── Network ───────────────────────────────────────────────────────────
 alias localip="ipconfig getifaddr en0"  # Get local IP on primary interface
@@ -59,3 +55,5 @@ alias ios="open /Applications/Xcode.app/Contents/Developer/Applications/iOS\ Sim
 # ── Audio ────────────────────────────────────────────────────────────
 alias stfu="osascript -e 'set volume output muted true'"
 alias pumpitup="osascript -e 'set volume 7'"
+
+alias cal='command cal' (or alias cal='ncal')
