@@ -21,13 +21,13 @@ if [[ "${aWeather[1]}" == "  Weather report:"* ]] ; then
     print -l "${aWeather[@]}"
 else
     WeatherSuccess=false
-    echo "+============================+"
-    echo "| Weather unavailable now!!! |"
-    echo "| Check reason with command: |"
-    echo "|                            |"
-    echo "| curl wttr.in/Portland?0    |"
-    echo "|   --silent --max-time 3    |"
-    echo "+============================+"
+    echo "  +============================+"
+    echo "  |       WX unavailable       |"
+    echo "  |        Check with:         |"
+    echo "  |                            |"
+    echo "  |   curl wttr.in/Portland?0  |"
+    echo "  |   --silent --max-time 3    |"
+    echo "  +============================+"
 fi
 
 ##-------- QUOTE --------------------------------------------------------------
