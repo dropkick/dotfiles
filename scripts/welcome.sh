@@ -17,8 +17,8 @@ rm -f /tmp/now-weather
 
 # Was valid weather report found or an error message?
 # zsh arrays are 1-indexed: aWeather[1] is the first line
-if [[ "${aWeather[1]}" == "  Weather report:"* ]] ; then
-    print -l "${aWeather[@]}"
+if [[ "${aWeather[1]}" == *"Weather report:"* ]] ; then
+    print -l -- "  ${^aWeather[@]}"
 else
     WeatherSuccess=false
     echo "  +============================+"
@@ -26,7 +26,7 @@ else
     echo "  +============================+"
 fi
 
-##-------- QUOTE --------------------------------------------------------------
+#-------- QUOTE --------------------------------------------------------------
 
 # Fortune-style random quote from config/quotes/quotes.txt.
 # ${0:A} resolves this script's symlink (~/scripts/welcome.sh -> repo),
