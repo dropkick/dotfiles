@@ -68,6 +68,8 @@ Focused on macOS and flavors of Linux I use most (Debian, Mint, DietPi, Fedora, 
     │   ├── vscode/
     │   │   ├── settings.json             ← VS Code settings (→ platform-specific path)
     │   │   └── extensions.txt            ← list of extension IDs
+    │   ├── gh/
+    │   │   └── config.yml               ← gh CLI config (protocol, aliases)
     │   └── git/
     │       ├── gitconfig                 ← (→ ~/.gitconfig)
     │       ├── gitconfig.macos           ← (→ ~/.config/git/gitconfig.macos)
@@ -170,6 +172,8 @@ Just run `./install` from wherever you cloned it.
 | Apply macOS defaults            | Run `~/.dotfiles/scripts/setup/macos_defaults.zsh`                               |
 | Install VS Code extensions      | Run `~/.dotfiles/scripts/setup/install_vscode_extensions.zsh`                    |
 | Update extension list           | `code --list-extensions > ~/.dotfiles/config/vscode/extensions.txt`, then commit |
+| Update gh CLI config            | Edit `~/.config/gh/config.yml` (symlinked to repo) |
+
 
 ## Syncing Across Machines
 

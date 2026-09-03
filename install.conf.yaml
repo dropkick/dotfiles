@@ -54,6 +54,7 @@
     ~/.config/git/ignore: config/git/ignore
     ~/.config/git/gitconfig.macos: config/git/gitconfig.macos
     ~/.config/git/gitconfig.linux: config/git/gitconfig.linux
+    ~/.config/gh/config.yml: config/gh/config.yml
     ~/.config/lsd: config/lsd
     ~/.config/bat: config/bat
     ~/scripts/welcome.sh: scripts/welcome.sh
