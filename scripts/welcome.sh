@@ -40,6 +40,6 @@ if [[ -s "$QUOTE_FILE" ]]; then
     if (( $#quotes )); then
         echo " "
         q="${quotes[$((RANDOM % $#quotes + 1))]}"
-        fold -s -w $((QUOTE_WIDTH - 2)) <<< "\$q\" | sed 's/^/  /'
+        fold -s -w $((QUOTE_WIDTH - 2)) <<< "$q" | sed 's/^/  /'
     fi
 fi
