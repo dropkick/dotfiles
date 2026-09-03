@@ -9,7 +9,7 @@
   "advancedNewFile.convenienceOptions": ["last", "current", "root"],
   "redhat.telemetry.enabled": false,
   "[html]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "window.newWindowDimensions": "offset",
   "liveServer.settings.donotShowInfoMsg": true,
@@ -28,27 +28,27 @@
   "terminal.integrated.cursorBlinking": true,
   "terminal.integrated.fontSize": 15,
   "emmet.includeLanguages": {
-    "astro": "astro"
+    "astro": "astro",
   },
   "settingsSync.ignoredExtensions": [],
   "terminal.integrated.altClickMovesCursor": false,
   "[javascript]": {
-    "editor.formatOnSave": false
+    "editor.formatOnSave": false,
   },
   "[javascriptreact]": {
-    "editor.formatOnSave": false
+    "editor.formatOnSave": false,
   },
   "eslint.alwaysShowStatus": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll": "explicit"
+    "source.fixAll": "explicit",
   },
   "prettier.disableLanguages": ["javascript", "javascriptreact"],
   "[astro]": {
-    "editor.defaultFormatter": "astro-build.astro-vscode"
+    "editor.defaultFormatter": "astro-build.astro-vscode",
   },
   "prettier.documentSelectors": ["**/*.astro"],
   "[python]": {
-    "editor.defaultFormatter": "ms-python.autopep8"
+    "editor.defaultFormatter": "ms-python.autopep8",
   },
   "python.formatting.provider": "none",
   "[markdown]": {
@@ -59,20 +59,20 @@
     "editor.quickSuggestions": {
       "comments": "off",
       "strings": "off",
-      "other": "off"
-    }
+      "other": "off",
+    },
   },
   "markdown.extension.theming.decoration.renderTrailingSpace": true,
   "workbench.settings.applyToAllProfiles": ["files.trimTrailingWhitespace"],
   "workbench.editorAssociations": {
-    "*.css": "default"
+    "*.css": "default",
   },
   "editor.formatOnSave": true,
   "[css]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[scss]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "liveServer.settings.donotVerifyTags": true,
   "workbench.startupEditor": "none",
@@ -83,7 +83,23 @@
     "*": false,
     "plaintext": false,
     "markdown": false,
-    "scminput": false
+    "scminput": false,
   },
-  "chat.disableAIFeatures": true
+  "chat.disableAIFeatures": true,
+  "yaml.disableSchemaDetection": [
+    "**/docker-compose.yml",
+    "**/docker-compose.yaml",
+    "**/docker-compose.*.yml",
+    "**/docker-compose.*.yaml",
+    "**/compose.yml",
+    "**/compose.yaml",
+    "**/compose.*.yml",
+    "**/compose.*.yaml",
+    "**/.github/workflows/*.yml",
+    "**/.github/workflows/*.yaml",
+    "**/.gitea/workflows/*.yml",
+    "**/.gitea/workflows/*.yaml",
+    "**/.forgejo/workflows/*.yml",
+    "**/.forgejo/workflows/*.yaml",
+  ],
 }
