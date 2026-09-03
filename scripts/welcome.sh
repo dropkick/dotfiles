@@ -2,35 +2,53 @@
 
 # NAME: welcome.sh
 # PATH: ~/.dotfiles/scripts/welcome.sh (symlinked to ~/scripts/welcome.sh)
-# DESC: Display current weather and a random quote on shell startup
+# DESC: Display cached weather, moon phase, and a random quote on shell startup
 # CALL: Sourced from ~/.zshrc on login
-# DATE: Apr 6, 2017. Modified: Sep 3, 2026 (weather + fortune quote only).
+# DATE: Apr 6, 2017. Modified: Sep 3, 2026 (15-min weather cache, moon, quotes).
 
-# Replace Portland with your city name, GPS, etc. See: curl wttr.in/:help
-curl 'wttr.in/Portland?0' --silent --max-time 3 > /tmp/now-weather
+zmodload -F zsh/stat b:zstat 2>/dev/null    # zsh builtin — portable mtimes
 
-# Timeout #. Increase for slow connection---^
+# ── Weather (15-minute cache) ──────────────────────────────────────────
+WX_CACHE="/tmp/wttr-weather.cache"
+WX_TTL=900                                   # seconds (15 min)
 
-# zsh: read file into array (split on newlines)
-aWeather=("${(@f)$(< /tmp/now-weather)}")
-rm -f /tmp/now-weather
+wx_fresh=false
+if [[ -s "$WX_CACHE" ]]; then
+    wx_mtime=$(zstat +mtime "$WX_CACHE" 2>/dev/null)
+    [[ -n "$wx_mtime" ]] && (( $(date +%s) - wx_mtime < WX_TTL )) && wx_fresh=true
+fi
 
-# Was valid weather report found or an error message?
-# zsh arrays are 1-indexed: aWeather[1] is the first line
-if [[ "${aWeather[1]}" == *"Weather report:"* ]] ; then
+if (( ! wx_fresh )); then
+    curl 'wttr.in/Portland?0' --silent --max-time 3 > "$WX_CACHE.new" 2>/dev/null
+    # Promote to cache only if it's a valid report — a network blip
+    # leaves the previous cache in place as last-known weather.
+    if [[ -s "$WX_CACHE.new" && "$(head -n1 "$WX_CACHE.new")" == *"Weather report:"* ]]; then
+        mv "$WX_CACHE.new" "$WX_CACHE"
+    else
+        rm -f "$WX_CACHE.new"
+    fi
+fi
+
+if [[ -s "$WX_CACHE" ]]; then
+    aWeather=("${(@f)$(< "$WX_CACHE")}")
     print -l -- "  ${^aWeather[@]}"
 else
-    WeatherSuccess=false
     echo "  +============================+"
     echo "  |       WX unavailable       |"
     echo "  +============================+"
 fi
 
-#-------- QUOTE --------------------------------------------------------------
+# ── Moon phase (daily cache) ───────────────────────────────────────────
+MOON_CACHE="/tmp/moon-phase-$(date +%F)"
+if [[ -s "$MOON_CACHE" ]]; then
+    phase=$(< "$MOON_CACHE")
+else
+    phase=$(curl -sg --max-time 3 "wttr.in?format=j1" | grep -m1 'moon_phase' | sed 's/.*: *"//;s/".*//')
+    [[ -n "$phase" ]] && print -r -- "$phase" > "$MOON_CACHE"
+fi
+[[ -n "$phase" ]] && printf "\033[1;33m  🌙 %s\033[0m\n" "$phase"
 
-# Fortune-style random quote from config/quotes/quotes.txt.
-# ${0:A} resolves this script's symlink (~/scripts/welcome.sh -> repo),
-# so the quotes file is found no matter where the repo is cloned.
+# ── Quote ──────────────────────────────────────────────────────────────
 QUOTE_FILE="${0:A:h:h}/config/quotes/quotes.txt"
 QUOTE_WIDTH=50
 
