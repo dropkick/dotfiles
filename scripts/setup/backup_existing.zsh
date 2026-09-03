@@ -21,22 +21,11 @@ TIMESTAMP=$(date +%Y%m%d-%H%M%S)
 BACKUP_DIR="$HOME/.dotfiles-backup-$TIMESTAMP"
 BACKED_UP=0
 
-# ── Extract link targets from install.conf.yaml using Python ───────────
-# Dotbot requires Python, so this is a safe dependency.
-TARGETS=$(python3 -c "
-import yaml, sys, os
-
-with open('$CONFIG') as f:
-    data = yaml.safe_load(f)
-
-targets = []
-for entry in data:
-    if isinstance(entry, dict) and 'link' in entry:
-        for key in entry['link']:
-            targets.append(key)
-
-print('\n'.join(targets))
-" 2>/dev/null)
+# ── Extract link targets from install.conf.yaml ───────────────────────
+# Parse with grep/sed instead of Python — no PyYAML dependency.
+# Matches lines like "    ~/.config/dotfiles/aliases.zsh: config/zsh/aliases.zsh"
+# Also handles entries with nested keys (path:, if:) by skipping those.
+TARGETS=$(grep -E '^\s+~/.+:' "$CONFIG" | sed 's/^[[:space:]]*//;s/:.*//' | sort -u)
 
 if [[ -z "$TARGETS" ]]; then
   echo "  No link targets found in $CONFIG — skipping backup."
