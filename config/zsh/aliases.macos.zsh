@@ -56,4 +56,4 @@ alias ios="open /Applications/Xcode.app/Contents/Developer/Applications/iOS\ Sim
 alias stfu="osascript -e 'set volume output muted true'"
 alias pumpitup="osascript -e 'set volume 7'"
 
-alias cal='command cal' (or alias cal='ncal')
+alias cal="command cal"
