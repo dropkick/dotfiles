@@ -46,7 +46,8 @@ else
     phase=$(curl -sg --max-time 3 "wttr.in?format=j1" | grep -m1 'moon_phase' | sed 's/.*: *"//;s/".*//')
     [[ -n "$phase" ]] && print -r -- "$phase" > "$MOON_CACHE"
 fi
-[[ -n "$phase" ]] && printf "\033[1;33m  🌙 %s\033[0m\n" "$phase"
+print "   " 
+[[ -n "$phase" ]] && printf "\033[1;33m  🌕 %s\033[0m\n" "$phase"
 
 # ── Quote ──────────────────────────────────────────────────────────────
 QUOTE_FILE="${0:A:h:h}/config/quotes/quotes.txt"
