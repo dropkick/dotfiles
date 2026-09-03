@@ -30,18 +30,22 @@ else
     echo "+============================+"
 fi
 
-#-------- QUOTE --------------------------------------------------------------
+##-------- QUOTE --------------------------------------------------------------
 
 # Fortune-style random quote from config/quotes/quotes.txt.
 # ${0:A} resolves this script's symlink (~/scripts/welcome.sh -> repo),
 # so the quotes file is found no matter where the repo is cloned.
 QUOTE_FILE="${0:A:h:h}/config/quotes/quotes.txt"
+QUOTE_WIDTH=50
 
 if [[ -s "$QUOTE_FILE" ]]; then
     quotes=("${(@f)$(<"$QUOTE_FILE")}")
     quotes=("${(@)quotes:#}")           # drop blank lines
     if (( $#quotes )); then
         echo " "
-        printf "\033[90m  \"%s\"\033[0m\n" "${quotes[$((RANDOM % $#quotes + 1))]}"
+        q="${quotes[$((RANDOM % $#quotes + 1))]}"
+        printf "\033[90m"
+        fold -s -w $((QUOTE_WIDTH - 2)) <<< "\"$q\"" | sed 's/^/  /'
+        printf "\033[0m"
     fi
 fi
