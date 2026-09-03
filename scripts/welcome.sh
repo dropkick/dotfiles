@@ -17,7 +17,7 @@ rm -f /tmp/now-weather
 
 # Was valid weather report found or an error message?
 # zsh arrays are 1-indexed: aWeather[1] is the first line
-if [[ "${aWeather[1]}" == "Weather report:"* ]] ; then
+if [[ "${aWeather[1]}" == "  Weather report:"* ]] ; then
     print -l "${aWeather[@]}"
 else
     WeatherSuccess=false
@@ -44,8 +44,6 @@ if [[ -s "$QUOTE_FILE" ]]; then
     if (( $#quotes )); then
         echo " "
         q="${quotes[$((RANDOM % $#quotes + 1))]}"
-        printf "\033[90m"
         fold -s -w $((QUOTE_WIDTH - 2)) <<< "\"$q\"" | sed 's/^/  /'
-        printf "\033[0m"
     fi
 fi
