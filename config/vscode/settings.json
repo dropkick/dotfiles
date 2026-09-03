@@ -1,0 +1,89 @@
+{
+  "guides.enabled": false,
+  "workbench.colorTheme": "Best Themes - Monokai Night Time Italic",
+  "workbench.preferredDarkColorTheme": "Best Themes - Poimandres Dark",
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "git.confirmSync": false,
+  "security.workspace.trust.untrustedFiles": "open",
+  "advancedNewFile.convenienceOptions": ["last", "current", "root"],
+  "redhat.telemetry.enabled": false,
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "window.newWindowDimensions": "offset",
+  "liveServer.settings.donotShowInfoMsg": true,
+  "editor.fontLigatures": true,
+  "terminal.integrated.fontFamily": "Hack Nerd Font Mono",
+  "editor.fontFamily": "Operator Mono Light, Menlo, Monaco, 'Courier New', monospace",
+  "editor.fontSize": 17,
+  "editor.lineHeight": 25,
+  "editor.letterSpacing": 0.5,
+  "editor.fontWeight": "400",
+  "prettier.eslintIntegration": true,
+  "editor.cursorStyle": "line",
+  "editor.cursorWidth": 5,
+  "editor.cursorBlinking": "solid",
+  "editor.renderWhitespace": "all",
+  "terminal.integrated.cursorBlinking": true,
+  "terminal.integrated.fontSize": 15,
+  "emmet.includeLanguages": {
+    "astro": "astro"
+  },
+  "settingsSync.ignoredExtensions": [],
+  "terminal.integrated.altClickMovesCursor": false,
+  "[javascript]": {
+    "editor.formatOnSave": false
+  },
+  "[javascriptreact]": {
+    "editor.formatOnSave": false
+  },
+  "eslint.alwaysShowStatus": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
+  "prettier.disableLanguages": ["javascript", "javascriptreact"],
+  "[astro]": {
+    "editor.defaultFormatter": "astro-build.astro-vscode"
+  },
+  "prettier.documentSelectors": ["**/*.astro"],
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.autopep8"
+  },
+  "python.formatting.provider": "none",
+  "[markdown]": {
+    "editor.unicodeHighlight.ambiguousCharacters": false,
+    "editor.unicodeHighlight.invisibleCharacters": false,
+    "diffEditor.ignoreTrimWhitespace": true,
+    "editor.wordWrap": "on",
+    "editor.quickSuggestions": {
+      "comments": "off",
+      "strings": "off",
+      "other": "off"
+    }
+  },
+  "markdown.extension.theming.decoration.renderTrailingSpace": true,
+  "workbench.settings.applyToAllProfiles": ["files.trimTrailingWhitespace"],
+  "workbench.editorAssociations": {
+    "*.css": "default"
+  },
+  "editor.formatOnSave": true,
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "liveServer.settings.donotVerifyTags": true,
+  "workbench.startupEditor": "none",
+  "git.openRepositoryInParentFolders": "always",
+  "kaleidoscope.git.mergetool": "Default",
+  "workbench.editor.enablePreview": false,
+  "github.copilot.enable": {
+    "*": false,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false
+  },
+  "chat.disableAIFeatures": true
+}

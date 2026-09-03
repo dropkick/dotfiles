@@ -21,8 +21,7 @@ case "$(uname -s)" in
       info "Homebrew not found. Installing..."
       /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     fi
-    brew install zsh zsh-autosuggestions zsh-syntax-highlighting fzf mas eza lsd bat
-    ok "macOS packages installed"
+    brew install zsh zsh-autosuggestions zsh-syntax-highlighting fzf mas eza lsd bat figlet    ok "macOS packages installed"
     ;;
 
   Linux)
@@ -31,7 +30,7 @@ case "$(uname -s)" in
     if command -v apt &>/dev/null; then
       info "Using apt (Debian/Ubuntu/Mint/DietPi)"
       sudo apt update
-      sudo apt install -y zsh zsh-autosuggestions zsh-syntax-highlighting fzf lsd eza bat     
+      sudo apt install -y zsh zsh-autosuggestions zsh-syntax-highlighting fzf lsd eza bat figlet
       ok "apt packages installed"
 
     elif command -v dnf &>/dev/null; then

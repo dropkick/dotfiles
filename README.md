@@ -1,6 +1,13 @@
 # dotfiles
 
-Cross-platform dotfiles and shell bizniss for zsh, managed with [Dotbot](https://github.com/anishathalye/dotbot).
+```text
+    _     _    __ _ _
+ __| |___| |_ / _(_) |___ ___
+/ _` / _ \  _|  _| | / -_|_-<
+\__,_\___/\__|_| |_|_\___/__/
+
+```
+
 Focused on macOS and flavors of Linux I use most (Debian, Mint, DietPi, Fedora, Arch, etc.).
 
 ![License](https://p.kagi.com/proxy/license-personal-blue?c=EgGQfWtq44GRXgvj3b8hBT9Ge2Vh_riJyU6FF9ZblGvu-jRvNFNzL-hMmsQsdQqaQUyn2mFUjhEMVdO-VTKJMzDItz0mlR3aOyCo6bhRRq0%3D)
@@ -55,9 +62,9 @@ Focused on macOS and flavors of Linux I use most (Debian, Mint, DietPi, Fedora, 
     │   │   ├── aliases.zsh               ← shared aliases (all OSes)
     │   │   ├── aliases.linux.zsh         ← Linux-specific aliases
     │   │   ├── aliases.macos.zsh         ← macOS-specific aliases
-    │   │   └── functions.zsh             ← shell functions (updates, clean,
+    │   │   └── functions.zsh             ← shell functions (updates, clean, fn,
     │   │                                    calc, cheat, ff, fd, duf, gz,
-    │   │                                    dataurl, down4me, wx, moon)
+    │   │                                    dataurl, down4me, uporno, wx, moon)
     │   └── git/
     │       ├── gitconfig                 ← (→ ~/.gitconfig)
     │       ├── gitconfig.macos           ← (→ ~/.config/git/gitconfig.macos)
@@ -89,6 +96,7 @@ Focused on macOS and flavors of Linux I use most (Debian, Mint, DietPi, Fedora, 
     p10k configure
 
 The installer:
+
 1. Removes broken symlinks in your home directory
 2. Backs up any existing real files that would be replaced (to
    ~/.dotfiles-backup-TIMESTAMP/)
@@ -140,22 +148,22 @@ Just run `./install` from wherever you cloned it.
 
 ## Making Changes
 
-| What you want to do | How |
-|---|---|
-| Add an alias | Edit `config/zsh/aliases.zsh`, then `source ~/.zshrc` |
-| Add an OS-specific alias | Edit `aliases.linux.zsh` or `aliases.macos.zsh` |
-| Add a function | Edit `config/zsh/functions.zsh`, then `source ~/.zshrc` |
-| Change prompt | Run `p10k configure` (saves to `~/.p10k.zsh`, which is symlinked) |
-| Edit welcome screen | Edit `scripts/welcome.sh` |
-| Change what gets linked | Edit `install.conf.yaml`, then re-run `./install` |
-| Update packages on this machine | Run `updates` |
-| Clean caches / free disk space | Run `clean` |
-| List all aliases | Run `aliases` |
-| List all functions | Run `fn` (or `fn <name>` to see a body) |
-| Check weather | Run `wx` (or `wx <zip>`, `wx -0` for full forecast) |
-| Check moon phase | Run `moon` |
-| Check if a site is down | Run `down4me <site>` (or `uporno <site>`) |
-| Apply macOS defaults | Run `~/.dotfiles/scripts/setup/macos_defaults.zsh` |
+| What you want to do             | How                                                               |
+| ------------------------------- | ----------------------------------------------------------------- |
+| Add an alias                    | Edit `config/zsh/aliases.zsh`, then `source ~/.zshrc`             |
+| Add an OS-specific alias        | Edit `aliases.linux.zsh` or `aliases.macos.zsh`                   |
+| Add a function                  | Edit `config/zsh/functions.zsh`, then `source ~/.zshrc`           |
+| Change prompt                   | Run `p10k configure` (saves to `~/.p10k.zsh`, which is symlinked) |
+| Edit welcome screen             | Edit `scripts/welcome.sh`                                         |
+| Change what gets linked         | Edit `install.conf.yaml`, then re-run `./install`                 |
+| Update packages on this machine | Run `updates`                                                     |
+| Clean caches / free disk space  | Run `clean`                                                       |
+| List all aliases                | Run `aliases`                                                     |
+| List all functions              | Run `fn` (or `fn <name>` to see a body)                           |
+| Check weather                   | Run `wx` (or `wx <zip>`, `wx -0` for full forecast)               |
+| Check moon phase                | Run `moon`                                                        |
+| Check if a site is down         | Run `down4me <site>` (or `uporno <site>`)                         |
+| Apply macOS defaults            | Run `~/.dotfiles/scripts/setup/macos_defaults.zsh`                |
 
 ## Syncing Across Machines
 
@@ -181,6 +189,7 @@ updated content.
 Run `updates` to update everything on your system:
 
 **On macOS:**
+
 1. macOS software updates (`softwareupdate`)
 2. Homebrew update + upgrade
 3. Mac App Store apps (`mas upgrade`)
@@ -188,6 +197,7 @@ Run `updates` to update everything on your system:
 5. Ruby gems
 
 **On Linux:**
+
 1. apt update + upgrade
 2. Global npm packages
 3. Ruby gems
@@ -200,6 +210,7 @@ a tool isn't installed.
 Run `clean` to clear caches and free up disk space:
 
 **On macOS:**
+
 1. Homebrew cache (`brew cleanup --prune=0`)
 2. Trash (`~/.Trash/*`)
 3. DNS cache (`mDNSResponder`)
@@ -209,6 +220,7 @@ Run `clean` to clear caches and free up disk space:
 7. Docker system prune
 
 **On Linux:**
+
 1. apt cleanup (`autoremove`, `clean`, `autoclean`)
 2. Trash (`~/.local/share/Trash/*`)
 3. Ruby gem cleanup
@@ -241,6 +253,7 @@ the existing computer name is kept.
 ## Git Configuration
 
 The global gitconfig is symlinked to `~/.gitconfig`. It includes:
+
 - User info (name, email, GitHub user: dropkick, GitLab user: dropkickdesign)
 - Aliases (`l`, `st`, `co`, `ci`, `p`, `pr`, `br`, `amend`, etc.)
 - Color scheme for branch/diff/status output
@@ -269,6 +282,7 @@ No manual setup needed — it just works after `./install`.
 ## OS-Specific Aliases
 
 The `zshrc` detects the OS via `uname -s` and loads:
+
 - `aliases.zsh` — shared aliases (always loaded)
 - `aliases.linux.zsh` — Linux-specific (loaded on Linux)
 - `aliases.macos.zsh` — macOS-specific (loaded on macOS)
@@ -291,6 +305,5 @@ For `fzf` on minimal systems:
     ~/.fzf/install
 
 ## License
-
 
 Personal use. Feel free to fork and adapt.

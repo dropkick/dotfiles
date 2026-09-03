@@ -25,19 +25,17 @@
       force: true
 
 # ── Clean broken symlinks ──────────────────────────────────────────────
-- clean: ['~']
+- clean: ["~"]
 
 # ── Back up existing files & install packages ──────────────────────────
 # backup_existing.zsh runs first — reads this file, backs up any real
 # files at link targets to ~/.dotfiles-backup-TIMESTAMP/ before they're
 # overwritten. Then install_packages.zsh installs software.
 - shell:
-    -
-      command: zsh scripts/setup/backup_existing.zsh install.conf.yaml
+    - command: zsh scripts/setup/backup_existing.zsh install.conf.yaml
       stdout: true
       stderr: true
-    -
-      command: chmod -R +x scripts/setup && zsh scripts/setup/install_packages.zsh
+    - command: chmod -R +x scripts/setup && zsh scripts/setup/install_packages.zsh
       stdout: true
       stderr: true
 
@@ -62,3 +60,17 @@
     ~/.hammerspoon:
       path: config/hammerspoon
       if: '[ "$(uname -s)" = "Darwin" ]'
+    # VSCode
+    ~/Library/Application Support/Code/User/settings.json:
+      path: config/vscode/settings.json
+      if: '[ "$(uname -s)" = "Darwin" ]'
+    ~/.config/Code/User/settings.json:
+      path: config/vscode/settings.json
+      if: '[ "$(uname -s)" = "Linux" ]'
+    # VSCodium
+    ~/Library/Application Support/VSCodium/User/settings.json:
+      path: config/vscode/settings.json
+      if: '[ "$(uname -s)" = "Darwin" ]'
+    ~/.config/VSCodium/User/settings.json:
+      path: config/vscode/settings.json
+      if: '[ "$(uname -s)" = "Linux" ]'
