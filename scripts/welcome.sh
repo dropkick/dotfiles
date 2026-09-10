@@ -50,15 +50,16 @@ print "   "
 [[ -n "$phase" ]] && printf "\033[1;33m  🌕 %s\033[0m\n" "$phase"
 
 # ── Quote ──────────────────────────────────────────────────────────────
-QUOTE_FILE="${0:A:h:h}/config/quotes/quotes.txt"
+QUOTE_FILE="$HOME/.config/quotes/quotes.txt"
 QUOTE_WIDTH=50
 
+# Show a random quote if the quotes repo is installed; otherwise skip silently
 if [[ -s "$QUOTE_FILE" ]]; then
-    quotes=("${(@f)$(<"$QUOTE_FILE")}")
-    quotes=("${(@)quotes:#}")           # drop blank lines
-    if (( $#quotes )); then
-        echo " "
-        q="${quotes[$((RANDOM % $#quotes + 1))]}"
-        fold -s -w $((QUOTE_WIDTH - 2)) <<< "$q" | sed 's/^/  /'
-    fi
+  quotes=("${(@f)$(<"$QUOTE_FILE")}")
+  quotes=("${(@)quotes:#}")          # drop blank lines
+  if (( $#quotes )); then
+    echo " "
+    q="${quotes[$((RANDOM % $#quotes + 1))]}"
+    fold -s -w $((QUOTE_WIDTH - 2)) <<< "$q" | sed 's/^/ /'
+  fi
 fi
