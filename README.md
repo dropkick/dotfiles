@@ -40,6 +40,7 @@ Focused on macOS and flavors of Linux I use most (Debian, Mint, DietPi, Fedora, 
   - `down4me` / `uporno` — check if a site is down for everyone or just you
   - `wx` — weather report via wttr.in (`wx`, `wx 97201`, `wx -0` for full forecast)
   - `moon` — moon phase with ASCII art and phase name
+  - `wisdom-update` (aka `quotes-update`) — update optional quotes repo
 - **Introspection commands** — `aliases` lists alias names, `fn` lists
   function names (or pass a name to see its body)
 - A **welcome screen** showing weather, calendar, and time on terminal open
