@@ -129,3 +129,8 @@ alias localips="ifconfig | grep -Eo 'inet (addr:)?([0-9]+.){3}[0-9]+' | grep -v 
 
 # Track what I've done today
 alias did="nano -S ~/did.txt"
+
+# Update the wisdom quotes repo (github.com/dropkick/wisdom)
+alias wisdom-update="git -C ~/.config/quotes pull --ff-only"
+alias quotes-update="wisdom-update"
+
