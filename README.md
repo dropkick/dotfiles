@@ -101,6 +101,10 @@ Focused on macOS and flavors of Linux I use most (Debian, Mint, DietPi, Fedora, 
     # 5. If first time on this machine, configure the prompt:
     p10k configure
 
+    # 6. (Optional) Install [wisdom](https://github.com/dropkick/wisdom)
+    #    for a random quote at shell startup:
+    git clone https://github.com/dropkick/wisdom ~/.config/quotes
+
 The installer:
 
 1. Removes broken symlinks in your home directory
