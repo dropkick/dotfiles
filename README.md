@@ -25,6 +25,7 @@ Focused on macOS and flavors of Linux I use most (Debian, Mint, DietPi, Fedora, 
   - `zsh-history-substring-search` — Up/Down arrows search matching history
 - **Powerlevel10k** prompt theme (configurable with `p10k configure`)
 - **fzf** integration for fuzzy history search (Ctrl+R)
+- **thefuck** corrects your previous command, type `fuck`
 - Cross-platform **`updates`** function — updates system, package manager,
   Mac App Store (mas), npm, and Ruby gems with one command
 - Cross-platform **`clean`** function — clears caches and frees disk space
