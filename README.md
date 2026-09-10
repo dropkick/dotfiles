@@ -42,6 +42,7 @@ Focused on macOS and flavors of Linux I use most (Debian, Mint, DietPi, Fedora, 
 - **Introspection commands** — `aliases` lists alias names, `fn` lists
   function names (or pass a name to see its body)
 - A **welcome screen** showing weather, calendar, and time on terminal open
+  - Quote at shell startup (optional — requires the [wisdom](https://github.com/dropkick/wisdom) repo)
 - **Automatic backups** — the installer backs up any existing real files
   before replacing them with symlinks
 - **Standalone macOS defaults script** — applies ~100 system preferences
