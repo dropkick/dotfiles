@@ -386,26 +386,56 @@ function moon() {
 # ─────────────────────────────────────────────────────────────────────
 
 function flushdns-piholes() {
-    local host target
-    local hosts=(cleo brio aldo)
+    local host target result rc
+    local -a hosts=(cleo brio aldo)
+    local total=${#hosts[@]}
+    local ok=0 fail=0
+    local start=$SECONDS
+
+    # Colors (disabled if not a TTY)
+    if [[ -t 1 ]]; then
+        local c_ok=$'\e[32m' c_bad=$'\e[31m' c_off=$'\e[0m'
+    else
+        local c_ok='' c_bad='' c_off=''
+    fi
 
     # Local cache first — client-side staleness
-    echo "Flushing local resolver..."
-    sudo resolvectl flush-caches
+    printf 'Local resolver (systemd-resolved)... '
+    if sudo resolvectl flush-caches >/dev/null 2>&1; then
+        printf '%s✓%s\n' "$c_ok" "$c_off"
+    else
+        printf '%s✗ FAILED%s\n' "$c_bad" "$c_off"
+        (( fail++ ))
+    fi
 
     # Then each Pi-hole — network-side staleness
     for host in "${hosts[@]}"; do
-        echo -n "Flushing ${host}.dropkick.design... "
+        printf '%s... ' "${host}.dropkick.design"
         if ssh "root@${host}.dropkick.design" "pihole restartdns --flush-caches" >/dev/null 2>&1; then
-            echo "✓"
+            printf '%s✓%s\n' "$c_ok" "$c_off"
+            (( ok++ ))
         else
-            echo "✗ FAILED (host down or SSH error)"
+            printf '%s✗ FAILED%s (host down or SSH error)\n' "$c_bad" "$c_off"
+            (( fail++ ))
         fi
     done
+
+    # Summary
+    if (( fail == 0 )); then
+        printf '%sAll %d hosts flushed%s in %ds\n' "$c_ok" "$ok" "$c_off" "$(( SECONDS - start ))"
+    else
+        printf '%s%d/%d flushed, %d FAILED%s in %ds\n' \
+            "$c_ok" "$ok" "$(( ok + fail ))" "$c_bad" "$fail" "$c_off" "$(( SECONDS - start ))"
+    fi
 
     # Optional verification
     target="${1:-}"
     if [[ -n "$target" ]]; then
-        echo "Resolving ${target}: $(dig +short "$target" | head -1)"
+        result=$(dig +short "$target" | head -1)
+        if [[ -n "$result" ]]; then
+            printf '%s→ %s resolves to %s\n' "$c_ok" "$target" "$result"
+        else
+            printf '%s→ %s did NOT resolve — check pfSense Unbound override%s\n' "$c_bad" "$target" "$c_off"
+        fi
     fi
 }
