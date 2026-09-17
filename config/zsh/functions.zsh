@@ -372,3 +372,40 @@ function moon() {
   fi
   curl -sg --max-time 5 "wttr.in/moon"
 }
+
+# ═══════════════════════════════════════════════════════════════════════
+#
+# flushdns-piholes — Flush local DNS cache + all Pi-hole hosts' DNS caches
+#
+# Clears the local systemd-resolved cache, then restarts the DNS resolver
+# (with cache flush) on each Pi-hole host in sequence: cleo, brio, aldo.
+#
+# Usage: flushdns-piholes [domain]
+#        Optional domain is resolved afterwards to verify the result.
+#
+# ─────────────────────────────────────────────────────────────────────
+
+function flushdns-piholes() {
+    local host target
+    local hosts=(cleo brio aldo)
+
+    # Local cache first — client-side staleness
+    echo "Flushing local resolver..."
+    sudo resolvectl flush-caches
+
+    # Then each Pi-hole — network-side staleness
+    for host in "${hosts[@]}"; do
+        echo -n "Flushing ${host}.dropkick.design... "
+        if ssh "root@${host}.dropkick.design" "pihole restartdns --flush-caches" >/dev/null 2>&1; then
+            echo "✓"
+        else
+            echo "✗ FAILED (host down or SSH error)"
+        fi
+    done
+
+    # Optional verification
+    target="${1:-}"
+    if [[ -n "$target" ]]; then
+        echo "Resolving ${target}: $(dig +short "$target" | head -1)"
+    fi
+}

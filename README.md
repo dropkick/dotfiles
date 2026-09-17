@@ -34,13 +34,16 @@ Focused on macOS and flavors of Linux I use most (Debian, Mint, DietPi, Fedora, 
   - `calc` — quick calculator (`calc "2 + 2"`)
   - `cheat` — command cheatsheets via cht.sh (`cheat tar`)
   - `ff` / `fd` — fuzzy find files/directories by name
+  - `flushdns` — flush the local DNS cache (`sudo resolvectl flush-caches`)
+  - `flushdns-piholes` — flush local + all three Pi-hole hosts' DNS caches,
+    with optional domain to verify resolution after (`flushdns-piholes whatever.host.name`)
   - `duf` — disk usage, sorted and formatted
   - `gz` — gzip compression ratio for a file
   - `dataurl` — create a data URL from a file
   - `down4me` / `uporno` — check if a site is down for everyone or just you
-  - `wx` — weather report via wttr.in (`wx`, `wx 97201`, `wx -0` for full forecast)
   - `moon` — moon phase with ASCII art and phase name
   - `wisdom-update` (aka `quotes-update`) — update optional quotes repo
+  - `wx` — weather report via wttr.in (`wx`, `wx 97201`, `wx -0` for full forecast)
 - **Introspection commands** — `aliases` lists alias names, `fn` lists
   function names (or pass a name to see its body)
 - A **welcome screen** showing weather, calendar, and time on terminal open
@@ -66,8 +69,9 @@ Focused on macOS and flavors of Linux I use most (Debian, Mint, DietPi, Fedora, 
     │   │   ├── aliases.linux.zsh         ← Linux-specific aliases
     │   │   ├── aliases.macos.zsh         ← macOS-specific aliases
     │   │   └── functions.zsh             ← shell functions (updates, clean, fn,
-    │   │                                    calc, cheat, ff, fd, duf, gz,
-    │   │                                    dataurl, down4me, uporno, wx, moon)
+    │   │                                   calc, cheat, ff, lcushdns, flushdns-piholes, 
+    │   │                                   fd, duf, gz, dataurl, down4me, 
+    │   │                                   uporno, wx, moon)
     │   ├── vscode/
     │   │   ├── settings.json             ← VS Code settings (→ platform-specific path)
     │   │   └── extensions.txt            ← list of extension IDs
