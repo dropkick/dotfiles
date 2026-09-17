@@ -14,6 +14,10 @@ alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 # (macOS uses ifconfig — see aliases.macos.zsh for that version)
 alias localips="ip -br addr | grep -v 'lo'"
 
+# Flush the local systemd-resolved DNS cache
+alias flushdns="sudo resolvectl flush-caches"
+
+
 
 # ── Package management (Debian/Ubuntu/Mint/DietPi) ────────────────────
 # Shortcuts for common apt operations
