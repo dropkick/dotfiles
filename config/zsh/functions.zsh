@@ -234,6 +234,111 @@ function copyfile {
 hostname2ip() {
   ping -c 1 "$1" | egrep -m1 -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}'
 }
+# update-piholes — Update OS + Pi-hole on all fleet hosts
+#
+# Runs on each Pi-hole host in sequence (cleo, brio, aldo), in this order:
+#   1. dietpi-update (unattended) — DietPi OS updates
+#   2. apt update + full-upgrade — Debian packages (incl. sqlite3)
+#   3. pihole -up -y — Pi-hole core/web/FTL
+#
+# Semi-verbose: one line per step per host, then a summary.
+# Requires: passwordless root SSH to each host (same as flushdns-piholes).
+#
+# Usage: update-piholes [-p] [-q]
+#   -p  Pi-hole only (skip dietpi-update and apt)
+#   -q  quiet — only show failures and the summary
+
+function update-piholes() {
+    emulate -L zsh
+    local host step rc skip_os=0 quiet=0
+    local -a hosts=(cleo brio aldo)
+    local total=${#hosts[@]} ok=0 fail=0 upToDate=0
+    local start=$SECONDS
+
+    while getopts ':pq' opt; do
+        case $opt in
+            p) skip_os=1 ;;
+            q) quiet=1 ;;
+            *) printf 'Usage: update-piholes [-p] [-q]\n'; return 1 ;;
+        esac
+    done
+    shift $(( OPTIND - 1 ))
+
+    # Colors (disabled if not a TTY)
+    if [[ -t 1 ]]; then
+        local c_ok=$'\e[32m' c_bad=$'\e[31m' c_dim=$'\e[2m' c_off=$'\e[0m'
+    else
+        local c_ok='' c_bad='' c_dim='' c_off=''
+    fi
+
+    v() { (( quiet )) || printf '%s\n' "$*"; }
+
+    for host in "${hosts[@]}"; do
+        local fqdn="${host}.dropkick.design"
+        printf '%s%s%s\n' "$c_dim" "── $fqdn ────────────────────────" "$c_off"
+        local host_failed=0
+
+        # 1. DietPi update (unattended; -1 skips the interactive prompt)
+        if (( ! skip_os )); then
+            step='dietpi-update'
+            v "  $step ... "
+            if ssh "root@$fqdn" 'dietpi-update -1' >/dev/null 2>&1; then
+                v "  ${c_ok}✓${c_off} $step"
+            else
+                # dietpi-update exits non-zero when nothing to do — check
+                if ssh "root@$fqdn" 'dietpi-update -1 2>&1' | grep -qi 'up to date'; then
+                    v "  ${c_ok}✓${c_off} $step (up to date)"
+                else
+                    printf '  %s✗ FAILED %s%s\n' "$c_bad" "$step" "$c_off"
+                    (( host_failed++ ))
+                fi
+            fi
+
+            # 2. apt packages
+            step='apt full-upgrade'
+            v "  $step ... "
+            if ssh "root@$fqdn" \
+                'export DEBIAN_FRONTEND=noninteractive; apt-get update -qq && \
+                 apt-get full-upgrade -y -qq && \
+                 apt-get autoremove -y -qq' >/dev/null 2>&1; then
+                v "  ${c_ok}✓${c_off} $step"
+            else
+                printf '  %s✗ FAILED %s%s\n' "$c_bad" "$step" "$c_off"
+                (( host_failed++ ))
+            fi
+        fi
+
+        # 3. Pi-hole core/web/FTL
+        step='pihole -up'
+        v "  $step ... "
+        if ssh "root@$fqdn" 'pihole -up -y' >/dev/null 2>&1; then
+            v "  ${c_ok}✓${c_off} $step"
+        else
+            printf '  %s✗ FAILED %s%s (run manually to see why)\n' "$c_bad" "$step" "$c_off"
+            (( host_failed++ ))
+        fi
+
+        if (( host_failed )); then
+            (( fail++ ))
+        else
+            (( ok++ ))
+        fi
+    done
+
+    # Summary
+    if (( fail == 0 )); then
+        printf '%sAll %d hosts updated%s in %ds%s\n' \
+            "$c_ok" "$ok" "$c_off" "$c_dim" "$(( SECONDS - start ))"
+    else
+        printf '%s%d/%d hosts updated, %d FAILED%s in %ds\n' \
+            "$c_ok" "$ok" "$(( ok + fail ))" "$c_bad" "$fail" "$c_off" "$(( SECONDS - start ))"
+    fi
+
+    # Reminder: the fleet has no sync — all three must stay in lockstep
+    (( fail == 0 )) && v "${c_dim}(fleet parity: no-sync policy — all three updated together ✓)${c_off}"
+
+    return $(( fail > 0 ))
+}
 
 # Find the real URL behind a shortened URL
 unshorten() {
@@ -438,4 +543,139 @@ function flushdns-piholes() {
             printf '%s→ %s did NOT resolve — check pfSense Unbound override%s\n' "$c_bad" "$target" "$c_off"
         fi
     fi
+}
+
+
+# update-piholes — Update OS + Pi-hole on all fleet hosts
+#
+# Runs on each Pi-hole host in sequence (cleo, brio, aldo), in this order:
+#   1. dietpi-update (unattended) — DietPi OS + APT upgrades (DietPi
+#      applies apt upgrades itself; a separate apt step is redundant)
+#   2. pihole -up -y — Pi-hole core/web/FTL
+#   3. reboot check — flags (or with -r, performs) sequential reboots
+#
+# Requires: passwordless root SSH to each host (same as flushdns-piholes).
+#
+# Usage: update-piholes [-p] [-q] [-r]
+#   -p  Pi-hole only (skip dietpi-update)
+#   -q  quiet — only show failures and the summary
+#   -r  reboot hosts that need it (sequentially, waits for each)
+
+function update-piholes() {
+    emulate -L zsh
+    local host step fqdn rc skip_os=0 quiet=0 reboot=0
+    local -a hosts=(cleo brio aldo)
+    local total=${#hosts[@]} h_ok=0 h_fail=0 rebooted=0
+    local start=$SECONDS
+
+    while getopts ':pqr' opt; do
+        case $opt in
+            p) skip_os=1 ;;
+            q) quiet=1 ;;
+            r) reboot=1 ;;
+            *) printf 'Usage: update-piholes [-p] [-q] [-r]\n'; return 1 ;;
+        esac
+    done
+    shift $(( OPTIND - 1 ))
+
+    # Colors (disabled if not a TTY)
+    if [[ -t 1 ]]; then
+        local c_ok=$'\e[32m' c_bad=$'\e[31m' c_dim=$'\e[2m' c_off=$'\e[0m'
+    else
+        local c_ok='' c_bad='' c_dim='' c_off=''
+    fi
+
+    v()  { (( quiet )) || info "$*"; }
+    vok(){ (( quiet )) || ok   "$*"; }
+    fail(){ printf '%s[FAIL]%s %s\n' "$c_bad" "$c_off" "$*"; }
+
+    (( skip_os )) && v "Pi-hole only (skip dietpi-update)"
+    (( reboot ))  && v "Reboot mode: hosts needing it will reboot sequentially (safe: DHCP hands out all three DNS IPs)"
+    ok "🚦 Let's update the Pi-hole fleet…"
+
+    for host in "${hosts[@]}"; do
+        fqdn="${host}.dropkick.design"
+        local host_failed=0 steps=2
+        (( skip_os )) && steps=1
+
+        info "── $fqdn ──────────────────────"
+        (( quiet )) || info "Connecting to $fqdn…"
+        if ! ssh -o ConnectTimeout=10 -o BatchMode=yes "root@$fqdn" 'hostname' >/dev/null 2>&1; then
+            fail "$fqdn unreachable (host down or SSH error) — skipping"
+            (( h_fail++ ))
+            continue
+        fi
+        vok "$fqdn connected"
+
+        if (( ! skip_os )); then
+            # 1. DietPi update (unattended; bare "1" = check + apply
+            #    noninteractively; full path — not in PATH over non-login
+            #    ssh; includes apt upgrades; exit 0 when already up to
+            #    date). Full output passthrough — failure reasons show
+            #    inline instead of being swallowed.
+            info "[1/$steps] 🥗 Starting DietPi update…"
+            if ssh "root@$fqdn" '/boot/dietpi/dietpi-update 1'; then
+                ok "DietPi update complete (OS + APT)"
+            else
+                fail "DietPi update failed on $fqdn (see output above)"
+                (( host_failed++ ))
+            fi
+        fi
+
+        # 2. Pi-hole core/web/FTL
+        local n=1; (( skip_os )) || n=2
+        info "[$n/$steps] 🕳️ Starting Pi-hole update (core/web/FTL)…"
+        if ssh "root@$fqdn" 'pihole -up -y' >/dev/null 2>&1; then
+            ok "Pi-hole update complete"
+        else
+            fail "pihole -up failed on $fqdn (run manually to see why)"
+            (( host_failed++ ))
+        fi
+
+        # 3. Reboot check (DietPi/Debian touch this file when needed)
+        if ssh "root@$fqdn" '[ -f /var/run/reboot-required ]'; then
+            if (( reboot )); then
+                info "⚠ reboot required — rebooting $fqdn (sequential, fleet redundancy covers it)…"
+                ssh "root@$fqdn" 'reboot' >/dev/null 2>&1
+                local i=0
+                info "Waiting for $fqdn to come back…"
+                until ssh -o ConnectTimeout=5 -o BatchMode=yes "root@$fqdn" \
+                        'pihole status web' >/dev/null 2>&1; do
+                    (( i++ ))
+                    if (( i > 45 )); then
+                        fail "$fqdn did not come back after ~90s — CHECK IT"
+                        (( host_failed++ ))
+                        break
+                    fi
+                    sleep 2
+                done
+                (( i <= 45 )) && ok "$fqdn back up (rebooted, DNS answering)"
+                (( rebooted++ ))
+            else
+                printf '%s[REBOOT]%s %s needs a reboot — rerun with -r to reboot now%s\n' \
+                    "$c_bad" "$c_off" "$fqdn" "$c_dim"
+            fi
+        else
+            vok "no reboot required"
+        fi
+
+        if (( host_failed )); then
+            fail "── $fqdn: $host_failed step(s) FAILED ──"
+            (( h_fail++ ))
+        else
+            vok "── $fqdn: all steps complete ──"
+            (( h_ok++ ))
+        fi
+    done
+
+    # Summary
+    if (( h_fail == 0 )); then
+        ok "💥 All $h_ok hosts updated${rebooted:+ (+$rebooted rebooted)} in $(( SECONDS - start ))s"
+        v "Fleet parity: no-sync policy — all three updated together ✓"
+    else
+        printf '%s[FAIL]%s %d/%d hosts updated, %d FAILED in %ds\n' \
+            "$c_bad" "$c_off" "$h_ok" "$(( h_ok + h_fail ))" "$h_fail" "$(( SECONDS - start ))"
+    fi
+
+    return $(( h_fail > 0 ))
 }
