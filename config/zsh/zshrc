@@ -67,6 +67,9 @@ DOTFILES_CONFIG="$HOME/.config/dotfiles"
 # Shell functions (includes the cross-platform `updates` function)
 [ -f "$DOTFILES_CONFIG/functions.zsh" ] && source "$DOTFILES_CONFIG/functions.zsh"
 
+# Pi-hole fleet functions (flushdns/update/disable/enable-piholes)
+[ -f "$DOTFILES_CONFIG/pihole.zsh" ] && source "$DOTFILES_CONFIG/pihole.zsh"
+
 
 # ── Welcome screen ────────────────────────────────────────────────────
 # Displays Portland weather, a calendar with today highlighted, and

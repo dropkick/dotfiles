@@ -49,6 +49,7 @@
     ~/.config/dotfiles/aliases.linux.zsh: config/zsh/aliases.linux.zsh
     ~/.config/dotfiles/aliases.macos.zsh: config/zsh/aliases.macos.zsh
     ~/.config/dotfiles/functions.zsh: config/zsh/functions.zsh
+    ~/.config/dotfiles/pihole.zsh: config/zsh/pihole.zsh
     ~/.config/dotfiles/options.zsh: config/zsh/options.zsh
     ~/.gitconfig: config/git/gitconfig
     ~/.config/git/ignore: config/git/ignore

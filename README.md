@@ -33,10 +33,12 @@ Focused on macOS and flavors of Linux I use most (Debian, Mint, DietPi, Fedora, 
 - A collection of **aliases** and **functions** for common tasks:
   - `calc` — quick calculator (`calc "2 + 2"`)
   - `cheat` — command cheatsheets via cht.sh (`cheat tar`)
+  - `disable-piholes` [duration] — pause ad blocking on the whole fleet (default 5m; all three together, since partial disable = inconsistent filtering)
+  - `enable-piholes` — re-enable blocking fleet-wide immediately
   - `ff` / `fd` — fuzzy find files/directories by name
   - `flushdns` — flush the local DNS cache (`sudo resolvectl flush-caches`)
   - `flushdns-piholes` — flush local + all three Pi-hole hosts' DNS caches,
-    with optional domain to verify resolution after (`flushdns-piholes whatever.host.name`)
+     with optional domain to verify resolution after (`flushdns-piholes whatever.host.name`)
   - `duf` — disk usage, sorted and formatted
   - `gz` — gzip compression ratio for a file
   - `dataurl` — create a data URL from a file
