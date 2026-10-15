@@ -24,6 +24,9 @@ Focused on macOS and flavors of Linux I use most (Debian, Mint, DietPi, Fedora, 
   - `zsh-syntax-highlighting` — green/red command coloring as you type
   - `zsh-history-substring-search` — Up/Down arrows search matching history
 - **Powerlevel10k** prompt theme (configurable with `p10k configure`)
+- **nvm** + Node LTS (24) — per-user Node version manager, so projects
+  can pin their own version via `.nvmrc`. Loaded from `nvm.zsh` in
+  interactive shells only (keeps non-interactive zsh fast)
 - **fzf** integration for fuzzy history search (Ctrl+R)
 - **thefuck** corrects your previous command, type `fuck`
 - Cross-platform **`updates`** function — updates system, package manager,
@@ -66,6 +69,7 @@ Focused on macOS and flavors of Linux I use most (Debian, Mint, DietPi, Fedora, 
     │   │   ├── zshrc                     ← thin loader (→ ~/.zshrc)
     │   │   ├── zshenv                    ← env vars (→ ~/.zshenv)
     │   │   ├── .p10k.zsh                 ← prompt config (→ ~/.p10k.zsh)
+    │   │   ├── nvm.zsh                   ← nvm loader (→ ~/.config/dotfiles/nvm.zsh)
     │   │   ├── options.zsh               ← history + shell options
     │   │   ├── aliases.zsh               ← shared aliases (all OSes)
     │   │   ├── aliases.linux.zsh         ← Linux-specific aliases
@@ -89,6 +93,7 @@ Focused on macOS and flavors of Linux I use most (Debian, Mint, DietPi, Fedora, 
     │   └── setup/
     │       ├── backup_existing.zsh       ← backs up real files before linking
     │       ├── install_packages.zsh      ← OS-aware package installer
+    │       ├── install_nvm.zsh           ← installs nvm + Node LTS
     │       ├── macos_defaults.zsh        ← standalone macOS system preferences
     │       └── install_vscode_extensions.zsh ← installs extensions on demand
     ├── powerlevel10k/                    ← git submodule
@@ -122,9 +127,10 @@ The installer:
 3. Installs zsh + autocomplete plugins (via Homebrew on macOS,
    apt/dnf/pacman on Linux)
 4. Creates symlinks for all config files (via Dotbot)
-5. Creates the platform-specific gitconfig.local symlink
-6. Ports bash history to zsh (if applicable)
-7. Sets zsh as the default shell
+5. Installs nvm + Node LTS (removes any distro `nodejs` first)
+6. Creates the platform-specific gitconfig.local symlink
+7. Ports bash history to zsh (if applicable)
+8. Sets zsh as the default shell
 
 ### Automatic Backups
 
@@ -186,6 +192,9 @@ Just run `./install` from wherever you cloned it.
 | Install VS Code extensions      | Run `~/.dotfiles/scripts/setup/install_vscode_extensions.zsh`                    |
 | Update extension list           | `code --list-extensions > ~/.dotfiles/config/vscode/extensions.txt`, then commit |
 | Update gh CLI config            | Edit `~/.config/gh/config.yml` (symlinked to repo) |
+| Add / change Node version | `nvm install <ver> && nvm alias default <ver>` |
+| Pin a project's Node version | `echo "24" > .nvmrc` in the project root |
+| Change the default Node version | Edit `NODE_VERSION` in `scripts/setup/install_nvm.zsh` |
 
 
 ## Syncing Across Machines
@@ -227,6 +236,17 @@ Run `updates` to update everything on your system:
 
 Each step is labeled with a progress indicator and skips gracefully if
 a tool isn't installed.
+
+**A note on npm with nvm:** `npm update -g` only updates packages for the
+*currently active* Node version. With nvm, globals live inside each
+version's directory, so they don't carry across versions:
+
+    nvm install 24 --reinstall-packages-from=22
+
+Run `updates` in a shell where `nvm alias default` has set the version you
+actually want, or it may update the globals of whatever version was last
+used.
+
 
 ## The `clean` Function
 
@@ -335,6 +355,44 @@ The `zshrc` detects the OS via `uname -s` and loads:
 - `aliases.zsh` — shared aliases (always loaded)
 - `aliases.linux.zsh` — Linux-specific (loaded on Linux)
 - `aliases.macos.zsh` — macOS-specific (loaded on macOS)
+
+## Node & nvm
+
+nvm is installed per-user into `~/.nvm` by `scripts/setup/install_nvm.zsh`
+(run automatically by `./install`). A default Node version is set with
+`nvm alias default`, so new shells get it without any manual `nvm use`.
+
+nvm is loaded from `config/zsh/nvm.zsh` in **interactive shells only** —
+not `zshenv`. Sourcing `nvm.sh` costs startup time on every zsh process,
+including scripts that never touch Node.
+
+### Why the installer doesn't touch your profile
+
+nvm's own installer appends a loader block to the shell profile it
+detects. Here `~/.zshrc` is a **symlink into this repo**, so that would
+append to a tracked file. `install_nvm.zsh` passes `PROFILE=/dev/null` to
+suppress it, and `nvm.zsh` loads nvm instead.
+
+### If you previously had distro Node
+
+Debian/Ubuntu/Mint package `nodejs` at `/usr/bin/node`, usually years
+behind. `install_nvm.zsh` removes it via apt if `dpkg` reports it as
+package-managed — never anything under `~/.nvm` or `~/.local/bin`.
+
+### Per-project versions
+
+Drop a `.nvmrc` in a project root and nvm will use it:
+
+    echo "24" > .nvmrc
+    nvm use
+
+### Non-interactive shells
+
+Because nvm loads from `zshrc`, it is **not** available to cron jobs,
+systemd units, or `ssh host 'cmd'`. Use an absolute path there:
+
+    $(nvm which 24)
+
 
 ## DietPi / Minimal Systems
 

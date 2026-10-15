@@ -38,6 +38,9 @@
     - command: chmod -R +x scripts/setup && zsh scripts/setup/install_packages.zsh
       stdout: true
       stderr: true
+    - command: zsh scripts/setup/install_nvm.zsh
+      stdout: true
+      stderr: true
 
 # ── Symlinks ───────────────────────────────────────────────────────────
 # Each line: <target in home> : <source in repo>
@@ -49,6 +52,7 @@
     ~/.config/dotfiles/aliases.linux.zsh: config/zsh/aliases.linux.zsh
     ~/.config/dotfiles/aliases.macos.zsh: config/zsh/aliases.macos.zsh
     ~/.config/dotfiles/functions.zsh: config/zsh/functions.zsh
+    ~/.config/dotfiles/nvm.zsh: config/zsh/nvm.zsh
     ~/.config/dotfiles/pihole.zsh: config/zsh/pihole.zsh
     ~/.config/dotfiles/options.zsh: config/zsh/options.zsh
     ~/.gitconfig: config/git/gitconfig

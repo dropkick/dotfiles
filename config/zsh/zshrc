@@ -8,7 +8,9 @@
 #    ~/.config/dotfiles/aliases.zsh       — shared aliases (all OSes)
 #    ~/.config/dotfiles/aliases.<os>.zsh  — OS-specific aliases
 #    ~/.config/dotfiles/functions.zsh     — shell functions
-#    ~/scripts/welcome.sh                — weather/calendar/time greeting
+#    ~/.config/dotfiles/pihole.zsh        — Pi-hole fleet helpers
+#    ~/.config/dotfiles/nvm.zsh           — Node Version Manager
+#    ~/scripts/welcome.sh                 — weather/calendar/time greeting
 #
 #  All modular files are managed by Dotbot from the dotfiles repo.
 #  See the repo's README.md for the full layout and how to make changes.
@@ -69,6 +71,11 @@ DOTFILES_CONFIG="$HOME/.config/dotfiles"
 
 # Pi-hole fleet functions (flushdns/update/disable/enable-piholes)
 [ -f "$DOTFILES_CONFIG/pihole.zsh" ] && source "$DOTFILES_CONFIG/pihole.zsh"
+
+# Node Version Manager (loaded from ~/.nvm via the setup script)
+# Must come after compinit (above) so nvm's completion can register,
+# and before zsh-syntax-highlighting (below), which wraps all widgets.
+[ -f "$DOTFILES_CONFIG/nvm.zsh" ] && source "$DOTFILES_CONFIG/nvm.zsh"
 
 
 # ── Welcome screen ────────────────────────────────────────────────────
