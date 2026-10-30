@@ -146,32 +146,50 @@ fi
 
 # ── Set zsh as default shell if it isn't already ───────────────────────
 info "🐚 Checking default shell..."
-CURRENT_SHELL=$(getent passwd "$USER" 2>/dev/null | cut -d: -f7 || echo "$SHELL")
-ZSH_PATH=$(command -v zsh 2>/dev/null)
+ZSH_PATH="$(command -v zsh 2>/dev/null)"
 
-if [[ -z "$ZSH_PATH" ]]; then
-  info "zsh not found in PATH — skipping default shell check."
-elif [[ "$CURRENT_SHELL" == *zsh ]]; then
-  ok "zsh is already your default shell."
+if [ -z "$ZSH_PATH" ]; then
+  info "zsh not found in PATH - skipping default shell check."
+  ZSH_PATH=""
 else
-  printf "  Would you like to set zsh as your default shell? [y/N] "
-  read -r REPLY < /dev/tty
-  if [[ "$REPLY" =~ ^[Yy]$ ]]; then
-    # Try chsh first (works on macOS, some Linux distros)
-    if chsh -s "$ZSH_PATH" 2>/dev/null; then
-      ok "Default shell set to zsh. Log out and back in for it to take effect."
-    else
-      # chsh failed (PAM restriction on Debian/Ubuntu) — try sudo
-      info "chsh failed (likely PAM restriction). Trying with sudo..."
-      if sudo chsh -s "$ZSH_PATH" "$USER" 2>/dev/null; then
-        ok "Default shell set to zsh. Log out and back in for it to take effect."
+  if [ "$(uname -s)" = "Darwin" ]; then
+    # Directory Services is the source of truth; getent does not exist here.
+    current_shell="$(dscl . -read "$HOME" UserShell | awk '{print $2}')"
+    # chsh validates against /etc/shells; Homebrew zsh is not listed by default.
+    if ! grep -qx "$ZSH_PATH" /etc/shells; then
+      echo "$ZSH_PATH" | sudo tee -a /etc/shells >/dev/null
+      info "Registered $ZSH_PATH in /etc/shells"
+    fi
+  else
+    current_shell="$(getent passwd "$USER" 2>/dev/null | cut -d: -f7)"
+    [ -n "$current_shell" ] || current_shell="$SHELL"
+  fi
+
+  if [ "$current_shell" = "$ZSH_PATH" ] || [ "$current_shell" = "/bin/zsh" ]; then
+    ok "zsh is already your default shell ($current_shell)"
+  else
+    printf "  Would you like to set zsh as your default shell? [y/N] "
+    read -r REPLY < /dev/tty
+    if [[ "$REPLY" =~ ^[Yy]$ ]]; then
+      if chsh -s "$ZSH_PATH" 2>/dev/null || sudo chsh -s "$ZSH_PATH" "$USER"; then
+        # Verify instead of assuming: chsh can exit 0 without changing anything.
+        case "$(uname -s)" in
+          Darwin) final_shell="$(dscl . -read "$HOME" UserShell | awk '{print $2}')" ;;
+          *)      final_shell="$(getent passwd "$USER" 2>/dev/null | cut -d: -f7)" ;;
+        esac
+        if [ "$final_shell" = "$ZSH_PATH" ]; then
+          ok "Default shell set to $ZSH_PATH. Log out and back in."
+        else
+          info "chsh reported success but shell is still $final_shell"
+          info "Run manually:  sudo chsh -s $ZSH_PATH $USER"
+        fi
       else
         info "Could not set zsh as default shell automatically."
         info "Run this manually:  sudo chsh -s $ZSH_PATH $USER"
       fi
+    else
+      info "Skipping. You can set it later with: chsh -s $ZSH_PATH"
     fi
-  else
-    info "Skipping. You can set it later with: chsh -s $ZSH_PATH"
   fi
 fi
 
