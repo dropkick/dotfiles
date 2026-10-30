@@ -121,8 +121,17 @@ esac
 
 # ── Install cloudflare-speed-cli for speedtest alias ─────────────
 info "📦 Installing cloudflare-speed-cli package..."
-curl -fsSL https://raw.githubusercontent.com/kavehtehrani/cloudflare-speed-cli/main/install.sh | sh
-ok "cloudflare-speed-cli package installed"
+if command -v cloudflare-speed-cli >/dev/null 2>&1; then
+  ok "cloudflare-speed-cli already installed"
+else
+  info "Installing cloudflare-speed-cli..."
+  if curl -fsSL https://raw.githubusercontent.com/kavehtehrani/cloudflare-speed-cli/main/install.sh | sh; then
+    ok "cloudflare-speed-cli installed"
+  else
+    info "cloudflare-speed-cli install failed - skipping"
+  fi
+fi
+
 
 # ── Clone zsh-history-substring-search (not in apt repos) ─────────────
 info "🔌 Ensuring zsh-history-substring-search is installed..."
