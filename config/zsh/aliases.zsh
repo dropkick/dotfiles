@@ -57,28 +57,34 @@ alias paths='echo -e ${PATH//:/\\n}'    # Print PATH entries, one per line
 # eza (exa fork): colorful, git-aware file listing
 # lsd: ls with Nerd Font icons
 
+# ── listing tools ──────────────────────────────────────────────────
+# lls = long, all, classify. Defined in every branch so it exists
+# even where eza can't be installed (e.g. Debian 12 bookworm).
 # eza aliases — main listing tool (colors + git status built in)
 if command -v eza &>/dev/null; then
-  alias lls='eza -lah --git'
+  alias lls='eza -lAhF --git'
   alias ll='eza -lh --git'
-  alias la='eza -la --git'
-  alias lt='eza -lah --tree --git'
-  alias lr='eza -lah --git --reverse'
+  alias la='eza -lAh --git'
+  alias l='eza -lAh --git'
+  alias lt='eza -lAhF --tree --git'
+  alias lr='eza -lAhF --git --reverse'
 # lsd: ls with Nerd Font icons
 elif command -v lsd &>/dev/null; then
   alias ls='lsd'
-  alias lls='lsd -laF'
-  alias l='lsd -lahA'
-  alias ll='lsd -lah'
-  alias la='lsd -la'
+  alias lls='lsd -lAF'
+  alias ll='lsd -lh'
+  alias la='lsd -lAh'
+  alias l='lsd -lAh'
+  alias lt='lsd --tree --depth 2'
+  alias lr='lsd -lAhF -r'
+# plain-ls fallbacks
 else
   alias ls='ls --color=auto'
-  alias lls='ls -laF --color=auto'   # ← restores the original meaning
-  alias l='ls -lahA'
-  alias ll='ls -lh'
-  alias la='ls -la'
+  alias lls='ls -lAF --color=auto'
+  alias ll='ls -lh --color=auto'
+  alias la='ls -lAh --color=auto'
+  alias l='ls -lAh --color=auto'
 fi
-
 
 
 
