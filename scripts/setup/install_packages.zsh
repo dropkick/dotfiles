@@ -13,18 +13,24 @@ ok()   { echo -e "\033[32m[OK]\033[0m $1" ; }
 
 info "📦 Detecting OS and installing packages..."
 
-# ══ package installation ═══════════════════════════════════════════
-# Each package is installed individually: one unavailable name must
-# never abort the rest. Failures are collected and reported at the end.
+# == package installation ==========================================
+# Each package is installed individually so that one unavailable name
+# can never abort the rest. Failures are collected and reported at the
+# end instead of being reported as success.
 
 FAILED_PKGS=""
 INSTALLED_PKGS=""
 
 if [ "$(id -u)" -eq 0 ]; then SUDO=""; else SUDO="sudo"; fi
-PKG_LOG="$(mktemp -t dotfiles-pkg.XXXXXX)"
+PKG_LOG="${TMPDIR:-/tmp}/dotfiles-pkg.log"
+: >"$PKG_LOG"
 
-# pkg_install <name>  — defined per package manager below
+# pkg_install is defined per package manager inside the case below.
 try_pkg() {
+  if ! command -v pkg_install >/dev/null 2>&1; then
+    info "internal error: pkg_install not defined"
+    return 1
+  fi
   if pkg_install "$1" >>"$PKG_LOG" 2>&1; then
     INSTALLED_PKGS="$INSTALLED_PKGS $1"
   else
@@ -32,15 +38,18 @@ try_pkg() {
   fi
 }
 
+# Takes separate words, not one quoted string: zsh does not word-split
+# quoted parameters, so quoting the list makes it a single argument.
+
 install_list() {
-  for p in $1; do try_pkg "$p"; done
+  local p
+  for p in "$@"; do try_pkg "$p"; done
 }
 
 report_pkgs() {
   if [ -n "$FAILED_PKGS" ]; then
-    info "⚠️  Could not install:$FAILED_PKGS"
-    info "    Everything else installed fine. Details: $PKG_LOG"
-    # info "    Debian 12 (bookworm) has no eza package — see README for the static binary."
+    info "Could not install:$FAILED_PKGS"
+    info "Everything else installed fine. Details: $PKG_LOG"
   else
     ok "$1 packages installed"
   fi
@@ -48,63 +57,67 @@ report_pkgs() {
 
 case "$(uname -s)" in
   Darwin)
-    # ── macOS: install via Homebrew ─────────────────────────────────
-    info "Detected macOS — using Homebrew"
-    if ! command -v brew &>/dev/null; then
+    info "Detected macOS - using Homebrew"
+    if ! command -v brew >/dev/null 2>&1; then
       info "Homebrew not found. Installing..."
       /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-      # Homebrew isn't on PATH in this shell yet (Apple Silicon and Intel)
       for b in /opt/homebrew/bin/brew /usr/local/bin/brew; do
         if [ -x "$b" ]; then eval "$("$b" shellenv)"; break; fi
       done
     fi
-    command -v brew &>/dev/null || { info "⚠️  Homebrew unavailable — skipping packages"; }
-    if command -v brew &>/dev/null; then
+    if command -v brew >/dev/null 2>&1; then
       pkg_install() { brew install "$1"; }
-      install_list "zsh zsh-autosuggestions zsh-syntax-highlighting fzf mas bat figlet thefuck eza lsd"
+      install_list zsh zsh-autosuggestions zsh-syntax-highlighting \
+                   fzf mas bat figlet thefuck eza lsd
       report_pkgs "macOS"
+    else
+      info "Homebrew unavailable - skipping package installation"
     fi
     ;;
 
   Linux)
     info "Detected Linux"
-    if command -v apt-get &>/dev/null; then
+    if command -v apt-get >/dev/null 2>&1; then
       info "Using apt (Debian/Ubuntu/Mint/DietPi)"
-      $SUDO apt-get update -qq || info "apt update reported errors — continuing anyway"
+      $SUDO apt-get update -qq || info "apt update reported errors - continuing anyway"
       pkg_install() { $SUDO apt-get install -y "$1"; }
-      # eza/figlet last: newest additions, most likely to be unavailable
-      install_list "zsh zsh-autosuggestions zsh-syntax-highlighting fzf lsd bat thefuck figlet eza"
-      # Debian/Ubuntu install bat's binary as `batcat` [fa93e3]
-      if command -v batcat &>/dev/null && ! command -v bat &>/dev/null; then
+      # eza and figlet last: newest names, most likely to be missing.
+      install_list zsh zsh-autosuggestions zsh-syntax-highlighting \
+                   fzf lsd bat thefuck figlet eza
+      # Debian/Ubuntu ship bat's binary as batcat
+      if command -v batcat >/dev/null 2>&1 && ! command -v bat >/dev/null 2>&1; then
         mkdir -p "$HOME/.local/bin"
         ln -sf "$(command -v batcat)" "$HOME/.local/bin/bat"
-        info "Linked batcat → ~/.local/bin/bat"
+        info "Linked batcat to ~/.local/bin/bat"
       fi
       report_pkgs "apt"
 
-    elif command -v dnf &>/dev/null; then
+    elif command -v dnf >/dev/null 2>&1; then
       info "Using dnf (Fedora)"
       pkg_install() { $SUDO dnf install -y "$1"; }
-      install_list "zsh zsh-autosuggestions zsh-syntax-highlighting fzf lsd bat figlet thefuck eza"
+      install_list zsh zsh-autosuggestions zsh-syntax-highlighting \
+                   fzf lsd bat figlet thefuck eza
       report_pkgs "dnf"
 
-    elif command -v pacman &>/dev/null; then
+    elif command -v pacman >/dev/null 2>&1; then
       info "Using pacman (Arch)"
       pkg_install() { $SUDO pacman -S --needed --noconfirm "$1"; }
-      install_list "zsh zsh-autosuggestions zsh-syntax-highlighting fzf lsd bat figlet thefuck eza"
+      install_list zsh zsh-autosuggestions zsh-syntax-highlighting \
+                   fzf lsd bat figlet thefuck eza
       report_pkgs "pacman"
 
     else
-      info "⚠️  No supported package manager found."
-      info "    Install manually: zsh, zsh-autosuggestions, zsh-syntax-highlighting,"
-      info "    fzf, lsd (or eza), bat, figlet, thefuck"
+      info "No supported package manager found."
+      info "Install manually: zsh, zsh-autosuggestions, zsh-syntax-highlighting,"
+      info "fzf, lsd (or eza), bat, figlet, thefuck"
     fi
     ;;
 
   *)
-    info "⚠️  Unknown OS — skipping package installation."
+    info "Unknown OS - skipping package installation."
     ;;
 esac
+
 
 # ── Install cloudflare-speed-cli for speedtest alias ─────────────
 info "📦 Installing cloudflare-speed-cli package..."
