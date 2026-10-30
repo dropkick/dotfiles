@@ -187,15 +187,14 @@ bindkey '^[[B' history-substring-search-down   # Down arrow
 export PATH="$HOME/.local/bin:$PATH"
 [ -d /opt/homebrew/bin ] && export PATH="/opt/homebrew/bin:$PATH"
 
-
-# ── Platform-specific eval blocks (macOS only) ────────────────────────
-# These tools are macOS-specific and silently fail if not installed.
+# ── macOS-only eval blocks ────────────────────────────────────────────
 if [[ "$OS" == "macos" ]]; then
-  if command -v thefuck &>/dev/null; then
-  # Ensure config dir is a real directory (not a file or dangling symlink)
-    [[ -e ~/.config/thefuck || -L ~/.config/thefuck ]] && [[ ! -d ~/.config/thefuck ]] && rm ~/.config/thefuck
-    eval $(thefuck --alias 2>/dev/null)
-  fi
   command -v rbenv &>/dev/null && eval "$(rbenv init - zsh)"
 fi
 
+# ── thefuck: emits the `fuck` shell function ──────────────────────────
+# ...
+if command -v thefuck &>/dev/null; then
+  [[ -e ~/.config/thefuck || -L ~/.config/thefuck ]] && [[ ! -d ~/.config/thefuck ]] && rm ~/.config/thefuck
+  eval "$(thefuck --alias 2>/dev/null)"
+fi
