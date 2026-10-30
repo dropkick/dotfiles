@@ -23,8 +23,7 @@ INSTALLED_PKGS=""
 if [ "$(id -u)" -eq 0 ]; then SUDO=""; else SUDO="sudo"; fi
 PKG_LOG="$(mktemp -t dotfiles-pkg.XXXXXX)"
 
-# pkg_install <name>  — defined per package manager 
-below
+# pkg_install <name>  — defined per package manager below
 try_pkg() {
   if pkg_install "$1" >>"$PKG_LOG" 2>&1; then
     INSTALLED_PKGS="$INSTALLED_PKGS $1"
