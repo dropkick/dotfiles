@@ -59,24 +59,21 @@ alias paths='echo -e ${PATH//:/\\n}'    # Print PATH entries, one per line
 
 # eza aliases — main listing tool (colors + git status built in)
 if command -v eza &>/dev/null; then
-  alias lls='eza -lah --git'            # long list, all files, git status
-  alias ll='eza -lh --git'             # long list, git status
-  alias la='eza -la --git'             # long list, all files
-  alias lt='eza -lah --tree --git'    # tree view with git status
-  alias lr='eza -lah --git --reverse' # newest at bottom
-fi
-
-# lsd aliases — ls with Nerd Font icons
-if command -v lsd &>/dev/null; then
-  alias ls='lsd'                       # replace ls with lsd
-  alias l='lsd -lahA'                 # long list, almost all
-  alias lld='lsd -lah'                # long list, all
-  alias ld='lsd -la'                  # long list, all (sorted)
-fi
-
-# Standard ls fallback (if neither eza nor lsd installed)
-if ! command -v eza &>/dev/null && ! command -v lsd &>/dev/null; then
+  alias lls='eza -lah --git'
+  alias ll='eza -lh --git'
+  alias la='eza -la --git'
+  alias lt='eza -lah --tree --git'
+  alias lr='eza -lah --git --reverse'
+# lsd: ls with Nerd Font icons
+elif command -v lsd &>/dev/null; then
+  alias ls='lsd'
+  alias lls='lsd -laF'
+  alias l='lsd -lahA'
+  alias ll='lsd -lah'
+  alias la='lsd -la'
+else
   alias ls='ls --color=auto'
+  alias lls='ls -laF --color=auto'   # ← restores the original meaning
   alias l='ls -lahA'
   alias ll='ls -lh'
   alias la='ls -la'
