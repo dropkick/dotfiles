@@ -190,9 +190,9 @@ if [[ -s "$WX_CACHE" ]]; then
     aWeather=("${(@f)$(< "$WX_CACHE")}")
     print -l -- "  ${^aWeather[@]}"
 else
-    echo "  +============================+"
-    echo "  |       WX unavailable       |"
-    echo "  +============================+"
+    printf '  +----------------------------+\n'
+    printf '  |       WX unavailable       |\n'
+    printf '  +----------------------------+\n'
 fi
 
 
