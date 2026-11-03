@@ -86,7 +86,7 @@ _moon_name() {                               # $1 = fraction 0..1 -> "Waning Cre
     local f=$1 seg
     [[ $f == <-> || $f == <->.<-> ]] || return 1
     seg=$(( int(f * 8 + 0.5) % 8 ))
-    case $seg in
+    case $seg inf
         0) print -r -- "New Moon" ;;
         1) print -r -- "Waxing Crescent" ;;
         2) print -r -- "First Quarter" ;;
