@@ -152,41 +152,37 @@ _moon_offline() {                            # ruh roh, last resort — no netwo
 
 # ── Weather refresh: wttr.in -> Open-Meteo, guarded by a circuit breaker ──
 _wx_refresh() {                              # 0 = cache written, 1 = all failed
-    local code
+    local code tmp="$WX_CACHE.new.$$"        # $$ so concurrent shells don't collide
 
-    # Skip wttr entirely if it failed in the last WX_DOWN_TTL seconds.
     if ! _ok_fresh "$WX_DOWN_MARK" "$WX_DOWN_TTL"; then
         code=$(curl "wttr.in/${LOCATION}?0" --silent \
                     --connect-timeout 2 --max-time 3 \
-                    -o "$WX_CACHE.new" -w '%{http_code}' 2>/dev/null)
-
-        # Promote only a real report: 200, right shape, no error/throttle page.
-        # A timeout yields code 000 and an empty file.
-        if [[ $code == 200 && -s "$WX_CACHE.new" ]] \
-           && [[ "$(head -n1 "$WX_CACHE.new")" == *"Weather report:"* ]] \
-           && ! grep -qiE 'sorry|unknown location|quota|unavailable' "$WX_CACHE.new"; then
-            mv -f -- "$WX_CACHE.new" "$WX_CACHE"
-            rm -f -- "$WX_DOWN_MARK"          # healthy again — close the breaker
+                    -o "$tmp" -w '%{http_code}' 2>/dev/null)
+        if [[ $code == 200 && -s "$tmp" ]] \
+           && [[ "$(head -n1 "$tmp")" == *"Weather report:"* ]] \
+           && ! grep -qiE 'sorry|unknown location|quota|unavailable' "$tmp"; then
+            mv -f -- "$tmp" "$WX_CACHE"
+            rm -f -- "$WX_DOWN_MARK"
             return 0
         fi
-
-        rm -f -- "$WX_CACHE.new"
-        date +%s >| "$WX_DOWN_MARK"           # open the breaker
+        rm -f -- "$tmp"
+        date +%s >| "$WX_DOWN_MARK"
     fi
 
-    if _wx_openmeteo >| "$WX_CACHE.new" 2>/dev/null && [[ -s "$WX_CACHE.new" ]]; then
-        mv -f -- "$WX_CACHE.new" "$WX_CACHE"
+    if _wx_openmeteo >| "$tmp" 2>/dev/null && [[ -s "$tmp" ]]; then
+        mv -f -- "$tmp" "$WX_CACHE"
         return 0
     fi
-
-    rm -f -- "$WX_CACHE.new"
-    return 1                                  # last-known cache still stands
+    rm -f -- "$tmp"
+    return 1
 }
 
 # ── Weather (30-min cache; 5 min while showing failover output) ─────────
 wx_ttl=$WX_TTL
 grep -q 'open-meteo' "$WX_CACHE" 2>/dev/null && wx_ttl=$WX_TTL_FAIL
-_ok_fresh "$WX_CACHE" "$wx_ttl" || _wx_refresh
+if ! _ok_fresh "$WX_CACHE" "$wx_ttl"; then
+    ( _wx_refresh ) &!      # fork + disown: never blocks the prompt
+fi
 
 if [[ -s "$WX_CACHE" ]]; then
     aWeather=("${(@f)$(< "$WX_CACHE")}")
@@ -196,6 +192,7 @@ else
     echo "  |       WX unavailable       |"
     echo "  +============================+"
 fi
+
 
 # ── Moon phase (daily cache; wttr.in -> Open-Meteo -> local math) ──────
 MOON_CACHE="/tmp/moon-phase-$(date +%F)"
