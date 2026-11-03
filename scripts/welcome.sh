@@ -4,13 +4,13 @@
 # PATH: ~/.dotfiles/scripts/welcome.sh (symlinked to ~/scripts/welcome.sh)
 # DESC: Display cached weather, moon phase, and a random quote on shell startup
 # CALL: Sourced from ~/.zshrc on login
-# DATE: Apr 6, 2017. Modified: Sep 3, 2026 (15-min weather cache, moon, quotes).
+# DATE: Apr 6, 2017. Modified: Nov  2, 2026 (change to 30-min weather cache...wttr.in getting hammered with traffic lately)
 
 zmodload -F zsh/stat b:zstat 2>/dev/null    # zsh builtin — portable mtimes
 
 # ── Weather (15-minute cache) ──────────────────────────────────────────
 WX_CACHE="/tmp/wttr-weather.cache"
-WX_TTL=900                                   # seconds (15 min)
+WX_TTL=1800                                   # seconds (30  min)
 
 wx_fresh=false
 if [[ -s "$WX_CACHE" ]]; then
