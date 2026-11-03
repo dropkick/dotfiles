@@ -1,19 +1,18 @@
-# ═══════════════════════════════════════════════════════════════════════
-#  nvm.zsh — Node Version Manager
-#  ─────────────────────────────────────────────────────────────────────
-#  Loaded by zshrc (interactive shells only).
+# nvm.zsh — lazy-load nvm
 #
-#  NOT in zshenv on purpose — sourcing nvm.sh costs ~80ms on every zsh
-#  process, including non-interactive scripts that never touch node.
-#
-#  Install: ~/.dotfiles/scripts/setup/install_nvm.zsh
-#  Docs:    https://github.com/nvm-sh/nvm
-# ═══════════════════════════════════════════════════════════════════════
+# Sourcing nvm.sh + bash_completion costs ~0.9s per shell (nvm_auto alone
+# spends ~285ms running `nvm use` against .nvmrc on every startup). These
+# stubs defer all of it to the first real use.
 
 export NVM_DIR="$HOME/.nvm"
 
-if [[ -s "$NVM_DIR/nvm.sh" ]]; then
-  source "$NVM_DIR/nvm.sh"
-  # bash completion — zsh sources it fine, skip silently if absent
+_nvm_load() {
+  unfunction nvm node npm npx 2>/dev/null
+  [[ -s "$NVM_DIR/nvm.sh" ]]          && source "$NVM_DIR/nvm.sh"
   [[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"
-fi
+}
+
+for _c in nvm node npm npx; do
+  eval "$_c() { _nvm_load; $_c \"\$@\"; }"
+done
+unset _c
