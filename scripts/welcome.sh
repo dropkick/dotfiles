@@ -5,8 +5,10 @@
 # DESC: Display cached weather, moon phase, and a random quote on shell startup
 # CALL: Sourced from ~/.zshrc on login
 # DATE: Apr 6, 2017. Modified: Nov  3, 2026
-#       - wttr.in is primary for both wx and moonphase calls; each has a 
+#       - wttr.in is primary for both wx and moonphase calls; each has an
 #         api.open-meteo.com failover. "WX unavailable" only if all fail.
+#       - A wttr.in failure opens a 10-minute circuit breaker, so an outage
+#         costs one wttr attempt per 10 min instead of one per refresh.
 
 zmodload -F zsh/stat b:zstat 2>/dev/null    # zsh builtin — portable mtimes
 
@@ -17,6 +19,8 @@ LON="-122.6784"
 WX_CACHE="/tmp/wttr-weather.cache"
 WX_TTL=1800                                  # seconds (30 min)
 WX_TTL_FAIL=300                              # shorter TTL while showing failover output
+WX_DOWN_MARK="/tmp/wttr-down.mark"           # circuit breaker: last wttr failure
+WX_DOWN_TTL=600                              # seconds to skip wttr after a failure
 
 # ── Helpers (removed at the bottom — this script is sourced) ────────────
 _ok_fresh() {                                # $1=file  $2=ttl
@@ -62,7 +66,7 @@ _wx_openmeteo() {                            # wttr-style block; nonzero = faile
     url+=",weather_code,wind_speed_10m,wind_direction_10m,is_day"
     url+="&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto"
 
-    json=$(curl -sS --max-time 3 "$url" 2>/dev/null) || return 1
+    json=$(curl --silent --connect-timeout 2 --max-time 3 "$url" 2>/dev/null) || return 1
     [[ $json == *'"current":{'* ]] || return 1      # error JSON has no current block
     cur=${json#*'"current":{'}
     cur=${cur%%\}*}
@@ -118,7 +122,7 @@ _moon_emoji() {                              # $1 = phase name -> emoji
 
 _moon_wttr() {                               # primary — same call as before
     local json name
-    json=$(curl -sg --max-time 3 "wttr.in?format=j1" 2>/dev/null) || return 1
+    json=$(curl -sg --connect-timeout 2 --max-time 3 "wttr.in?format=j1" 2>/dev/null) || return 1
     [[ $json == *'"moon_phase"'* ]] || return 1
     name=${json##*\"moon_phase\": \"}        # anchored on the value form, order-independent
     name=${name%%\"*}
@@ -128,7 +132,7 @@ _moon_wttr() {                               # primary — same call as before
 
 _moon_openmeteo() {                          # failover — keyless
     local json frac
-    json=$(curl -sS --max-time 3 \
+    json=$(curl --silent --connect-timeout 2 --max-time 3 \
         "https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&daily=moon_phase&timezone=auto&forecast_days=1" \
         2>/dev/null) || return 1
     [[ $json == *'"moon_phase":['* ]] || return 1
@@ -146,29 +150,43 @@ _moon_offline() {                            # ruh roh, last resort — no netwo
     _moon_name "$(printf '0.%03d' $(( age * 1000 / 2551443 )))"
 }
 
-# ── Weather (30-min cache; wttr.in -> Open-Meteo) ──────────────────────
+# ── Weather refresh: wttr.in -> Open-Meteo, guarded by a circuit breaker ──
+_wx_refresh() {                              # 0 = cache written, 1 = all failed
+    local code
+
+    # Skip wttr entirely if it failed in the last WX_DOWN_TTL seconds.
+    if ! _ok_fresh "$WX_DOWN_MARK" "$WX_DOWN_TTL"; then
+        code=$(curl "wttr.in/${LOCATION}?0" --silent \
+                    --connect-timeout 2 --max-time 3 \
+                    -o "$WX_CACHE.new" -w '%{http_code}' 2>/dev/null)
+
+        # Promote only a real report: 200, right shape, no error/throttle page.
+        # A timeout yields code 000 and an empty file.
+        if [[ $code == 200 && -s "$WX_CACHE.new" ]] \
+           && [[ "$(head -n1 "$WX_CACHE.new")" == *"Weather report:"* ]] \
+           && ! grep -qiE 'sorry|unknown location|quota|unavailable' "$WX_CACHE.new"; then
+            mv -f -- "$WX_CACHE.new" "$WX_CACHE"
+            rm -f -- "$WX_DOWN_MARK"          # healthy again — close the breaker
+            return 0
+        fi
+
+        rm -f -- "$WX_CACHE.new"
+        date +%s >| "$WX_DOWN_MARK"           # open the breaker
+    fi
+
+    if _wx_openmeteo >| "$WX_CACHE.new" 2>/dev/null && [[ -s "$WX_CACHE.new" ]]; then
+        mv -f -- "$WX_CACHE.new" "$WX_CACHE"
+        return 0
+    fi
+
+    rm -f -- "$WX_CACHE.new"
+    return 1                                  # last-known cache still stands
+}
+
+# ── Weather (30-min cache; 5 min while showing failover output) ─────────
 wx_ttl=$WX_TTL
 grep -q 'open-meteo' "$WX_CACHE" 2>/dev/null && wx_ttl=$WX_TTL_FAIL
-
-if ! _ok_fresh "$WX_CACHE" "$wx_ttl"; then
-    wx_code=$(curl "wttr.in/${LOCATION}?0" --silent --max-time 3 \
-                   -o "$WX_CACHE.new" -w '%{http_code}' 2>/dev/null)
-
-    # Promote only a real report: 200, right shape, no error/throttle page.
-    # A timeout yields code 000 and an empty file — falls through to failover.
-    if [[ $wx_code == 200 && -s "$WX_CACHE.new" ]] \
-       && [[ "$(head -n1 "$WX_CACHE.new")" == *"Weather report:"* ]] \
-       && ! grep -qiE 'sorry|unknown location|quota|unavailable' "$WX_CACHE.new"; then
-        mv -f -- "$WX_CACHE.new" "$WX_CACHE"
-    else
-        rm -f -- "$WX_CACHE.new"
-        if _wx_openmeteo >| "$WX_CACHE.new" 2>/dev/null && [[ -s "$WX_CACHE.new" ]]; then
-            mv -f -- "$WX_CACHE.new" "$WX_CACHE"
-        else
-            rm -f -- "$WX_CACHE.new"          # last-known wttr cache still stands
-        fi
-    fi
-fi
+_ok_fresh "$WX_CACHE" "$wx_ttl" || _wx_refresh
 
 if [[ -s "$WX_CACHE" ]]; then
     aWeather=("${(@f)$(< "$WX_CACHE")}")
@@ -208,6 +226,6 @@ if [[ -s "$QUOTE_FILE" ]]; then
 fi
 
 # ── Clean up (sourced into your login shell) ───────────────────────────
-unfunction _ok_fresh _json_num _compass _wmo _wx_openmeteo \
+unfunction _ok_fresh _json_num _compass _wmo _wx_refresh _wx_openmeteo \
            _moon_name _moon_emoji _moon_wttr _moon_openmeteo _moon_offline 2>/dev/null
-unset wx_ttl wx_code phase aWeather quotes q LOCATION LAT LON 2>/dev/null
+unset wx_ttl phase aWeather quotes q LOCATION LAT LON 2>/dev/null
