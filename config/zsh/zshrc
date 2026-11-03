@@ -4,13 +4,13 @@
 #  This file is intentionally lean. It sets up core zsh behavior, loads
 #  the prompt (Powerlevel10k), then sources modular config files:
 #
-#    ~/.config/dotfiles/options.zsh       — zsh options and history
-#    ~/.config/dotfiles/aliases.zsh       — shared aliases (all OSes)
-#    ~/.config/dotfiles/aliases.<os>.zsh  — OS-specific aliases
-#    ~/.config/dotfiles/functions.zsh     — shell functions
-#    ~/.config/dotfiles/pihole.zsh        — Pi-hole fleet helpers
-#    ~/.config/dotfiles/nvm.zsh           — Node Version Manager
-#    ~/scripts/welcome.sh                 — weather/calendar/time greeting
+# ~/.config/dotfiles/options.zsh — zsh options and history
+# ~/.config/dotfiles/aliases.zsh — shared aliases (all OSes)
+# ~/.config/dotfiles/aliases.<os>.zsh  — OS-specific aliases
+# ~/.config/dotfiles/functions.zsh — shell functions
+# ~/.config/dotfiles/pihole.zsh — Pi-hole fleet helpers
+# ~/.config/dotfiles/nvm.zsh — Node Version Manager
+# ~/scripts/welcome.sh — weather/calendar/time greeting
 #
 #  All modular files are managed by Dotbot from the dotfiles repo.
 #  See the repo's README.md for the full layout and how to make changes.
@@ -22,7 +22,7 @@
 case "$(uname -s)" in
   Darwin) OS="macos" ;;
   Linux)  OS="linux" ;;
-  *)      OS="unknown" ;;
+  *) OS="unknown" ;;
 esac
 
 
@@ -53,6 +53,7 @@ fi
 
 # ── Completion system ─────────────────────────────────────────────────
 # zsh's completion is powerful but must be initialized explicitly.
+# Costs ~35ms; the full security sweep is worth keeping.
 autoload -Uz compinit && compinit
 
 
@@ -72,9 +73,9 @@ DOTFILES_CONFIG="$HOME/.config/dotfiles"
 # Pi-hole fleet functions (flushdns/update/disable/enable-piholes)
 [ -f "$DOTFILES_CONFIG/pihole.zsh" ] && source "$DOTFILES_CONFIG/pihole.zsh"
 
-# Node Version Manager (loaded from ~/.nvm via the setup script)
-# Must come after compinit (above) so nvm's completion can register,
-# and before zsh-syntax-highlighting (below), which wraps all widgets.
+# Node Version Manager — LAZY: nvm.zsh installs stubs, real nvm loads on
+# first `nvm`/`node`/`npm`/`npx`. Saves ~0.9s per startup; see that file.
+# Must still come after compinit so nvm's completion can register once loaded.
 [ -f "$DOTFILES_CONFIG/nvm.zsh" ] && source "$DOTFILES_CONFIG/nvm.zsh"
 
 
@@ -90,50 +91,58 @@ DOTFILES_CONFIG="$HOME/.config/dotfiles"
 # Key bindings and completion are loaded if available.
 # On macOS: installed via Homebrew (files at /opt/homebrew/opt/fzf/shell/)
 # On Linux: installed via apt or ~/.fzf/install (files at ~/.fzf/)
-# ── fzf: keybindings + completion ─────────────────────────────────────
-# Works with any fzf version — checks multiple install locations.
-# Older fzf (apt/dnf/pacman): ships separate key-bindings and completion
-#   scripts in various locations depending on distro
-# Newer fzf (0.48+): ~/.fzf.zsh created by installer, uses `fzf --zsh`
-# Git install: scripts in ~/.fzf/shell/
-# Homebrew: scripts in /opt/homebrew/opt/fzf/shell/ (Apple Silicon)
-#           or /usr/local/opt/fzf/shell/ (Intel)
-FZF_KEYBINDINGS_SOURCED=0
-FZF_COMPLETION_SOURCED=0
+#
+# GUARDED: re-sourcing rebinds widgets and re-wraps `_main_complete`,
+# which nests on every reload. Load once per shell.
+if (( ! ${+_ZSH_FZF_LOADED} )); then
 
-if command -v fzf &>/dev/null; then
-  # Source key-bindings
-  for f in \
-    /usr/share/doc/fzf/examples/key-bindings.zsh \
-    /usr/share/fzf/key-bindings.zsh \
-    /opt/homebrew/opt/fzf/shell/key-bindings.zsh \
-    /usr/local/opt/fzf/shell/key-bindings.zsh \
-    ~/.fzf/shell/key-bindings.zsh; do
-    if [[ -f "$f" ]]; then
-      source "$f"
-      FZF_KEYBINDINGS_SOURCED=1
-      break
+  # ── fzf: keybindings + completion ───────────────────────────────────
+  # Works with any fzf version — checks multiple install locations.
+  # Older fzf (apt/dnf/pacman): ships separate key-bindings and completion
+  #   scripts in various locations depending on distro
+  # Newer fzf (0.48+): ~/.fzf.zsh created by installer, uses `fzf --zsh`
+  # Git install: scripts in ~/.fzf/shell/
+  # Homebrew: scripts in /opt/homebrew/opt/fzf/shell/ (Apple Silicon)
+  # or /usr/local/opt/fzf/shell/ (Intel)
+  FZF_KEYBINDINGS_SOURCED=0
+  FZF_COMPLETION_SOURCED=0
+
+  if command -v fzf &>/dev/null; then
+    # Source key-bindings
+    for f in \
+      /usr/share/doc/fzf/examples/key-bindings.zsh \
+      /usr/share/fzf/key-bindings.zsh \
+      /opt/homebrew/opt/fzf/shell/key-bindings.zsh \
+      /usr/local/opt/fzf/shell/key-bindings.zsh \
+      ~/.fzf/shell/key-bindings.zsh; do
+      if [[ -f "$f" ]]; then
+        source "$f"
+        FZF_KEYBINDINGS_SOURCED=1
+        break
+      fi
+    done
+
+    # Source completion
+    for f in \
+      /usr/share/doc/fzf/examples/completion.zsh \
+      /usr/share/fzf/completion.zsh \
+      /opt/homebrew/opt/fzf/shell/completion.zsh \
+      /usr/local/opt/fzf/shell/completion.zsh \
+      ~/.fzf/shell/completion.zsh; do
+      if [[ -f "$f" ]]; then
+        source "$f"
+        FZF_COMPLETION_SOURCED=1
+        break
+      fi
+    done
+
+    # If separate scripts weren't found, try ~/.fzf.zsh (fzf installer)
+    if [[ $FZF_KEYBINDINGS_SOURCED -eq 0 ]] && [[ -f ~/.fzf.zsh ]]; then
+      source ~/.fzf.zsh
     fi
-  done
-
-  # Source completion
-  for f in \
-    /usr/share/doc/fzf/examples/completion.zsh \
-    /usr/share/fzf/completion.zsh \
-    /opt/homebrew/opt/fzf/shell/completion.zsh \
-    /usr/local/opt/fzf/shell/completion.zsh \
-    ~/.fzf/shell/completion.zsh; do
-    if [[ -f "$f" ]]; then
-      source "$f"
-      FZF_COMPLETION_SOURCED=1
-      break
-    fi
-  done
-
-  # If separate scripts weren't found, try ~/.fzf.zsh (fzf installer)
-  if [[ $FZF_KEYBINDINGS_SOURCED -eq 0 ]] && [[ -f ~/.fzf.zsh ]]; then
-    source ~/.fzf.zsh
   fi
+
+  typeset -g _ZSH_FZF_LOADED=1
 fi
 
 # Disable Alt+C (fuzzy cd) — not everyone wants it
@@ -144,41 +153,55 @@ FZF_ALT_C_COMMAND=''
 # These three plugins give the grey ghost text, command coloring, and
 # Up/Down history search that make zsh feel great.
 # Path varies by OS: Homebrew on macOS, apt on Linux, git fallback anywhere.
+#
+# GUARDED: zsh-syntax-highlighting is NOT re-entrant. It wraps every ZLE
+# widget on each source, and re-sourcing wraps the already-wrapped widgets,
+# so cost grows super-linearly with reloads (~10s by the ~30th `source
+# ~/.zshrc`). Load once per shell; use `exec zsh` for a clean slate.
+if (( ! ${+_ZSH_PLUGINS_LOADED} )); then
 
-# 1. zsh-autosuggestions — grey ghost text from history
-#    Type a partial command → suggests the full match from history.
-#    → (right arrow) to accept the whole suggestion
-#    Alt+→ to accept one word
-if [ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
-  source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-elif [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
-  source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-elif [ -f ~/.zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
-  source ~/.zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+  # 1. zsh-autosuggestions — grey ghost text from history
+  # Type a partial command → suggests the full match from history.
+  # → (right arrow) to accept the whole suggestion
+  # Alt+→ to accept one word
+  if [ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+    source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+  elif [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+    source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+  elif [ -f ~/.zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+    source ~/.zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+  fi
+
+  # 2. zsh-history-substring-search — Up/Down searches matching history
+  # Type "git" then Up → cycles through all "git ..." commands in history.
+  # Sourced BEFORE syntax-highlighting so its widgets exist first.
+  if [ -f /opt/homebrew/share/zsh-history-substring-search/zsh-history-substring-search.zsh ]; then
+    source /opt/homebrew/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+  elif [ -f /usr/share/zsh-history-substring-search/zsh-history-substring-search.zsh ]; then
+    source /usr/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+  elif [ -f ~/.zsh-plugins/zsh-history-substring-search/zsh-history-substring-search.zsh ]; then
+    source ~/.zsh-plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+  fi
+
+  # 3. zsh-syntax-highlighting — colors commands as you type
+  # Green = valid command, red = not found, etc.
+  # Must be sourced LAST — it wraps all widgets defined above it.
+  if [ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+    source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  elif [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+    source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  elif [ -f ~/.zsh-plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+    source ~/.zsh-plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  fi
+
+  typeset -g _ZSH_PLUGINS_LOADED=1
 fi
 
-# 2. zsh-syntax-highlighting — colors commands as you type
-#    Green = valid command, red = not found, etc.
-#    Must be sourced near the END of .zshrc (it wraps all widgets).
-if [ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
-  source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-elif [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
-  source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-elif [ -f ~/.zsh-plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
-  source ~/.zsh-plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# Keybindings for history-substring-search (only if the plugin loaded)
+if (( $+functions[history-substring-search-up] )); then
+  bindkey '^[[A' history-substring-search-up   # Up arrow
+  bindkey '^[[B' history-substring-search-down # Down arrow
 fi
-
-# 3. zsh-history-substring-search — Up/Down searches matching history
-#    Type "git" then Up → cycles through all "git ..." commands in history.
-if [ -f /opt/homebrew/share/zsh-history-substring-search/zsh-history-substring-search.zsh ]; then
-  source /opt/homebrew/share/zsh-history-substring-search/zsh-history-substring-search.zsh
-elif [ -f ~/.zsh-plugins/zsh-history-substring-search/zsh-history-substring-search.zsh ]; then
-  source ~/.zsh-plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
-fi
-
-# Keybindings for history-substring-search (apply if plugin loaded)
-bindkey '^[[A' history-substring-search-up    # Up arrow
-bindkey '^[[B' history-substring-search-down   # Down arrow
 
 
 # ── PATH additions ────────────────────────────────────────────────────
@@ -193,6 +216,7 @@ if [[ "$OS" == "macos" ]]; then
 fi
 
 # ── thefuck: emits the `fuck` shell function ──────────────────────────
+# LAZY: 2s of Python import deferred to first use.
 if (( $+commands[thefuck] )); then
   fuck() {
     unfunction fuck
