@@ -16,10 +16,15 @@ LOCATION="Portland"                          # wttr.in location string
 LAT="45.5152"                                # Portland, OR — coords for Open-Meteo
 LON="-122.6784"
 
+WELCOME_CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/welcome"
+mkdir -p "$WELCOME_CACHE" 2>/dev/null
+
+WX_CACHE="$WELCOME_CACHE/weather.cache"
+
 WX_CACHE="/tmp/wttr-weather.cache"
 WX_TTL=1800                                  # seconds (30 min)
 WX_TTL_FAIL=300                              # shorter TTL while showing failover output
-WX_DOWN_MARK="/tmp/wttr-down.mark"           # circuit breaker: last wttr failure
+WX_DOWN_MARK="$WELCOME_CACHE/wttr-down.mark" # circuit breaker: last wttr failure
 WX_DOWN_TTL=1800                             # seconds to skip wttr after a failure
 
 # ── Helpers (removed at the bottom — this script is sourced) ────────────
@@ -195,7 +200,8 @@ fi
 
 
 # ── Moon phase (daily cache; wttr.in -> Open-Meteo -> local math) ──────
-MOON_CACHE="/tmp/moon-phase-$(date +%F)"
+MOON_CACHE="$WELCOME_CACHE/moon-phase-$(date +%F)"
+
 if [[ -s "$MOON_CACHE" ]]; then
     phase=$(< "$MOON_CACHE")
 else
