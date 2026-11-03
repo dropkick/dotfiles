@@ -7,8 +7,8 @@
 # DATE: Apr 6, 2017. Modified: Nov  3, 2026
 #       - wttr.in is primary for both wx and moonphase calls; each has an
 #         api.open-meteo.com failover. "WX unavailable" only if all fail.
-#       - A wttr.in failure opens a 10-minute circuit breaker, so an outage
-#         costs one wttr attempt per 10 min instead of one per refresh.
+#       - A wttr.in failure opens a 30-minute circuit breaker, so an outage
+#         costs one wttr attempt per 30 min instead of one per refresh.
 
 zmodload -F zsh/stat b:zstat 2>/dev/null    # zsh builtin — portable mtimes
 
@@ -224,6 +224,8 @@ if [[ -s "$QUOTE_FILE" ]]; then
     fold -s -w $((QUOTE_WIDTH - 2)) <<< "$q" | sed 's/^/ /'
   fi
 fi
+
+print -l -- "$WELCOME_CACHE"/moon-phase-* | tail -n +8 | xargs -r rm -f 2>/dev/null
 
 # ── Clean up (sourced into your login shell) ───────────────────────────
 unfunction _ok_fresh _json_num _compass _wmo _wx_refresh _wx_openmeteo \
