@@ -76,7 +76,7 @@ _wx_openmeteo() {                            # wttr-style block; nonzero = faile
     code=$(_json_num weather_code "$cur")
     day=$(_json_num is_day "$cur")
 
-    print -r -- "  ${LOCATION}  ·  open-meteo (failover)"
+    print -r -- "  ${LOCATION}  ·  open-meteo "
     print -r -- "  $(_wmo ${code:-0} ${day:-1})"
     print -r -- "  $(printf '%.0f' $t)°F · feels $(printf '%.0f' ${f:-$t})°F"
     print -r -- "  Wind $(printf '%.0f' ${w:-0}) mph $(_compass ${wd:-0}) · ${rh:-?}% RH"
