@@ -20,7 +20,7 @@ WX_CACHE="/tmp/wttr-weather.cache"
 WX_TTL=1800                                  # seconds (30 min)
 WX_TTL_FAIL=300                              # shorter TTL while showing failover output
 WX_DOWN_MARK="/tmp/wttr-down.mark"           # circuit breaker: last wttr failure
-WX_DOWN_TTL=600                              # seconds to skip wttr after a failure
+WX_DOWN_TTL=1800                             # seconds to skip wttr after a failure
 
 # ── Helpers (removed at the bottom — this script is sourced) ────────────
 _ok_fresh() {                                # $1=file  $2=ttl
