@@ -193,8 +193,10 @@ if [[ "$OS" == "macos" ]]; then
 fi
 
 # ── thefuck: emits the `fuck` shell function ──────────────────────────
-# ...
-if command -v thefuck &>/dev/null; then
-  [[ -e ~/.config/thefuck || -L ~/.config/thefuck ]] && [[ ! -d ~/.config/thefuck ]] && rm ~/.config/thefuck
-  eval "$(thefuck --alias 2>/dev/null)"
+if (( $+commands[thefuck] )); then
+  fuck() {
+    unfunction fuck
+    eval "$(thefuck --alias)"
+    fuck "$@"
+  }
 fi
