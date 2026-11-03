@@ -18,10 +18,7 @@ LON="-122.6784"
 
 WELCOME_CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/welcome"
 mkdir -p "$WELCOME_CACHE" 2>/dev/null
-
 WX_CACHE="$WELCOME_CACHE/weather.cache"
-
-WX_CACHE="/tmp/wttr-weather.cache"
 WX_TTL=1800                                  # seconds (30 min)
 WX_TTL_FAIL=300                              # shorter TTL while showing failover output
 WX_DOWN_MARK="$WELCOME_CACHE/wttr-down.mark" # circuit breaker: last wttr failure
