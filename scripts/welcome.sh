@@ -5,14 +5,13 @@
 # DESC: Display cached weather, moon phase, and a random quote on shell startup
 # CALL: Sourced from ~/.zshrc on login
 # DATE: Apr 6, 2017. Modified: Nov  3, 2026
-#       - wttr.in is primary for both wx and moonphase calls; each has a
+#       - wttr.in is primary for both wx and moonphase calls; each has a 
 #         api.open-meteo.com failover. "WX unavailable" only if all fail.
 
 zmodload -F zsh/stat b:zstat 2>/dev/null    # zsh builtin — portable mtimes
-zmodload zsh/regex 2>/dev/null              # for =~ in _json_num
 
 LOCATION="Portland"                          # wttr.in location string
-LAT="45.5152"                                # Portland, OR coords for Open-Meteo 
+LAT="45.5152"                                # Portland, OR — coords for Open-Meteo
 LON="-122.6784"
 
 WX_CACHE="/tmp/wttr-weather.cache"
@@ -29,7 +28,7 @@ _ok_fresh() {                                # $1=file  $2=ttl
 
 _json_num() {                                # $1=key  $2=json fragment -> number
     local re="\"$1\"[[:space:]]*:[[:space:]]*(-?[0-9]+(\.[0-9]+)?)"
-    local MATCH; local -a match mbegin mend
+    local -a match mbegin mend
     [[ $2 =~ $re ]] && print -r -- $match[1]
 }
 
@@ -76,16 +75,21 @@ _wx_openmeteo() {                            # wttr-style block; nonzero = faile
     code=$(_json_num weather_code "$cur")
     day=$(_json_num is_day "$cur")
 
-    print -r -- "  ${LOCATION}  ·  open-meteo "
-    print -r -- "  $(_wmo ${code:-0} ${day:-1})"
-    print -r -- "  $(printf '%.0f' $t)°F · feels $(printf '%.0f' ${f:-$t})°F"
-    print -r -- "  Wind $(printf '%.0f' ${w:-0}) mph $(_compass ${wd:-0}) · ${rh:-?}% RH"
+    print -r -- "${LOCATION}  ·  open-meteo"
+    print -r -- "$(_wmo ${code:-0} ${day:-1})"
+    print -r -- "$(printf '%.0f' $t)°F · feels $(printf '%.0f' ${f:-$t})°F"
+    print -r -- "Wind $(printf '%.0f' ${w:-0}) mph $(_compass ${wd:-0}) · ${rh:-?}% RH"
 }
 
 _moon_name() {                               # $1 = fraction 0..1 -> "Waning Crescent"
-    local f=$1 seg
-    [[ $f == <-> || $f == <->.<-> ]] || return 1
-    seg=$(( int(f * 8 + 0.5) % 8 ))
+    local f=$1 ip fp th seg
+    [[ $f == <-> || $f == <->.<-> || $f == .<-> ]] || return 1
+    if [[ $f == *.* ]]; then fp=${f#*.}; else fp=; fi
+    fp=${fp[1,3]}                            # truncate to 3 decimals
+    fp=${(r:3::0:)fp}                        # right-pad to 3 with zeros
+    ip=${f%%.*}; ip=${ip:-0}
+    th=$(( ip * 1000 + fp ))                 # fraction in thousandths, integer math
+    seg=$(( (th * 8 + 500) / 1000 % 8 ))
     case $seg in
         0) print -r -- "New Moon" ;;
         1) print -r -- "Waxing Crescent" ;;
@@ -98,16 +102,31 @@ _moon_name() {                               # $1 = fraction 0..1 -> "Waning Cre
     esac
 }
 
-_moon_wttr() {                               # primary call
+_moon_emoji() {                              # $1 = phase name -> emoji
+    case $1 in
+        "New Moon")        print -r -- "🌑" ;;
+        "Waxing Crescent") print -r -- "🌒" ;;
+        "First Quarter")   print -r -- "🌓" ;;
+        "Waxing Gibbous")  print -r -- "🌔" ;;
+        "Full Moon")       print -r -- "🌕" ;;
+        "Waning Gibbous")  print -r -- "🌖" ;;
+        "Last Quarter")    print -r -- "🌗" ;;
+        "Waning Crescent") print -r -- "🌘" ;;
+        *)                 print -r -- "🌕" ;;
+    esac
+}
+
+_moon_wttr() {                               # primary — same call as before
     local json name
     json=$(curl -sg --max-time 3 "wttr.in?format=j1" 2>/dev/null) || return 1
     [[ $json == *'"moon_phase"'* ]] || return 1
-    name=${json#*\"moon_phase\"}; name=${name#*\"}; name=${name%%\"*}
+    name=${json##*\"moon_phase\": \"}        # anchored on the value form, order-independent
+    name=${name%%\"*}
     [[ -n $name && $name != *[\{\[]* ]] && ${#name} -le 40 ] || return 1
     print -r -- $name
 }
 
-_moon_openmeteo() {                          # failover call 
+_moon_openmeteo() {                          # failover — keyless
     local json frac
     json=$(curl -sS --max-time 3 \
         "https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&daily=moon_phase&timezone=auto&forecast_days=1" \
@@ -119,7 +138,7 @@ _moon_openmeteo() {                          # failover call
     _moon_name "$frac"
 }
 
-_moon_offline() {                            # ruh roh, last resort
+_moon_offline() {                            # ruh roh, last resort — no network at all
     local age
     # new moon 2000-01-06 18:14 UTC; synodic month 2551443 s
     age=$(( ($(date +%s) - 947182440) % 2551443 ))
@@ -129,7 +148,7 @@ _moon_offline() {                            # ruh roh, last resort
 
 # ── Weather (30-min cache; wttr.in -> Open-Meteo) ──────────────────────
 wx_ttl=$WX_TTL
-grep -q 'open-meteo (failover)' "$WX_CACHE" 2>/dev/null && wx_ttl=$WX_TTL_FAIL
+grep -q 'open-meteo' "$WX_CACHE" 2>/dev/null && wx_ttl=$WX_TTL_FAIL
 
 if ! _ok_fresh "$WX_CACHE" "$wx_ttl"; then
     wx_code=$(curl "wttr.in/${LOCATION}?0" --silent --max-time 3 \
@@ -171,7 +190,7 @@ else
     [[ -n $phase ]] && print -r -- "$phase" >| "$MOON_CACHE"
 fi
 print "   "
-[[ -n "$phase" ]] && printf "\033[1;33m  🌕 %s\033[0m\n" "$phase"
+[[ -n "$phase" ]] && printf "\033[1;33m  %s %s\033[0m\n" "$(_moon_emoji "$phase")" "$phase"
 
 # ── Quote ──────────────────────────────────────────────────────────────
 QUOTE_FILE="$HOME/.config/quotes/quotes.txt"
@@ -190,5 +209,5 @@ fi
 
 # ── Clean up (sourced into your login shell) ───────────────────────────
 unfunction _ok_fresh _json_num _compass _wmo _wx_openmeteo \
-           _moon_name _moon_wttr _moon_openmeteo _moon_offline 2>/dev/null
+           _moon_name _moon_emoji _moon_wttr _moon_openmeteo _moon_offline 2>/dev/null
 unset wx_ttl wx_code phase aWeather quotes q LOCATION LAT LON 2>/dev/null
