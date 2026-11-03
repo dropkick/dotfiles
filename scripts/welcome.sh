@@ -122,17 +122,17 @@ _moon_emoji() {                              # $1 = phase name -> emoji
     esac
 }
 
-_moon_wttr() {                               # primary — same call as before
+_moon_wttr() {                               # primary 
     local json name
-    json=$(curl -sg --connect-timeout 2 --max-time 3 "wttr.in?format=j1" 2>/dev/null) || return 1
-    [[ $json == *'"moon_phase"'* ]] || return 1
-    name=${json##*\"moon_phase\": \"}        # anchored on the value form, order-independent
-    name=${name%%\"*}
-    [[ -n $name && $name != *[\{\[]* ]] && ${#name} -le 40 ] || return 1
+    local -a match mbegin mend
+    json=$(curl -sf --connect-timeout 2 --max-time 4 "wttr.in/${LOCATION}?format=j1" 2>/dev/null) || return 1
+    [[ $json =~ '"moon_phase":[[:space:]]*"([A-Za-z ]+)"' ]] || return 1
+    name=$match[1]
+    [[ $name == (New|Waxing|First|Full|Waning|Last)* ]] || return 1
     print -r -- $name
 }
 
-_moon_openmeteo() {                          # failover — keyless
+_moon_openmeteo() {                          # failover
     local json frac
     json=$(curl --silent --connect-timeout 2 --max-time 3 \
         "https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&daily=moon_phase&timezone=auto&forecast_days=1" \
@@ -144,7 +144,7 @@ _moon_openmeteo() {                          # failover — keyless
     _moon_name "$frac"
 }
 
-_moon_offline() {                            # ruh roh, last resort — no network at all
+_moon_offline() {                            # ruh roh, last resort
     local age
     # new moon 2000-01-06 18:14 UTC; synodic month 2551443 s
     age=$(( ($(date +%s) - 947182440) % 2551443 ))
