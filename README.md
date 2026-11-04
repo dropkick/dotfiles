@@ -28,6 +28,7 @@ Focused on macOS and flavors of Linux I use most (Debian, Mint, DietPi, Fedora, 
   can pin their own version via `.nvmrc`. Loaded from `nvm.zsh` in
   interactive shells only (keeps non-interactive zsh fast)
 - **fzf** integration for fuzzy history search (Ctrl+R)
+- **pay-respects** (replacement for **thefuck**) corrects previous command, type `fuck`
 - Cross-platform **`updates`** function — updates system, package manager,
   Mac App Store (mas), npm, and Ruby gems with one command
 - Cross-platform **`clean`** function — clears caches and frees disk space

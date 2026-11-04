@@ -133,6 +133,29 @@ else
 fi
 
 
+# ── Install pay-respects (thefuck replacement) ────────────────────────
+# In Debian/Ubuntu universe from 0.8.8 onward, but NOT in noble (Mint 22),
+# so try apt first and fall back to the upstream install script.
+info "📦 Installing pay-respects..."
+if command -v pay-respects >/dev/null 2>&1; then
+  ok "pay-respects already installed"
+elif [ "$(uname -s)" = "Darwin" ]; then
+  if brew install timescam/homebrew-tap/pay-respects >>"$PKG_LOG" 2>&1; then
+    ok "pay-respects installed via brew"
+  else
+    info "pay-respects install failed - skipping"
+  fi
+else
+  info "Installing pay-respects..."
+  if $SUDO apt-get install -y pay-respects >>"$PKG_LOG" 2>&1; then
+    ok "pay-respects installed via apt"
+  elif curl -fsSL https://raw.githubusercontent.com/iffse/pay-respects/main/install.sh | sh; then
+    ok "pay-respects installed via install script"
+  else
+    info "pay-respects install failed - skipping"
+  fi
+fi
+
 # ── Clone zsh-history-substring-search (not in apt repos) ─────────────
 info "🔌 Ensuring zsh-history-substring-search is installed..."
 mkdir -p ~/.zsh-plugins

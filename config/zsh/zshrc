@@ -215,3 +215,13 @@ if [[ "$OS" == "macos" ]]; then
   command -v rbenv &>/dev/null && eval "$(rbenv init - zsh)"
 fi
 
+# ── pay-respects: thefuck replacement, command suggestions ────────────
+# `fuck` keeps the old muscle memory; README default is `f`.
+# No AI: keeps suggestions to local rules only, no network, no built-in
+# API key prompt on first use.
+export _PR_AI_DISABLE=1
+
+if (( ! ${+_PAY_RESPECTS_LOADED} )); then
+  (( $+commands[pay-respects] )) && eval "$(pay-respects zsh --alias fuck)"
+  typeset -g _PAY_RESPECTS_LOADED=1
+fi
