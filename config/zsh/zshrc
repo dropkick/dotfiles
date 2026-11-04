@@ -203,12 +203,11 @@ if (( $+functions[history-substring-search-up] )); then
   bindkey '^[[B' history-substring-search-down # Down arrow
 fi
 
-
 # ── PATH additions ────────────────────────────────────────────────────
-# ~/.local/bin for user-installed binaries (pip, cargo, etc.)
-# Homebrew on Apple Silicon (macOS only, harmless on Linux if absent)
-export PATH="$HOME/.local/bin:$PATH"
-[ -d /opt/homebrew/bin ] && export PATH="/opt/homebrew/bin:$PATH"
+# Moved to ~/.zshenv so non-interactive shells get them too, and so the
+# prepends aren't duplicated by zshrc on every load. Do not re-add it 
+# smart guy.
+
 
 # ── macOS-only eval blocks ────────────────────────────────────────────
 if [[ "$OS" == "macos" ]]; then

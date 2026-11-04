@@ -9,5 +9,11 @@
 # Default editor (used by git, sudoedit, etc.)
 export EDITOR="${EDITOR:-nano}"
 
-# Add ~/.local/bin to PATH for user-installed binaries
-export PATH="$HOME/.local/bin:$PATH"
+# Add ~/.local/bin to PATH for user-installed binaries.
+# typeset -U keeps $path unique on every assignment, so repeated shells and
+# reloads can never stack duplicates.
+typeset -U path PATH
+path=("$HOME/.local/bin" $path)
+
+# Homebrew on Apple Silicon (macOS only; no-op on Linux)
+[[ -d /opt/homebrew/bin ]] && path=(/opt/homebrew/bin $path)
