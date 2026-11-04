@@ -68,7 +68,7 @@ case "$(uname -s)" in
     if command -v brew >/dev/null 2>&1; then
       pkg_install() { brew install "$1"; }
       install_list zsh zsh-autosuggestions zsh-syntax-highlighting \
-                   fzf mas bat figlet thefuck eza lsd
+                   fzf mas bat figlet eza lsd
       report_pkgs "macOS"
     else
       info "Homebrew unavailable - skipping package installation"
@@ -83,7 +83,7 @@ case "$(uname -s)" in
       pkg_install() { $SUDO apt-get install -y "$1"; }
       # eza and figlet last: newest names, most likely to be missing.
       install_list zsh zsh-autosuggestions zsh-syntax-highlighting \
-                   fzf lsd bat thefuck figlet eza
+                   fzf lsd bat figlet eza
       # Debian/Ubuntu ship bat's binary as batcat
       if command -v batcat >/dev/null 2>&1 && ! command -v bat >/dev/null 2>&1; then
         mkdir -p "$HOME/.local/bin"
@@ -96,20 +96,20 @@ case "$(uname -s)" in
       info "Using dnf (Fedora)"
       pkg_install() { $SUDO dnf install -y "$1"; }
       install_list zsh zsh-autosuggestions zsh-syntax-highlighting \
-                   fzf lsd bat figlet thefuck eza
+                   fzf lsd bat figlet eza
       report_pkgs "dnf"
 
     elif command -v pacman >/dev/null 2>&1; then
       info "Using pacman (Arch)"
       pkg_install() { $SUDO pacman -S --needed --noconfirm "$1"; }
       install_list zsh zsh-autosuggestions zsh-syntax-highlighting \
-                   fzf lsd bat figlet thefuck eza
+                   fzf lsd bat figlet eza
       report_pkgs "pacman"
 
     else
       info "No supported package manager found."
       info "Install manually: zsh, zsh-autosuggestions, zsh-syntax-highlighting,"
-      info "fzf, lsd (or eza), bat, figlet, thefuck"
+      info "fzf, lsd (or eza), bat, figlet"
     fi
     ;;
 

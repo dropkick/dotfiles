@@ -215,12 +215,3 @@ if [[ "$OS" == "macos" ]]; then
   command -v rbenv &>/dev/null && eval "$(rbenv init - zsh)"
 fi
 
-# ── thefuck: emits the `fuck` shell function ──────────────────────────
-# LAZY: 2s of Python import deferred to first use.
-if (( $+commands[thefuck] )); then
-  fuck() {
-    unfunction fuck
-    eval "$(thefuck --alias)"
-    fuck "$@"
-  }
-fi
