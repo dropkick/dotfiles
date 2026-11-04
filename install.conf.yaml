@@ -72,9 +72,10 @@
       path: config/vscode/settings.json
       if: '[ "$(uname -s)" = "Linux" ]'
     # VSCodium
-    ~/Library/Application Support/VSCodium/User/settings.json:
+    ~/.config/wezterm/wezterm.lua: config/wezterm/wezterm.lua
+    ~/.config/VSCodium/User/settings.json:
       path: config/vscode/settings.json
-      if: '[ "$(uname -s)" = "Darwin" ]'
+      if: '[ "$(uname -s)" = "Linux" ]'
     ~/.config/VSCodium/User/settings.json:
       path: config/vscode/settings.json
       if: '[ "$(uname -s)" = "Linux" ]'
